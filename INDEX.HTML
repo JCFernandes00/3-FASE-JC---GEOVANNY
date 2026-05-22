@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Portal Académico Uni-CV | Upgrade Completo</title>
+
+  <link rel="stylesheet" href="style.css">
+
+
 <style>
+/* 
+   VARIÁVEIS DE CORES E TEMA
+   */
 :root{
   --vermelho:#b20d2b;
   --vermelho-escuro:#8f0a22;
@@ -21,6 +27,8 @@
   --amarelo:#f4b400;
   --sombra:0 8px 20px rgba(0,0,0,.08);
 }
+
+/* Tema escuro */
 body.dark{
   --preto:#111827;
   --branco:#111827;
@@ -31,6 +39,8 @@ body.dark{
   --card:#1e293b;
   --sombra:0 8px 20px rgba(0,0,0,.28);
 }
+
+/* Reset*/
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--fundo);color:var(--texto)}
 button,input,select,textarea{font-family:inherit}
@@ -41,19 +51,55 @@ body.dark button.secondary{background:#334155;color:#fff}
 button.small{padding:7px 10px;font-size:12px}
 input,select,textarea{width:100%;padding:11px;margin:7px 0 14px;border:1px solid var(--borda);border-radius:8px;background:var(--card);color:var(--texto)}
 label{font-weight:bold;font-size:14px}.hidden{display:none!important}
+
+/* 
+    TOPO / BOTÕES E-MAIL, MOODLE, SITE, MODO, SAIR
+   */
 .topbar{height:58px;background:var(--preto);color:#fff;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
 .logo{height:58px;width:260px;background:var(--vermelho);display:flex;align-items:center;padding-left:18px;font-size:23px;font-weight:bold;letter-spacing:.5px}
 .toplinks{display:flex;align-items:center;gap:8px;padding-right:14px}.toplinks button,.toplinks a{background:transparent;color:#fff;text-decoration:none;border:0;padding:9px 12px;border-radius:6px;font-size:14px}.toplinks button:hover,.toplinks a:hover{background:rgba(255,255,255,.13)}
 .user-chip{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);padding:6px 10px;border-radius:999px}.user-chip img{width:28px;height:28px;border-radius:50%;object-fit:cover;border:2px solid #fff}
+
+/* 
+   LAYOUT PRINCIPAL: SIDEBAR + CONTEÚDO
+    */
 .layout{display:flex}.sidebar{width:260px;background:var(--card);min-height:calc(100vh - 58px);border-right:1px solid var(--borda);position:sticky;top:58px;align-self:flex-start}.menu-item{padding:16px 20px;border-bottom:1px solid var(--borda);cursor:pointer;font-size:15px;display:flex;justify-content:space-between;align-items:center}.menu-item:hover,.menu-item.active{background:#f8e8ec;color:var(--vermelho);font-weight:bold}body.dark .menu-item:hover,body.dark .menu-item.active{background:#3b1821}.content{flex:1;padding:28px;max-width:1400px}.secao{display:none}.secao.active{display:block}.section-title{background:var(--vermelho);color:#fff;display:inline-block;padding:13px 24px;margin-bottom:18px;border-radius:0 12px 12px 0;font-weight:bold}
+
+/* 
+   BANNER DE BOAS-VINDAS COM IMAGEM
+   */
 .banner{position:relative;background:linear-gradient(rgba(0,0,0,.52),rgba(0,0,0,.42)),url('matricula_unicv-2.jpeg');background-size:cover;background-position:center;border-radius:18px;padding:58px 35px;text-align:center;margin-bottom:24px;color:#fff;box-shadow:var(--sombra);overflow:hidden}.banner h1{font-size:35px;margin:0 0 10px}.banner p{font-size:17px;margin:6px 0}.banner-actions{margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+
+/* 
+   GRIDS, CARDS, BADGES E TABELAS
+    */
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.card{background:var(--card);border:1px solid var(--borda);border-radius:14px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,.04)}.card h3{color:var(--vermelho);margin-top:0}.card-button{cursor:pointer;min-height:100px;transition:.2s}.card-button:hover{transform:translateY(-3px);border-color:var(--vermelho);box-shadow:var(--sombra)}.muted{color:var(--muted);font-size:14px}.badge{display:inline-block;padding:5px 9px;border-radius:999px;font-size:12px;font-weight:bold;background:#f8e8ec;color:var(--vermelho)}.badge.green{background:#e8f7ed;color:var(--verde)}.badge.blue{background:#e7efff;color:var(--azul)}.badge.yellow{background:#fff7df;color:#946200}
 table{width:100%;border-collapse:collapse;background:var(--card);border-radius:12px;overflow:hidden}th{background:var(--vermelho);color:white;padding:12px;text-align:left}td{padding:12px;border-bottom:1px solid var(--borda)}tr:hover td{background:rgba(178,13,43,.04)}
-.profile-header{display:flex;gap:24px;align-items:center;flex-wrap:wrap}.photo-box{text-align:center}.photo-box img{width:132px;height:132px;border-radius:50%;object-fit:cover;border:5px solid var(--vermelho);background:#ddd}.id-card{background:linear-gradient(135deg,var(--vermelho),var(--vermelho-escuro));color:white;border-radius:18px;padding:20px;min-height:190px;position:relative;overflow:hidden}.id-card:after{content:'';position:absolute;right:-40px;bottom:-40px;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.12)}.qr{width:92px;height:92px;background:#fff;color:#111;display:grid;place-items:center;border-radius:10px;font-weight:bold;margin-top:14px}.stat{text-align:center}.stat h2{margin:0;color:var(--vermelho);font-size:30px}.notification{padding:13px 15px;border-left:5px solid var(--vermelho);background:var(--card);border-radius:10px;margin-bottom:10px;border-top:1px solid var(--borda);border-right:1px solid var(--borda);border-bottom:1px solid var(--borda)}.success{color:var(--verde);font-weight:bold}.danger{color:var(--vermelho);font-weight:bold}.portal-card{display:flex;gap:14px;align-items:flex-start}.icon{width:42px;height:42px;border-radius:12px;background:#f8e8ec;color:var(--vermelho);display:grid;place-items:center;font-size:22px;font-weight:bold;flex:none}.modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:99;padding:20px}.modal-content{background:var(--card);color:var(--texto);border-radius:16px;padding:22px;width:min(560px,100%);box-shadow:var(--sombra);max-height:90vh;overflow:auto}.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:12px}.login-screen{min-height:100vh;display:grid;place-items:center;background:linear-gradient(135deg,var(--vermelho),#2a2e35)}.login-card{width:min(440px,92vw);background:#fff;border-radius:20px;padding:30px;box-shadow:0 16px 40px rgba(0,0,0,.25);color:#333}.login-card h1{color:var(--vermelho);margin-top:0;text-align:center}.app{display:none}.toast{position:fixed;right:20px;bottom:20px;background:var(--preto);color:#fff;padding:13px 16px;border-radius:10px;box-shadow:var(--sombra);display:none;z-index:200}.progress{height:9px;background:#e8edf3;border-radius:99px;overflow:hidden}.progress span{display:block;height:100%;background:var(--vermelho);border-radius:99px}.discipline-detail{margin-top:18px;border-left:5px solid var(--vermelho)}.top-search{display:flex;gap:10px;margin-bottom:18px}.top-search input{margin:0}.material-list li{margin:8px 0}
+
+/* 
+   PERFIL, FOTO, CARTÃO ACADÉMICO E QR ID
+    */
+.profile-header{display:flex;gap:24px;align-items:center;flex-wrap:wrap}.photo-box{text-align:center}.photo-box img{width:132px;height:132px;border-radius:50%;object-fit:cover;border:5px solid var(--vermelho);background:#ddd}.id-card{background:linear-gradient(135deg,var(--vermelho),var(--vermelho-escuro));color:white;border-radius:18px;padding:20px;min-height:190px;position:relative;overflow:hidden}.id-card:after{content:'';position:absolute;right:-40px;bottom:-40px;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.12)}.qr{width:92px;height:92px;background:#fff;color:#111;display:grid;place-items:center;border-radius:10px;font-weight:bold;margin-top:14px}.stat{text-align:center}.stat h2{margin:0;color:var(--vermelho);font-size:30px}.notification{padding:13px 15px;border-left:5px solid var(--vermelho);background:var(--card);border-radius:10px;margin-bottom:10px;border-top:1px solid var(--borda);border-right:1px solid var(--borda);border-bottom:1px solid var(--borda)}.success{color:var(--verde);font-weight:bold}.danger{color:var(--vermelho);font-weight:bold}.portal-card{display:flex;gap:14px;align-items:flex-start}.icon{width:42px;height:42px;border-radius:12px;background:#f8e8ec;color:var(--vermelho);display:grid;place-items:center;font-size:22px;font-weight:bold;flex:none}
+/* 
+   JANELAS DE INTERAÇÃO
+    */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:99;padding:20px}.modal-content{background:var(--card);color:var(--texto);border-radius:16px;padding:22px;width:min(560px,100%);box-shadow:var(--sombra);max-height:90vh;overflow:auto}.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:12px}
+/* 
+    ECRÃ DE LOGIN
+    */
+.login-screen{min-height:100vh;display:grid;place-items:center;background:linear-gradient(135deg,var(--vermelho),#2a2e35)}.login-card{width:min(440px,92vw);background:#fff;border-radius:20px;padding:30px;box-shadow:0 16px 40px rgba(0,0,0,.25);color:#333}.login-card h1{color:var(--vermelho);margin-top:0;text-align:center}.app{display:none}.toast{position:fixed;right:20px;bottom:20px;background:var(--preto);color:#fff;padding:13px 16px;border-radius:10px;box-shadow:var(--sombra);display:none;z-index:200}.progress{height:9px;background:#e8edf3;border-radius:99px;overflow:hidden}.progress span{display:block;height:100%;background:var(--vermelho);border-radius:99px}.discipline-detail{margin-top:18px;border-left:5px solid var(--vermelho)}.top-search{display:flex;gap:10px;margin-bottom:18px}.top-search input{margin:0}.material-list li{margin:8px 0}
+
+/* 
+   9. RESPONSIVIDADE PARA TELEMÓVEL E TABLET
+    */
 @media(max-width:900px){.layout{flex-direction:column}.sidebar{width:100%;position:relative;top:0;display:grid;grid-template-columns:repeat(2,1fr);min-height:auto}.content{padding:18px}.grid,.grid-2,.grid-4{grid-template-columns:1fr}.logo{width:auto;min-width:180px}.toplinks{gap:2px}.toplinks span{display:none}.banner h1{font-size:25px}}
+
 </style>
 </head>
 <body>
+<!--
+     LOGIN DO PORTAL
+     -->
 <div id="loginScreen" class="login-screen">
   <div class="login-card">
     <h1>◇ PORTAL Uni-CV</h1>
@@ -68,7 +114,11 @@ table{width:100%;border-collapse:collapse;background:var(--card);border-radius:1
   </div>
 </div>
 
+<!-- 
+     APLICAÇÃO PRINCIPAL
+     -->
 <div id="app" class="app">
+  <!-- Barra superior com botões rápidos -->
 <div class="topbar">
   <div class="logo">◇ PORTAL</div>
   <div class="toplinks">
@@ -81,6 +131,7 @@ table{width:100%;border-collapse:collapse;background:var(--card);border-radius:1
   </div>
 </div>
 <div class="layout">
+    <!-- Menu lateral de navegação -->
   <aside class="sidebar">
     <div class="menu-item" data-target="home" onclick="mostrar('home')">Home <span>⌂</span></div>
     <div class="menu-item" data-target="perfil" onclick="mostrar('perfil')">Perfil do Aluno <span>👤</span></div>
@@ -93,7 +144,9 @@ table{width:100%;border-collapse:collapse;background:var(--card);border-radius:1
     <div class="menu-item" data-target="documentos" onclick="mostrar('documentos')">Documentos <span>📄</span></div>
     <div class="menu-item" data-target="suporte" onclick="mostrar('suporte')">Suporte <span>🛠</span></div>
   </aside>
+    <!-- Conteúdo das páginas/abas -->
   <main class="content">
+        <!-- Página inicial -->
     <section id="home" class="secao">
       <div class="banner">
         <h1>BEM-VINDO(A) AO PORTAL ACADÉMICO</h1>
@@ -101,8 +154,6 @@ table{width:100%;border-collapse:collapse;background:var(--card);border-radius:1
         <p><strong>JEAN CLAUDE FERNANDES</strong> | Nº 158656</p>
         <p>Tecnologia e Multimédia</p>
         <div class="banner-actions"><button onclick="mostrar('disciplinas')">Ver disciplinas</button><button class="secondary" onclick="mostrar('notificacoes')">Ver avisos</button></div>
-        </style>
-        
       </div>
       <div class="grid-4">
         <div class="card stat"><h2>5</h2><p>Disciplinas</p></div><div class="card stat"><h2>15.5</h2><p>Média Geral</p></div><div class="card stat"><h2>92%</h2><p>Assiduidade</p></div><div class="card stat"><h2>8</h2><p>Pagamentos</p></div>
@@ -118,6 +169,7 @@ table{width:100%;border-collapse:collapse;background:var(--card);border-radius:1
       </div>
     </section>
 
+        <!-- Perfil do aluno -->
     <section id="perfil" class="secao">
       <div class="section-title">PERFIL DO ALUNO</div>
       <div class="grid-2">
@@ -132,6 +184,7 @@ table{width:100%;border-collapse:collapse;background:var(--card);border-radius:1
       </div>
     </section>
 
+        <!-- Área docente -->
     <section id="docente" class="secao">
       <div class="section-title">ÁREA DO DOCENTE</div>
       <div class="grid-2">
@@ -145,6 +198,7 @@ table{width:100%;border-collapse:collapse;background:var(--card);border-radius:1
 
     <section id="notificacoes" class="secao"><div class="section-title">NOTIFICAÇÕES</div><div id="listaNotificacoes"></div><button onclick="marcarAvisos()">Marcar todos como lidos</button></section>
 
+        <!-- Unidades curriculares -->
     <section id="disciplinas" class="secao"><div class="section-title">UNIDADES CURRICULARES</div><div class="top-search"><input id="pesquisaDisciplina" oninput="filtrarDisciplinas()" placeholder="Pesquisar disciplina..."><button onclick="filtrarDisciplinas()">Pesquisar</button></div><div class="card"><table id="tabelaDisciplinas"><tr><th>Disciplina</th><th>Docente</th><th>Estado</th><th>Ação</th></tr></table></div><div id="detalheDisciplina" class="card discipline-detail hidden"></div></section>
 
     <section id="plano" class="secao"><div class="section-title">PLANO CURRICULAR</div><div class="card"><p><strong>Curso/Área:</strong> Tecnologia e Multimédia</p><table><tr><th>Semestre</th><th>Disciplina</th><th>Créditos</th><th>Progresso</th></tr><tr><td>1.º</td><td>Introdução a Base de Dados</td><td>6</td><td><div class="progress"><span style="width:100%"></span></div></td></tr><tr><td>1.º</td><td>Gestão de Projeto Multimédia</td><td>5</td><td><div class="progress"><span style="width:100%"></span></div></td></tr><tr><td>1.º</td><td>Tecnologia de Desenvolvimento Web II</td><td>6</td><td><div class="progress"><span style="width:80%"></span></div></td></tr><tr><td>1.º</td><td>Laboratório de Projeto Multimédia I</td><td>6</td><td><div class="progress"><span style="width:65%"></span></div></td></tr><tr><td>1.º</td><td>Sistemas de Compressão Multimédia</td><td>5</td><td><div class="progress"><span style="width:100%"></span></div></td></tr></table></div></section>
@@ -153,16 +207,22 @@ table{width:100%;border-collapse:collapse;background:var(--card);border-radius:1
 
     <section id="horario" class="secao"><div class="section-title">HORÁRIO</div><div class="card"><table><tr><th>Dia</th><th>Disciplina</th><th>Hora</th><th>Sala</th><th>Ação</th></tr><tr><td>Segunda</td><td>Introdução a Base de Dados</td><td>08:00 - 10:00</td><td>Sala 12</td><td><button class="small" onclick="toast('Lembrete criado para segunda-feira.')">Lembrar</button></td></tr><tr><td>Terça</td><td>Gestão de Projeto Multimédia</td><td>10:00 - 12:00</td><td>Sala 08</td><td><button class="small" onclick="toast('Lembrete criado para terça-feira.')">Lembrar</button></td></tr><tr><td>Quarta</td><td>Tecnologia de Desenvolvimento Web II</td><td>14:00 - 16:00</td><td>Lab 2</td><td><button class="small" onclick="toast('Lembrete criado para quarta-feira.')">Lembrar</button></td></tr><tr><td>Quinta</td><td>Laboratório de Projeto Multimédia I</td><td>09:00 - 12:00</td><td>Lab 1</td><td><button class="small" onclick="toast('Lembrete criado para quinta-feira.')">Lembrar</button></td></tr><tr><td>Sexta</td><td>Sistemas de Compressão Multimédia</td><td>11:00 - 13:00</td><td>Sala 05</td><td><button class="small" onclick="toast('Lembrete criado para sexta-feira.')">Lembrar</button></td></tr></table></div></section>
 
+        <!-- Financeiro e pagamentos -->
     <section id="pagamentos" class="secao"><div class="section-title">FINANCEIRO E PAGAMENTO</div><div class="grid-2"><div class="card"><h3>Situação financeira</h3><p><span class="badge green">Sem dívida pendente</span></p><p>Total pago em 2025/2026: <strong>36.500 CVE</strong></p><button onclick="abrirModal('modalPagamento')">Efetuar pagamento</button></div><div class="card"><h3>Recibo rápido</h3><p>Gere um recibo simulado do último pagamento.</p><button onclick="gerarRecibo()">Gerar recibo</button><p id="reciboMsg" class="success"></p></div></div><br><div class="card"><h3>Pagamentos Recentes</h3><table id="tabelaPagamentos"><tr><th>Data</th><th>Descrição</th><th>Valor</th><th>Estado</th></tr></table></div></section>
 
+        <!-- Pedidos de documentos -->
     <section id="documentos" class="secao"><div class="section-title">DOCUMENTOS</div><div class="grid"><div class="card"><h3>Declaração de Matrícula</h3><p class="muted">Documento para comprovar inscrição ativa.</p><button onclick="solicitarDoc('Declaração de Matrícula')">Solicitar</button></div><div class="card"><h3>Certificado de Notas</h3><p class="muted">Documento com notas lançadas.</p><button onclick="solicitarDoc('Certificado de Notas')">Solicitar</button></div><div class="card"><h3>Comprovativo de Inscrição</h3><p class="muted">Comprovativo para efeitos administrativos.</p><button onclick="solicitarDoc('Comprovativo de Inscrição')">Solicitar</button></div></div><br><div class="card"><h3>Pedidos efetuados</h3><div id="pedidosDocs" class="muted">Ainda não existem pedidos.</div></div></section>
 
+        <!-- Suporte académico -->
     <section id="suporte" class="secao"><div class="section-title">SUPORTE</div><div class="grid-2"><div class="card"><label>Assunto</label><input id="supAssunto" placeholder="Ex.: Problema no acesso às notas"><label>Mensagem</label><textarea id="supMsg" rows="5" placeholder="Descreva o problema"></textarea><button onclick="enviarSuporte()">Enviar pedido</button><p id="suporteRetorno" class="success"></p></div><div class="card"><h3>Ajuda rápida</h3><div class="notification"><strong>Como acessar Moodle?</strong><br>Clique em MOODLE no topo ou dentro de uma disciplina.</div><div class="notification"><strong>Como pedir documento?</strong><br>Abra Documentos e clique em Solicitar.</div></div></div></section>
   </main>
 </div>
 </div>
 
-<div id="modalSite" class="modal"><div class="modal-content"><h2>Site Uni-CV</h2><p>Escolhe uma opção de interação:</p><div class="grid-2"><button onclick="window.open('https://www.unicv.edu.cv','_blank')">Abrir site oficial</button><button onclick="toast('Aqui poderia abrir notícias internas da Uni-CV.')">Notícias da universidade</button><button onclick="toast('Aqui poderia abrir contactos e serviços académicos.')">Contactos e serviços</button><button onclick="toast('Aqui poderia abrir calendário académico.')">Calendário académico</button></div><div class="modal-actions"><button class="secondary" onclick="fecharModais()">Fechar</button></div></div></div>
+<!-- 
+     MODAIS DO SISTEMA
+      -->
+<div id="modalSite" class="modal"><div class="modal-content"><h2>Site Uni-CV</h2><p>Escolhe uma opção de interação:</p><div class="grid-2"><button onclick="window.open('https://www.unicv.edu.cv','_blank')">Abrir site oficial</button><button onclick="window.open('https://www.unicv.edu.cv/pt/universidade/noticia-unicv','_blank')">Notícias da universidade</button><button onclick="toast('Aqui poderia abrir contactos e serviços académicos.')">Contactos e serviços</button><button onclick="toast('Aqui poderia abrir calendário académico.')">Calendário académico</button></div><div class="modal-actions"><button class="secondary" onclick="fecharModais()">Fechar</button></div></div></div>
 <div id="modalEmail" class="modal"><div class="modal-content"><h2>E-mail académico</h2><label>Para</label><input id="emailPara" placeholder="exemplo@unicv.edu.cv"><label>Assunto</label><input id="emailAssunto"><label>Mensagem</label><textarea id="emailMsg" rows="4"></textarea><div class="modal-actions"><button class="secondary" onclick="fecharModais()">Cancelar</button><button onclick="enviarEmailDemo()">Enviar</button></div></div></div>
 <div id="modalSenha" class="modal"><div class="modal-content"><h2>Alterar palavra-passe</h2><label>Nova palavra-passe</label><input id="novaSenha" type="password"><label>Confirmar</label><input id="confSenha" type="password"><p id="senhaMsg"></p><div class="modal-actions"><button class="secondary" onclick="fecharModais()">Cancelar</button><button onclick="alterarSenha()">Guardar</button></div></div></div>
 <div id="modalPagamento" class="modal"><div class="modal-content"><h2>Pagamento simulado</h2><label>Descrição</label><select id="pagDesc"><option>Propina mensal</option><option>Taxa administrativa</option><option>Inscrição</option></select><label>Valor</label><input id="pagValor" value="5.000 CVE"><label>Método</label><select><option>Vinti4</option><option>Transferência bancária</option><option>Cartão</option></select><div class="modal-actions"><button class="secondary" onclick="fecharModais()">Cancelar</button><button onclick="pagar()">Confirmar pagamento</button></div></div></div>
@@ -171,6 +231,17 @@ table{width:100%;border-collapse:collapse;background:var(--card);border-radius:1
 <div id="toast" class="toast"></div>
 
 <script>
+/* 
+   JAVASCRIPT DO PORTAL
+   - Dados simulados
+   - Navegação entre abas
+   - Modais
+   - Login
+   - Pagamentos
+   - Documentos
+   */
+
+// Lista de disciplinas usadas nas tabelas e detalhes
 const disciplinas=[
  {nome:'Introdução a Base de Dados',docente:'Docente 1',estado:'Concluída',nota:'15',creditos:6,moodle:'base-de-dados'},
  {nome:'Gestão de Projeto Multimédia',docente:'Docente 2',estado:'Concluída',nota:'16',creditos:5,moodle:'gestao-projeto'},
@@ -182,26 +253,56 @@ let pagamentos=JSON.parse(localStorage.getItem('pagamentosUniCV')||'null')||[
  ['05/04/2026','Propina mensal','5.000 CVE','Pago'],['05/03/2026','Propina mensal','5.000 CVE','Pago'],['05/02/2026','Propina mensal','5.000 CVE','Pago'],['05/01/2026','Propina mensal','5.000 CVE','Pago'],['10/12/2025','Taxa administrativa','1.500 CVE','Pago'],['05/12/2025','Propina mensal','5.000 CVE','Pago'],['05/11/2025','Propina mensal','5.000 CVE','Pago'],['05/10/2025','Propina mensal','5.000 CVE','Pago']
 ];
 let pedidos=JSON.parse(localStorage.getItem('docsUniCV')||'[]');
+
+// Faz login. Palavra-passe demo: 1234
 function entrar(){const pass=document.getElementById('loginPass').value;if(pass!=='1234'){document.getElementById('loginErro').innerText='Palavra-passe incorreta. Use 1234 para a demo.';return}document.getElementById('loginScreen').style.display='none';document.getElementById('app').style.display='block';mostrar('home');toast('Sessão iniciada com sucesso.')}
+
+// Termina sessão e volta ao ecrã de login
 function sair(){document.getElementById('app').style.display='none';document.getElementById('loginScreen').style.display='grid';toast('Sessão terminada.')}
+
+// Mostra uma aba/secção e esconde as outras
 function mostrar(id){document.querySelectorAll('.secao').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.menu-item').forEach(i=>i.classList.remove('active'));let item=document.querySelector(`[data-target="${id}"]`);if(item)item.classList.add('active');if(id==='disciplinas')renderDisciplinas();if(id==='notas')renderNotas();if(id==='pagamentos')renderPagamentos();if(id==='documentos')renderPedidos();if(id==='notificacoes')renderAvisos();window.scrollTo({top:0,behavior:'smooth'})}
+
+// Abre e fecha janelas/modal
 function abrirModal(id){document.getElementById(id).style.display='flex'}function fecharModais(){document.querySelectorAll('.modal').forEach(m=>m.style.display='none')}
+
+// Mostra mensagem rápida no canto inferior
 function toast(msg){let t=document.getElementById('toast');t.innerText=msg;t.style.display='block';setTimeout(()=>t.style.display='none',2600)}
+
+// Botões do topo: E-mail, Moodle, Site e Modo Escuro
 function abrirEmail(){abrirModal('modalEmail')}function abrirMoodle(){toast('A abrir Moodle em nova aba...');window.open('https://moodle.unicv.edu.cv','_blank')}function abrirSite(){abrirModal('modalSite')}function toggleDark(){document.body.classList.toggle('dark');localStorage.setItem('darkUniCV',document.body.classList.contains('dark')?'1':'0')}
+
+// Permite trocar foto do aluno/docente
 function trocarFoto(e,id){let f=e.target.files[0];if(!f)return;let reader=new FileReader();reader.onload=function(){document.getElementById(id).src=reader.result;if(id==='fotoAluno')document.getElementById('chipFoto').src=reader.result;localStorage.setItem(id,reader.result);toast('Foto atualizada.')};reader.readAsDataURL(f)}
+
+// Cria/atualiza a tabela de disciplinas
 function renderDisciplinas(){let q=(document.getElementById('pesquisaDisciplina')?.value||'').toLowerCase();let tb=document.getElementById('tabelaDisciplinas');tb.innerHTML='<tr><th>Disciplina</th><th>Docente</th><th>Estado</th><th>Ação</th></tr>';disciplinas.filter(d=>d.nome.toLowerCase().includes(q)).forEach((d,i)=>{tb.innerHTML+=`<tr><td>${d.nome}</td><td>${d.docente}</td><td><span class="badge ${d.estado==='Concluída'?'green':'blue'}">${d.estado}</span></td><td><button class="small" onclick="verDisciplina(${i})">Ver detalhes</button> <button class="small secondary" onclick="abrirMoodle()">Moodle</button></td></tr>`})}
 function filtrarDisciplinas(){renderDisciplinas()}function verDisciplina(i){let d=disciplinas[i];let box=document.getElementById('detalheDisciplina');box.classList.remove('hidden');box.innerHTML=`<h3>${d.nome}</h3><p><strong>Docente:</strong> ${d.docente}</p><p><strong>Créditos:</strong> ${d.creditos}</p><p><strong>Estado:</strong> ${d.estado}</p><ul class="material-list"><li>Plano da unidade curricular</li><li>Slides das aulas</li><li>Trabalhos e tarefas</li><li>Fórum de dúvidas</li></ul><button onclick="abrirMoodle()">Abrir no Moodle</button>`}
+
+// Cria/atualiza a tabela de notas
 function renderNotas(){let tb=document.getElementById('tabelaNotas');tb.innerHTML='<tr><th>Disciplina</th><th>Nota</th><th>Estado</th><th>Ação</th></tr>';disciplinas.forEach(d=>tb.innerHTML+=`<tr><td>${d.nome}</td><td>${d.nota}</td><td>${d.nota==='—'?'Em avaliação':'Aprovado'}</td><td><button class="small" onclick="toast('Pedido de revisão registado para ${d.nome}.')">Pedir revisão</button></td></tr>`)}
+
+// Cria/atualiza a tabela de pagamentos
 function renderPagamentos(){let tb=document.getElementById('tabelaPagamentos');tb.innerHTML='<tr><th>Data</th><th>Descrição</th><th>Valor</th><th>Estado</th></tr>';pagamentos.forEach(p=>tb.innerHTML+=`<tr><td>${p[0]}</td><td>${p[1]}</td><td>${p[2]}</td><td><span class="badge green">${p[3]}</span></td></tr>`)}
 function pagar(){let hoje=new Date().toLocaleDateString('pt-PT');pagamentos.unshift([hoje,document.getElementById('pagDesc').value,document.getElementById('pagValor').value,'Pago']);localStorage.setItem('pagamentosUniCV',JSON.stringify(pagamentos));fecharModais();renderPagamentos();toast('Pagamento registado com sucesso.')}
 function gerarRecibo(){document.getElementById('reciboMsg').innerText='Recibo simulado gerado: REC-UNICV-2026-001.'}function gerarHistorico(){document.getElementById('historicoMsg').innerText='Histórico académico simulado gerado com sucesso.'}
+
+// Regista pedidos de documentos no navegador
 function solicitarDoc(nome){let hoje=new Date().toLocaleDateString('pt-PT');pedidos.unshift({nome,data:hoje,estado:'Em processamento'});localStorage.setItem('docsUniCV',JSON.stringify(pedidos));renderPedidos();toast(nome+' solicitado com sucesso.')}
 function renderPedidos(){let div=document.getElementById('pedidosDocs');if(!pedidos.length){div.innerText='Ainda não existem pedidos.';return}div.innerHTML='<table><tr><th>Documento</th><th>Data</th><th>Estado</th></tr>'+pedidos.map(p=>`<tr><td>${p.nome}</td><td>${p.data}</td><td><span class="badge yellow">${p.estado}</span></td></tr>`).join('')+'</table>'}
+
+// Valida e envia pedido de suporte em modo demo
 function enviarSuporte(){let a=document.getElementById('supAssunto').value.trim(),m=document.getElementById('supMsg').value.trim();if(!a||!m){document.getElementById('suporteRetorno').className='danger';document.getElementById('suporteRetorno').innerText='Preencha o assunto e a mensagem.';return}document.getElementById('suporteRetorno').className='success';document.getElementById('suporteRetorno').innerText='Pedido enviado com sucesso. Ticket #UNICV-'+Math.floor(Math.random()*9000+1000);document.getElementById('supAssunto').value='';document.getElementById('supMsg').value=''}
 function enviarEmailDemo(){fecharModais();toast('E-mail académico enviado em modo demo.')}function alterarSenha(){let n=document.getElementById('novaSenha').value,c=document.getElementById('confSenha').value,msg=document.getElementById('senhaMsg');if(n.length<4){msg.className='danger';msg.innerText='A palavra-passe deve ter pelo menos 4 caracteres.';return}if(n!==c){msg.className='danger';msg.innerText='As palavras-passe não coincidem.';return}msg.className='success';msg.innerText='Palavra-passe alterada com sucesso.';setTimeout(fecharModais,900)}
 function lancarNota(){let disc=document.getElementById('notaDisc').value,val=document.getElementById('notaValor').value;let d=disciplinas.find(x=>x.nome===disc);if(d)d.nota=val;fecharModais();renderNotas();toast('Nota lançada com sucesso.')}
+
+// Renderiza as notificações
 function renderAvisos(){let div=document.getElementById('listaNotificacoes');div.innerHTML='<div class="notification"><strong>📢 Nova nota publicada</strong><br>Tecnologia de Desenvolvimento Web II já tem nota disponível.</div><div class="notification"><strong>💳 Situação financeira regularizada</strong><br>Não existem dívidas pendentes no momento.</div><div class="notification"><strong>📚 Moodle atualizado</strong><br>Novos materiais disponíveis em Base de Dados.</div><div class="notification"><strong>🗓 Calendário académico</strong><br>Consulte as datas de avaliação e entregas.</div>'}
-function marcarAvisos(){toast('Notificações marcadas como lidas.')}window.onload=function(){if(localStorage.getItem('darkUniCV')==='1')document.body.classList.add('dark');['fotoAluno','fotoDocente'].forEach(id=>{let v=localStorage.getItem(id);if(v)document.getElementById(id).src=v});let fa=localStorage.getItem('fotoAluno');if(fa)document.getElementById('chipFoto').src=fa;renderDisciplinas();renderNotas();renderPagamentos();renderPedidos();renderAvisos()}
+function marcarAvisos(){toast('Notificações marcadas como lidas.')}
+// Executa quando a página abre
+window.onload=function(){if(localStorage.getItem('darkUniCV')==='1')document.body.classList.add('dark');['fotoAluno','fotoDocente'].forEach(id=>{let v=localStorage.getItem(id);if(v)document.getElementById(id).src=v});let fa=localStorage.getItem('fotoAluno');if(fa)document.getElementById('chipFoto').src=fa;renderDisciplinas();renderNotas();renderPagamentos();renderPedidos();renderAvisos()}
 </script>
 </body>
 </html>
+
+//JC FERNANDES - 158656||PORTAL ACADÉMICO SIMULADO - UNIVERSIDADE DE CABO VERDE
