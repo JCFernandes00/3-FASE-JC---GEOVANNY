@@ -1,0 +1,74 @@
+:root {
+  --vermelho-unicv: #b30d2b;
+  --vermelho-hover: #8f0a22;
+  --preto-topo: #1f2225;
+  --fundo-geral: #edf4f6;
+  --branco: #ffffff;
+  --cinza-texto: #333333;
+  --cinza-claro: #f5f5f5;
+  --verde-borda: #c8e69b;
+  --azul-icone: #6f8796;
+}
+/* RESPONSIVO MOBILE */
+
+@media (max-width: 900px){
+
+  .layout{
+    flex-direction:column;
+  }
+
+  .sidebar{
+    width:100%;
+    min-height:auto;
+    display:flex;
+    overflow-x:auto;
+  }
+
+  .menu-item{
+    min-width:180px;
+    text-align:center;
+    border-right:1px solid #ddd;
+    border-bottom:none;
+  }
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .content{
+    padding:15px;
+  }
+
+  .banner{
+    padding:50px 20px;
+  }
+
+  .banner h1{
+    font-size:28px;
+  }
+
+  .perfil-topo{
+    flex-direction:column;
+    text-align:center;
+  }
+
+  table{
+    display:block;
+    overflow-x:auto;
+  }
+
+  .topbar{
+    flex-direction:column;
+    height:auto;
+    padding:10px;
+    gap:10px;
+  }
+
+  .toplinks{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:10px;
+  }
+
+}

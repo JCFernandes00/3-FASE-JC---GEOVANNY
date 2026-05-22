@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<title>Portal Académico Uni-CV</title>
+
+<style>
+:root {
+  --vermelho: #b20d2b;
+  --vermelho-escuro: #8f0a22;
+  --preto: #1f2225;
+  --branco: #ffffff;
+  --fundo: #edf4f6;
+  --cinza: #444;
+  --cinza-claro: #f5f5f5;
+  --borda: #e2e2e2;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--fundo);
+  color: var(--cinza);
+}
+
+.topbar {
+  height: 52px;
+  background: var(--preto);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  background: var(--vermelho);
+  height: 52px;
+  width: 260px;
+  display: flex;
+  align-items: center;
+  padding-left: 18px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.toplinks span {
+  margin: 0 20px;
+  font-size: 14px;
+}
+
+.layout {
+  display: flex;
+}
+
+.sidebar {
+  width: 260px;
+  background: var(--branco);
+  min-height: calc(100vh - 52px);
+  border-right: 1px solid var(--borda);
+}
+
+.menu-item {
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--borda);
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.menu-item:hover,
+.menu-item.active {
+  background: #f7e9ed;
+  color: var(--vermelho);
+  font-weight: bold;
+}
+
+.content {
+  flex: 1;
+  padding: 28px;
+}
+
+.banner {
+  background: var(--branco);
+  border-radius: 12px;
+  padding: 35px;
+  text-align: center;
+  margin-bottom: 25px;
+  border: 1px solid var(--borda);
+}
+
+.banner h1 {
+  color: var(--vermelho);
+  margin-bottom: 5px;
+}
+
+.section-title {
+  background: var(--vermelho);
+  color: white;
+  display: inline-block;
+  padding: 14px 28px;
+  margin-bottom: 18px;
+  font-weight: bold;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.card {
+  background: var(--branco);
+  padding: 22px;
+  border-radius: 10px;
+  border: 1px solid var(--borda);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.card h3 {
+  color: var(--vermelho);
+  margin-top: 0;
+}
+
+.card-button {
+  text-align: center;
+  cursor: pointer;
+  min-height: 95px;
+}
+
+.card-button:hover {
+  border-color: var(--vermelho);
+  background: #fff7f9;
+}
+
+button {
+  background: var(--vermelho);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--vermelho-escuro);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+th {
+  background: var(--vermelho);
+  color: white;
+  padding: 12px;
+  text-align: left;
+}
+
+td {
+  padding: 11px;
+  border-bottom: 1px solid var(--borda);
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0 14px;
+  border: 1px solid var(--borda);
+  border-radius: 4px;
+}
+
+.secao {
+  display: none;
+}
+
+.sucesso {
+  color: green;
+  font-weight: bold;
+}
+</style>
+
+<script>
+function mostrar(secao) {
+  document.querySelectorAll(".secao").forEach(s => s.style.display = "none");
+  document.getElementById(secao).style.display = "block";
+
+  document.querySelectorAll(".menu-item").forEach(i => i.classList.remove("active"));
+  const item = document.querySelector(`[data-target="${secao}"]`);
+  if (item) item.classList.add("active");
+}
+
+function confirmarPedido() {
+  document.getElementById("mensagemSuporte").innerText = "Pedido enviado com sucesso!";
+}
+
+window.onload = function() {
+  mostrar("home");
+}
+</script>
+</head>
+
+<body>
+
+<div class="topbar">
+  <div class="logo">◇ PORTAL</div>
+  <div class="toplinks">
+    <span>E-MAIL</span>
+    <span>MOODLE</span>
+    <span>SITE</span>
+    <span>SAIR</span>
+  </div>
+</div>
+
+<div class="layout">
+
+  <div class="sidebar">
+    <div class="menu-item" data-target="home" onclick="mostrar('home')">Home</div>
+    <div class="menu-item" data-target="perfil" onclick="mostrar('perfil')">Meu Perfil</div>
+    <div class="menu-item" data-target="disciplinas" onclick="mostrar('disciplinas')">Unidades Curriculares</div>
+    <div class="menu-item" data-target="plano" onclick="mostrar('plano')">Plano Curricular</div>
+    <div class="menu-item" data-target="notas" onclick="mostrar('notas')">Notas</div>
+    <div class="menu-item" data-target="horario" onclick="mostrar('horario')">Horário</div>
+    <div class="menu-item" data-target="pagamentos" onclick="mostrar('pagamentos')">Financeiro e Pagamento</div>
+    <div class="menu-item" data-target="documentos" onclick="mostrar('documentos')">Documentos</div>
+    <div class="menu-item" data-target="suporte" onclick="mostrar('suporte')">Suporte</div>
+  </div>
+
+  <div class="content">
+
+    <div id="home" class="secao">
+      <div class="banner">
+        <h1>BEM-VINDO(A) AO PORTAL ACADÉMICO</h1>
+        <p>Universidade de Cabo Verde</p>
+        <p><strong>JEAN CLAUDE FERNANDES</strong> | Nº 158656</p>
+        <p>Área: Tecnologia e Multimédia</p>
+      </div>
+
+      <div class="section-title">ESTUDANTE</div>
+
+      <div class="grid">
+        <div class="card card-button" onclick="mostrar('disciplinas')"><h3>Unidades Curriculares</h3></div>
+        <div class="card card-button" onclick="mostrar('plano')"><h3>Plano Curricular</h3></div>
+        <div class="card card-button" onclick="mostrar('notas')"><h3>Notas</h3></div>
+        <div class="card card-button" onclick="mostrar('horario')"><h3>Horário</h3></div>
+        <div class="card card-button" onclick="mostrar('pagamentos')"><h3>Financeiro e Pagamento</h3></div>
+        <div class="card card-button" onclick="mostrar('documentos')"><h3>Documentos</h3></div>
+      </div>
+    </div>
+
+    <div id="perfil" class="secao">
+      <div class="section-title">MEU PERFIL</div>
+      <div class="card">
+        <p><strong>Nome:</strong> JEAN CLAUDE FERNANDES</p>
+        <p><strong>Número:</strong> 158656</p>
+        <p><strong>Área:</strong> Tecnologia e Multimédia</p>
+        <p><strong>Estado:</strong> Estudante ativo</p>
+        <button>Alterar palavra-passe</button>
+      </div>
+    </div>
+
+    <div id="disciplinas" class="secao">
+      <div class="section-title">UNIDADES CURRICULARES</div>
+      <div class="card">
+        <table>
+          <tr><th>Disciplina</th><th>Docente</th><th>Ação</th></tr>
+          <tr><td>Introdução a Base de Dados</td><td>Docente 1</td><td><button>Ver detalhes</button></td></tr>
+          <tr><td>Gestão de Projeto Multimédia</td><td>Docente 2</td><td><button>Ver detalhes</button></td></tr>
+          <tr><td>Tecnologia de Desenvolvimento Web II</td><td>Docente 3</td><td><button>Ver detalhes</button></td></tr>
+          <tr><td>Laboratório de Projeto Multimédia I</td><td>Docente 4</td><td><button>Ver detalhes</button></td></tr>
+          <tr><td>Sistemas de Compressão Multimédia</td><td>Docente 5</td><td><button>Ver detalhes</button></td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div id="plano" class="secao">
+      <div class="section-title">PLANO CURRICULAR</div>
+      <div class="card">
+        <p><strong>Curso/Área:</strong> Tecnologia e Multimédia</p>
+        <p>Este ecrã apresenta as disciplinas organizadas por semestre e respetiva carga horária.</p>
+        <table>
+          <tr><th>Semestre</th><th>Disciplina</th><th>Créditos</th></tr>
+          <tr><td>1.º</td><td>Introdução a Base de Dados</td><td>6</td></tr>
+          <tr><td>1.º</td><td>Gestão de Projeto Multimédia</td><td>5</td></tr>
+          <tr><td>1.º</td><td>Tecnologia de Desenvolvimento Web II</td><td>6</td></tr>
+          <tr><td>1.º</td><td>Laboratório de Projeto Multimédia I</td><td>6</td></tr>
+          <tr><td>1.º</td><td>Sistemas de Compressão Multimédia</td><td>5</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div id="notas" class="secao">
+      <div class="section-title">NOTAS</div>
+      <div class="card">
+        <table>
+          <tr><th>Disciplina</th><th>Nota</th><th>Estado</th></tr>
+          <tr><td>Introdução a Base de Dados</td><td>15</td><td>Aprovado</td></tr>
+          <tr><td>Gestão de Projeto Multimédia</td><td>16</td><td>Aprovado</td></tr>
+          <tr><td>Tecnologia de Desenvolvimento Web II</td><td>17</td><td>Aprovado</td></tr>
+          <tr><td>Laboratório de Projeto Multimédia I</td><td>—</td><td>Em avaliação</td></tr>
+          <tr><td>Sistemas de Compressão Multimédia</td><td>14</td><td>Aprovado</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div id="horario" class="secao">
+      <div class="section-title">HORÁRIO</div>
+      <div class="card">
+        <table>
+          <tr><th>Dia</th><th>Disciplina</th><th>Hora</th><th>Sala</th></tr>
+          <tr><td>Segunda</td><td>Introdução a Base de Dados</td><td>08:00 - 10:00</td><td>Sala 12</td></tr>
+          <tr><td>Terça</td><td>Gestão de Projeto Multimédia</td><td>10:00 - 12:00</td><td>Sala 08</td></tr>
+          <tr><td>Quarta</td><td>Tecnologia de Desenvolvimento Web II</td><td>14:00 - 16:00</td><td>Lab 2</td></tr>
+          <tr><td>Quinta</td><td>Laboratório de Projeto Multimédia I</td><td>09:00 - 12:00</td><td>Lab 1</td></tr>
+          <tr><td>Sexta</td><td>Sistemas de Compressão Multimédia</td><td>11:00 - 13:00</td><td>Sala 05</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div id="pagamentos" class="secao">
+      <div class="section-title">FINANCEIRO E PAGAMENTO</div>
+      <div class="card">
+        <h3>Pagamentos Recentes</h3>
+        <table>
+          <tr><th>Data</th><th>Descrição</th><th>Valor</th><th>Estado</th></tr>
+          <tr><td>05/04/2026</td><td>Propina mensal</td><td>5.000 CVE</td><td>Pago</td></tr>
+          <tr><td>05/03/2026</td><td>Propina mensal</td><td>5.000 CVE</td><td>Pago</td></tr>
+          <tr><td>05/02/2026</td><td>Propina mensal</td><td>5.000 CVE</td><td>Pago</td></tr>
+          <tr><td>05/01/2026</td><td>Propina mensal</td><td>5.000 CVE</td><td>Pago</td></tr>
+          <tr><td>10/12/2025</td><td>Taxa administrativa</td><td>1.500 CVE</td><td>Pago</td></tr>
+          <tr><td>05/12/2025</td><td>Propina mensal</td><td>5.000 CVE</td><td>Pago</td></tr>
+          <tr><td>05/11/2025</td><td>Propina mensal</td><td>5.000 CVE</td><td>Pago</td></tr>
+          <tr><td>05/10/2025</td><td>Propina mensal</td><td>5.000 CVE</td><td>Pago</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div id="documentos" class="secao">
+      <div class="section-title">DOCUMENTOS</div>
+      <div class="grid">
+        <div class="card"><h3>Declaração de Matrícula</h3><button>Solicitar</button></div>
+        <div class="card"><h3>Certificado de Notas</h3><button>Solicitar</button></div>
+        <div class="card"><h3>Comprovativo de Inscrição</h3><button>Solicitar</button></div>
+      </div>
+    </div>
+
+    <div id="suporte" class="secao">
+      <div class="section-title">SUPORTE</div>
+      <div class="card">
+        <label>Assunto</label>
+        <input type="text" placeholder="Ex.: Problema no acesso às notas">
+
+        <label>Mensagem</label>
+        <textarea rows="5" placeholder="Descreva o problema"></textarea>
+
+        <button onclick="confirmarPedido()">Enviar pedido</button>
+        <p id="mensagemSuporte" class="sucesso"></p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
