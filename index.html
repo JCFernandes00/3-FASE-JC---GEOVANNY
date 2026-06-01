@@ -1,604 +1,1384 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portal Académico Uni-CV | V2</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UniCV Future 2.0</title>
 
   <style>
-    /* =========================================================
-       1. VARIÁVEIS GERAIS DO TEMA
-       ========================================================= */
     :root{
-      --vermelho:#b20d2b;
-      --vermelho-escuro:#8f0a22;
-      --preto:#1f2225;
-      --branco:#ffffff;
-      --fundo:#edf4f6;
-      --texto:#2f3439;
-      --muted:#6b7280;
-      --borda:#e3e6ea;
-      --card:#ffffff;
-      --verde:#167a3a;
-      --azul:#2563eb;
-      --roxo:#7c3aed;
-      --amarelo:#f4b400;
-      --sombra:0 10px 25px rgba(0,0,0,.08);
-    }
-
-    body.dark{
-      --preto:#111827;
-      --branco:#111827;
-      --fundo:#0f172a;
-      --texto:#e5e7eb;
-      --muted:#a5b4c8;
-      --borda:#334155;
-      --card:#1e293b;
-      --sombra:0 10px 25px rgba(0,0,0,.28);
+      --red:#ab162a;
+      --red-dark:#7d0d1d;
+      --gold:#d6a84f;
+      --cream:#f6efe4;
+      --soft:#f7f4ef;
+      --ink:#111;
+      --muted:#6f6a62;
+      --line:#ded5c8;
+      --white:#fff;
+      --green:#1f7a5c;
+      --blue:#1f4e79;
+      --dark:#111;
+      --shadow:0 22px 60px rgba(0,0,0,.14);
     }
 
     *{box-sizing:border-box}
-    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--fundo);color:var(--texto)}
-    button,input,select,textarea{font-family:inherit}
 
-    button{background:var(--vermelho);color:#fff;border:0;padding:10px 14px;border-radius:9px;cursor:pointer;font-weight:700}
-    button:hover{background:var(--vermelho-escuro)}
-    button.secondary{background:#eef2f7;color:var(--texto);border:1px solid var(--borda)}
-    button.small{padding:7px 10px;font-size:12px}
-    body.dark button.secondary{background:#334155;color:#fff}
+    body{
+      margin:0;
+      background:var(--cream);
+      color:var(--ink);
+      font-family:Georgia,"Times New Roman",serif;
+    }
 
-    input,select,textarea{width:100%;padding:11px;margin:7px 0 14px;border:1px solid var(--borda);border-radius:9px;background:var(--card);color:var(--texto)}
-    label{font-weight:bold;font-size:14px}
+    button,input,textarea,select{
+      font-family:Arial,sans-serif;
+    }
+
+    button{
+      border:0;
+      background:var(--red);
+      color:white;
+      padding:12px 18px;
+      cursor:pointer;
+      font-weight:700;
+    }
+
+    button:hover{background:var(--red-dark)}
+
+    button.light{
+      background:white;
+      color:var(--red);
+      border:1px solid var(--line);
+    }
+
+    button.dark{
+      background:var(--ink);
+      color:white;
+    }
+
+    button.gold{
+      background:var(--gold);
+      color:#1d1304;
+    }
+
+    input,textarea,select{
+      width:100%;
+      padding:12px;
+      border:1px solid var(--line);
+      background:white;
+      margin:8px 0 14px;
+      font-size:15px;
+    }
+
     .hidden{display:none!important}
 
-    /* =========================================================
-       2. LOGIN
-       ========================================================= */
-    .login-screen{min-height:100vh;display:grid;place-items:center;background:linear-gradient(135deg,var(--vermelho),#2a2e35);padding:20px}
-    .login-card{width:min(460px,94vw);background:#fff;border-radius:22px;padding:30px;box-shadow:0 20px 50px rgba(0,0,0,.28);color:#333}
-    .login-card h1{color:var(--vermelho);text-align:center;margin:0 0 8px}
-    .login-card .demo{background:#f8e8ec;border-radius:12px;padding:12px;color:#5c0616;font-size:14px}
-    .danger{color:var(--vermelho);font-weight:bold}
-    .success{color:var(--verde);font-weight:bold}
+    .login{
+      min-height:100vh;
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      background:var(--cream);
+    }
 
-    /* =========================================================
-       3. LAYOUT BASE
-       ========================================================= */
+    .login-hero{
+      padding:60px;
+      background:
+        linear-gradient(rgba(0,0,0,.3),rgba(0,0,0,.38)),
+        url("matricula_unicv-2.jpeg");
+      background-size:cover;
+      background-position:center;
+      color:white;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      font-family:Arial,sans-serif;
+      font-weight:900;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+
+    .brand-mark{
+      width:44px;
+      height:44px;
+      display:grid;
+      place-items:center;
+      background:var(--red);
+      color:white;
+    }
+
+    .login-hero h1{
+      font-size:clamp(48px,7vw,88px);
+      line-height:.95;
+      max-width:850px;
+      margin:0;
+    }
+
+    .login-hero p{
+      max-width:660px;
+      font-size:20px;
+      line-height:1.55;
+    }
+
+    .login-card{
+      padding:54px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      background:var(--soft);
+    }
+
+    .login-card h2{
+      font-size:42px;
+      margin:0 0 10px;
+    }
+
+    .login-card p{
+      color:var(--muted);
+      font-family:Arial,sans-serif;
+      line-height:1.5;
+    }
+
+    .role-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      margin:24px 0;
+    }
+
+    .role{
+      border:1px solid var(--line);
+      background:white;
+      color:var(--ink);
+      padding:20px;
+      text-align:left;
+    }
+
+    .role.active{
+      background:var(--red);
+      color:white;
+    }
+
+    .role strong{
+      display:block;
+      font-size:18px;
+      margin-bottom:6px;
+    }
+
+    .role span{
+      font-size:13px;
+      opacity:.8;
+    }
+
     .app{display:none}
-    .topbar{height:60px;background:var(--preto);color:#fff;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:20}
-    .logo{height:60px;width:260px;background:var(--vermelho);display:flex;align-items:center;padding-left:18px;font-size:23px;font-weight:bold;letter-spacing:.5px}
-    .toplinks{display:flex;align-items:center;gap:8px;padding-right:14px}
-    .toplinks button{background:transparent;color:#fff;border:0;padding:9px 12px;border-radius:6px;font-size:14px}
-    .toplinks button:hover{background:rgba(255,255,255,.14)}
-    .user-chip{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.11);padding:6px 10px;border-radius:999px}
-    .user-chip img{width:30px;height:30px;border-radius:50%;object-fit:cover;border:2px solid #fff}
-    .role-pill{padding:5px 10px;border-radius:999px;background:#fff;color:var(--vermelho);font-size:12px;font-weight:bold;text-transform:uppercase}
 
-    .layout{display:flex}
-    .sidebar{width:270px;background:var(--card);min-height:calc(100vh - 60px);border-right:1px solid var(--borda);position:sticky;top:60px;align-self:flex-start}
-    .sidebar-head{padding:18px;border-bottom:1px solid var(--borda);background:linear-gradient(135deg,#fff,#f8e8ec)}
-    body.dark .sidebar-head{background:#1e293b}
-    .sidebar-head strong{display:block;color:var(--vermelho);margin-bottom:4px}
-    .menu-item{padding:15px 20px;border-bottom:1px solid var(--borda);cursor:pointer;font-size:15px;display:flex;justify-content:space-between;align-items:center}
-    .menu-item:hover,.menu-item.active{background:#f8e8ec;color:var(--vermelho);font-weight:bold}
-    body.dark .menu-item:hover,body.dark .menu-item.active{background:#3b1821}
-    .content{flex:1;padding:28px;max-width:1450px}
-    .secao{display:none}
-    .secao.active{display:block}
-    .section-title{background:var(--vermelho);color:#fff;display:inline-block;padding:13px 24px;margin-bottom:18px;border-radius:0 12px 12px 0;font-weight:bold}
+    .topbar{
+      min-height:76px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 36px;
+      background:var(--cream);
+      border-bottom:1px solid var(--line);
+      position:sticky;
+      top:0;
+      z-index:20;
+      gap:20px;
+    }
 
-    /* =========================================================
-       4. COMPONENTES VISUAIS
-       ========================================================= */
-    .banner{position:relative;background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.42)),url('matricula_unicv-2.jpeg');background-size:cover;background-position:center;border-radius:20px;padding:62px 35px;text-align:center;margin-bottom:24px;color:#fff;box-shadow:var(--sombra);overflow:hidden}
-    .banner h1{font-size:36px;margin:0 0 10px}.banner p{font-size:17px;margin:6px 0}
-    .banner.aluno{background:linear-gradient(rgba(178,13,43,.64),rgba(0,0,0,.42)),url('matricula_unicv-2.jpeg');background-size:cover;background-position:center}
-    .banner.docente{background:linear-gradient(rgba(31,34,37,.74),rgba(124,58,237,.35)),url('matricula_unicv-2.jpeg');background-size:cover;background-position:center}
-    .banner-actions{margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+    .nav{
+      display:flex;
+      gap:20px;
+      align-items:center;
+      font-family:Arial,sans-serif;
+      font-weight:700;
+      font-size:14px;
+      flex-wrap:wrap;
+    }
 
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-    .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
-    .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-    .card{background:var(--card);border:1px solid var(--borda);border-radius:16px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
-    .card h3{color:var(--vermelho);margin-top:0}
-    .card-button{cursor:pointer;min-height:110px;transition:.2s}.card-button:hover{transform:translateY(-3px);border-color:var(--vermelho);box-shadow:var(--sombra)}
-    .muted{color:var(--muted);font-size:14px}
-    .badge{display:inline-block;padding:5px 9px;border-radius:999px;font-size:12px;font-weight:bold;background:#f8e8ec;color:var(--vermelho)}
-    .badge.green{background:#e8f7ed;color:var(--verde)}.badge.blue{background:#e7efff;color:var(--azul)}.badge.purple{background:#f0e7ff;color:var(--roxo)}.badge.yellow{background:#fff7df;color:#946200}
+    .nav span{
+      cursor:pointer;
+    }
 
-    table{width:100%;border-collapse:collapse;background:var(--card);border-radius:12px;overflow:hidden}
-    th{background:var(--vermelho);color:white;padding:12px;text-align:left}td{padding:12px;border-bottom:1px solid var(--borda)}tr:hover td{background:rgba(178,13,43,.04)}
+    .nav span:hover{color:var(--red)}
 
-    .profile-header{display:flex;gap:24px;align-items:center;flex-wrap:wrap}.photo-box{text-align:center}.photo-box img{width:135px;height:135px;border-radius:50%;object-fit:cover;border:5px solid var(--vermelho);background:#ddd}
-    .id-card{background:linear-gradient(135deg,var(--vermelho),var(--vermelho-escuro));color:white;border-radius:20px;padding:20px;min-height:210px;position:relative;overflow:hidden}.id-card.docente{background:linear-gradient(135deg,#1f2225,var(--roxo))}.id-card:after{content:'';position:absolute;right:-40px;bottom:-40px;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.12)}.qr{width:92px;height:92px;background:#fff;color:#111;display:grid;place-items:center;border-radius:10px;font-weight:bold;margin-top:14px}
-    .stat{text-align:center}.stat h2{margin:0;color:var(--vermelho);font-size:30px}.stat.docente h2{color:var(--roxo)}
-    .notification{padding:13px 15px;border-left:5px solid var(--vermelho);background:var(--card);border-radius:10px;margin-bottom:10px;border:1px solid var(--borda)}
-    .notification.docente{border-left-color:var(--roxo)}
-    .progress{height:9px;background:#e8edf3;border-radius:99px;overflow:hidden}.progress span{display:block;height:100%;background:var(--vermelho);border-radius:99px}
+    .profile-chip{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-family:Arial,sans-serif;
+      font-weight:700;
+    }
 
-    /* =========================================================
-       5. MODAIS E TOAST
-       ========================================================= */
-    .modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:99;padding:20px}
-    .modal-content{background:var(--card);color:var(--texto);border-radius:18px;padding:22px;width:min(600px,100%);box-shadow:var(--sombra);max-height:90vh;overflow:auto}
-    .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:12px}
-    .toast{position:fixed;right:20px;bottom:20px;background:var(--preto);color:#fff;padding:13px 16px;border-radius:10px;box-shadow:var(--sombra);display:none;z-index:200}
+    .avatar{
+      width:38px;
+      height:38px;
+      display:grid;
+      place-items:center;
+      background:var(--red);
+      color:white;
+      border-radius:50%;
+      font-size:13px;
+    }
 
-    /* =========================================================
-       6. RESPONSIVIDADE
-       ========================================================= */
-    @media(max-width:900px){
-      .topbar{height:auto;align-items:flex-start;flex-direction:column}.logo{width:100%;height:56px}.toplinks{width:100%;flex-wrap:wrap;padding:8px}.user-chip{margin-left:auto}
-      .layout{flex-direction:column}.sidebar{width:100%;position:relative;top:0;display:grid;grid-template-columns:repeat(2,1fr);min-height:auto}.sidebar-head{grid-column:1/-1}.content{padding:16px}.grid,.grid-2,.grid-4{grid-template-columns:1fr}.banner{padding:48px 18px}.banner h1{font-size:25px}table{display:block;overflow-x:auto;white-space:nowrap}
+    .section{
+      display:none;
+      animation:fade .25s ease;
+    }
+
+    .section.active{display:block}
+
+    @keyframes fade{
+      from{opacity:0;transform:translateY(10px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+
+    .kicker{
+      font-family:Arial,sans-serif;
+      color:var(--red);
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.16em;
+      font-size:12px;
+    }
+
+    .editorial-hero{
+      min-height:calc(100vh - 76px);
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      border-bottom:1px solid var(--line);
+    }
+
+    .editorial-text{
+      padding:70px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+
+    .editorial-text h1{
+      font-size:clamp(54px,7vw,98px);
+      line-height:.92;
+      margin:18px 0 22px;
+    }
+
+    .editorial-text p{
+      font-size:21px;
+      color:#3b352f;
+      line-height:1.55;
+      max-width:760px;
+    }
+
+    .hero-actions{
+      margin-top:30px;
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .editorial-image{
+      background:
+        linear-gradient(rgba(171,22,42,.1),rgba(0,0,0,.18)),
+        url("matricula_unicv-2.jpeg");
+      background-size:cover;
+      background-position:center;
+      min-height:600px;
+    }
+
+    .feature-row{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      border-bottom:1px solid var(--line);
+    }
+
+    .feature{
+      padding:38px;
+      min-height:240px;
+      border-right:1px solid var(--line);
+      background:var(--soft);
+    }
+
+    .feature:last-child{border-right:0}
+
+    .feature h3{
+      font-size:30px;
+      margin:10px 0;
+    }
+
+    .feature p{
+      color:var(--muted);
+      font-family:Arial,sans-serif;
+      line-height:1.5;
+    }
+
+    .workspace{
+      min-height:calc(100vh - 76px);
+      display:grid;
+      grid-template-columns:285px 1fr;
+      background:#111;
+      color:white;
+      font-family:Arial,sans-serif;
+    }
+
+    .student-area{
+      background:#111;
+    }
+
+    .teacher-area{
+      background:#f5f1e9;
+      color:var(--ink);
+    }
+
+    .side{
+      padding:28px;
+      border-right:1px solid rgba(255,255,255,.12);
+      background:#171717;
+    }
+
+    .teacher-area .side{
+      background:var(--red);
+      color:white;
+      border-right:0;
+    }
+
+    .side h2{
+      font-family:Georgia,serif;
+      font-size:34px;
+      line-height:1;
+      margin:20px 0;
+    }
+
+    .side p{
+      color:#d8d8d8;
+      line-height:1.5;
+    }
+
+    .teacher-area .side p{color:#ffe3e8}
+
+    .side-menu{
+      display:grid;
+      gap:10px;
+      margin-top:24px;
+    }
+
+    .side-menu button{
+      text-align:left;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.14);
+    }
+
+    .side-menu button.active{
+      background:var(--gold);
+      color:#1d1304;
+    }
+
+    .work-content{
+      padding:36px;
+    }
+
+    .work-section{display:none}
+    .work-section.active{display:block}
+
+    .page-title h1{
+      font-family:Georgia,serif;
+      font-size:54px;
+      line-height:1;
+      margin:10px 0 24px;
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:18px;
+      margin-bottom:22px;
+    }
+
+    .card{
+      background:#1b1b1b;
+      border:1px solid rgba(255,255,255,.12);
+      padding:24px;
+      color:white;
+    }
+
+    .teacher-area .card{
+      background:white;
+      color:var(--ink);
+      border:1px solid var(--line);
+      box-shadow:0 12px 40px rgba(0,0,0,.08);
+    }
+
+    .card h3{
+      margin:0 0 14px;
+      font-size:25px;
+      font-family:Georgia,serif;
+    }
+
+    .card p{
+      color:#d8d8d8;
+      line-height:1.5;
+    }
+
+    .teacher-area .card p{color:var(--muted)}
+
+    .stat strong{
+      display:block;
+      font-size:42px;
+      color:var(--gold);
+      margin:10px 0 3px;
+    }
+
+    .teacher-area .stat strong{color:var(--red)}
+
+    .grid-2{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:20px;
+    }
+
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:20px;
+    }
+
+    .timeline{
+      display:grid;
+      gap:12px;
+    }
+
+    .step{
+      display:grid;
+      grid-template-columns:85px 1fr;
+      gap:16px;
+      padding:16px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.1);
+    }
+
+    .teacher-area .step{
+      background:var(--soft);
+      border:1px solid var(--line);
+    }
+
+    .step-time{
+      color:var(--gold);
+      font-weight:900;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      font-family:Arial,sans-serif;
+      background:white;
+      color:var(--ink);
+    }
+
+    th,td{
+      padding:14px;
+      border-bottom:1px solid var(--line);
+      text-align:left;
+    }
+
+    th{
+      background:var(--soft);
+      color:var(--red);
+    }
+
+    .badge{
+      display:inline-block;
+      padding:6px 10px;
+      background:var(--soft);
+      color:var(--red);
+      font-family:Arial,sans-serif;
+      font-weight:900;
+      font-size:12px;
+    }
+
+    .progress{
+      background:#333;
+      height:12px;
+      overflow:hidden;
+      margin-top:8px;
+    }
+
+    .progress span{
+      display:block;
+      height:100%;
+      background:var(--gold);
+    }
+
+    .modal{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.55);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      z-index:100;
+      padding:20px;
+    }
+
+    .modal-content{
+      background:white;
+      padding:34px;
+      max-width:640px;
+      width:100%;
+      box-shadow:var(--shadow);
+      color:var(--ink);
+    }
+
+    .modal-content h2{
+      font-size:38px;
+      margin:0 0 12px;
+    }
+
+    @media(max-width:950px){
+      .login,
+      .editorial-hero,
+      .workspace,
+      .grid-2,
+      .grid-3{
+        grid-template-columns:1fr;
+      }
+
+      .feature-row,
+      .cards{
+        grid-template-columns:1fr;
+      }
+
+      .topbar{
+        align-items:flex-start;
+        flex-direction:column;
+        padding:18px;
+      }
+
+      .editorial-text,
+      .work-content,
+      .side,
+      .login-hero,
+      .login-card{
+        padding:26px;
+      }
+
+      .editorial-text h1,
+      .login-hero h1,
+      .page-title h1{
+        font-size:42px;
+      }
     }
   </style>
 </head>
+
 <body>
 
-  <!-- =========================================================
-       LOGIN: aqui o utilizador escolhe ALUNO ou DOCENTE
-       ========================================================= -->
-  <div id="loginScreen" class="login-screen">
-    <div class="login-card">
-      <h1>◇ PORTAL Uni-CV</h1>
-      <p class="muted" style="text-align:center">Acesso académico simulado</p>
+  <section id="login" class="login">
+    <div class="login-hero">
+      <div class="brand">
+        <div class="brand-mark">U</div>
+        <div>UniCV Future</div>
+      </div>
 
-      <label>Tipo de utilizador</label>
-      <select id="tipoLogin">
-        <option value="aluno">Aluno</option>
-        <option value="docente">Docente</option>
-      </select>
-
-      <label>Número / E-mail</label>
-      <input id="loginUser" value="158656" placeholder="Ex.: 158656 ou docente@unicv.edu.cv">
-
-      <label>Palavra-passe</label>
-      <input id="loginPass" type="password" value="1234" placeholder="Digite 1234">
-
-      <button style="width:100%" onclick="entrar()">Entrar</button>
-
-      <p class="demo">Demo: escolha Aluno ou Docente. A palavra-passe é <strong>1234</strong>.</p>
-      <p id="loginErro" class="danger"></p>
-    </div>
-  </div>
-
-  <!-- =========================================================
-       APLICAÇÃO PRINCIPAL
-       ========================================================= -->
-  <div id="app" class="app">
-    <div class="topbar">
-      <div class="logo">◇ PORTAL</div>
-      <div class="toplinks">
-        <button onclick="abrirEmail()">E-MAIL</button>
-        <button onclick="abrirMoodle()">MOODLE</button>
-        <button onclick="abrirSite()">SITE</button>
-        <button onclick="toggleDark()">MODO</button>
-        <button onclick="sair()">SAIR</button>
-        <span id="rolePill" class="role-pill">Aluno</span>
-        <div class="user-chip"><img id="chipFoto" src="https://via.placeholder.com/120/b20d2b/ffffff?text=JF"><span id="chipNome">Jean Claude</span></div>
+      <div>
+        <h1>A university experience beyond the portal.</h1>
+        <p>
+          Uma proposta digital inspirada em universidades de referência:
+          editorial, inteligente, personalizada e centrada na jornada académica.
+        </p>
       </div>
     </div>
 
-    <div class="layout">
-      <aside class="sidebar">
-        <div class="sidebar-head">
-          <strong id="sidebarTitulo">Área do Aluno</strong>
-          <span id="sidebarSub" class="muted">Portal académico pessoal</span>
+    <div class="login-card">
+      <h2>Entrar</h2>
+      <p>Escolhe a experiência. O aluno e o docente entram em mundos separados.</p>
+
+      <div class="role-grid">
+        <button class="role active" id="roleAluno" onclick="selecionarPerfil('aluno')">
+          <strong>Aluno</strong>
+          <span>Student Journey</span>
+        </button>
+
+        <button class="role" id="roleDocente" onclick="selecionarPerfil('docente')">
+          <strong>Docente</strong>
+          <span>Teaching Studio</span>
+        </button>
+      </div>
+
+      <label>Número / E-mail</label>
+      <input id="loginUser" value="158656">
+
+      <label>Palavra-passe</label>
+      <input id="loginPass" type="password" value="1234">
+
+      <button onclick="entrar()" style="width:100%">Aceder</button>
+      <p>Demo: usa a senha <strong>1234</strong>.</p>
+    </div>
+  </section>
+
+  <section id="app" class="app">
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-mark">U</div>
+        <div>UniCV Future</div>
+      </div>
+
+      <div id="nav" class="nav"></div>
+
+      <div class="profile-chip">
+        <div id="avatar" class="avatar">JC</div>
+        <span id="chipNome">Jean Claude</span>
+      </div>
+    </div>
+
+    <section id="home" class="section active">
+      <div class="editorial-hero">
+        <div class="editorial-text">
+          <span class="kicker">UniCV Future 2.0</span>
+          <h1>Educação superior para uma nova geração atlântica.</h1>
+          <p>
+            Uma plataforma universitária integrada, organizada por jornada:
+            curso, serviços académicos, calendário, apoio, carreira e inteligência académica.
+          </p>
+
+          <div class="hero-actions">
+            <button onclick="entrarDireto('aluno')">Explorar Student Journey</button>
+            <button class="light" onclick="entrarDireto('docente')">Entrar no Teaching Studio</button>
+            <button class="dark" onclick="abrirSite()">Site oficial Uni-CV</button>
+          </div>
         </div>
-        <div id="menuPrincipal"></div>
-      </aside>
 
-      <main class="content">
-        <!-- HOME MUDA CONFORME ALUNO / DOCENTE -->
-        <section id="home" class="secao"></section>
+        <div class="editorial-image"></div>
+      </div>
 
-        <!-- PERFIL DO ALUNO -->
-        <section id="perfilAluno" class="secao">
-          <div class="section-title">PERFIL DO ALUNO</div>
-          <div class="grid-2">
-            <div class="card">
-              <div class="profile-header">
-                <div class="photo-box">
-                  <img id="fotoAluno" src="https://via.placeholder.com/160/b20d2b/ffffff?text=JF">
-                  <input type="file" accept="image/*" onchange="trocarFoto(event,'fotoAluno')">
-                </div>
-                <div>
-                  <h2>JEAN CLAUDE DUARTE FERNANDES</h2>
-                  <p><strong>Nº:</strong> 158656</p>
-                  <p><strong>Curso:</strong> Tecnologia e multimedia</p>
-                  <p><span class="badge green">Matrícula ativa</span></p>
-                </div>
-              </div>
-              <hr>
-              <p><strong>Ano:</strong> 2.º Ano</p>
-              <p><strong>Semestre:</strong> 1.º Semestre</p>
-              <p><strong>Créditos concluídos:</strong> 72 ECTS</p>
-              <p><strong>Média geral:</strong> 15.5 valores</p>
-              <button onclick="abrirModal('modalSenha')">Alterar palavra-passe</button>
-            </div>
+      <div class="feature-row">
+        <div class="feature">
+          <span class="kicker">Curso</span>
+          <h3>Primeiro o curso, depois as disciplinas.</h3>
+          <p>O estudante entra em Tecnologia e Multimédia e depois consulta plano curricular, unidades, notas e docentes.</p>
+        </div>
 
-            <div class="id-card">
-              <h3 style="color:white;margin-top:0">CARTÃO ACADÉMICO DIGITAL</h3>
-              <p><strong>Jean Claude Duarte Fernandes</strong></p>
-              <p>Nº 158656 | Tecnologia e multimedia</p>
-              <p>Validade: 2026/2027</p>
-              <div class="qr">QR ID</div>
-            </div>
-          </div>
-        </section>
+        <div class="feature">
+          <span class="kicker">Serviços</span>
+          <h3>Balcão académico online.</h3>
+          <p>Documentos, propinas, requerimentos, inscrições, bolsa, recibos e suporte técnico num só menu.</p>
+        </div>
 
-        <!-- PERFIL DO DOCENTE -->
-        <section id="perfilDocente" class="secao">
-          <div class="section-title">PERFIL DO DOCENTE</div>
-          <div class="grid-2">
-            <div class="card">
-              <div class="profile-header">
-                <div class="photo-box">
-                  <img id="fotoDocente" src="https://via.placeholder.com/160/1f2225/ffffff?text=CM">
-                  <input type="file" accept="image/*" onchange="trocarFoto(event,'fotoDocente')">
-                </div>
-                <div>
-                  <h2>CLEONICE MORREIRA</h2>
-                  <p><strong>Departamento:</strong> Tecnologias e Multimédia</p>
-                  <p><strong>Gabinete:</strong> Bloco B, Sala 12</p>
-                  <p><strong>Atendimento:</strong> Quarta, 15:00 - 17:00</p>
-                  <p><span class="badge purple">Perfil docente ativo</span></p>
-                </div>
-              </div>
-            </div>
-            <div class="id-card docente">
-              <h3 style="color:white;margin-top:0">CARTÃO DOCENTE DIGITAL</h3>
-              <p><strong>Cleonice Morreira</strong></p>
-              <p>Departamento de Tecnologias e Multimédia</p>
-              <p>Acesso: Pautas, Presenças e Materiais</p>
-              <div class="qr">QR DOC</div>
-            </div>
-          </div>
-        </section>
+        <div class="feature">
+          <span class="kicker">Apoio</span>
+          <h3>Chatbot e suporte técnico.</h3>
+          <p>O aluno pode perguntar como pedir documentos, consultar prazos, abrir tickets e receber orientação.</p>
+        </div>
+      </div>
+    </section>
 
-        <!-- ÁREA DO ALUNO -->
-        <section id="disciplinas" class="secao">
-          <div class="section-title">UNIDADES CURRICULARES</div>
-          <div class="card">
-            <input id="pesquisaDisciplina" oninput="renderDisciplinas()" placeholder="Pesquisar disciplina...">
-            <table id="tabelaDisciplinas"></table>
-          </div>
-          <div id="detalheDisciplina" class="card hidden" style="margin-top:18px;border-left:5px solid var(--vermelho)"></div>
-        </section>
+    <section id="studentArea" class="section student-area">
+      <div class="workspace">
+        <aside class="side">
+          <span class="kicker">Student Journey</span>
+          <h2>Jean Claude Duarte Fernandes</h2>
+          <p>Nº 158656 · Tecnologia e multimedia</p>
 
-        <section id="notas" class="secao">
-          <div class="section-title">NOTAS</div>
-          <div class="card">
-            <table id="tabelaNotas"></table><br>
-            <button onclick="toast('Histórico académico gerado em modo demo.')">Gerar histórico académico</button>
-          </div>
-        </section>
+          <div id="studentMenu" class="side-menu"></div>
+        </aside>
 
-        <section id="horarioAluno" class="secao">
-          <div class="section-title">HORÁRIO DO ALUNO</div>
-          <div class="card"><table id="tabelaHorarioAluno"></table></div>
-        </section>
+        <main class="work-content">
+          <div id="studentDashboard" class="work-section active"></div>
+          <div id="studentCurso" class="work-section"></div>
+          <div id="studentServicos" class="work-section"></div>
+          <div id="studentCalendario" class="work-section"></div>
+          <div id="studentApoio" class="work-section"></div>
+          <div id="studentUniAI" class="work-section"></div>
+          <div id="studentCarreira" class="work-section"></div>
+          <div id="studentVida" class="work-section"></div>
+          <div id="studentPerfil" class="work-section"></div>
+        </main>
+      </div>
+    </section>
 
-        <section id="pagamentos" class="secao">
-          <div class="section-title">FINANCEIRO E PAGAMENTO</div>
-          <div class="grid-2">
-            <div class="card"><h3>Situação financeira</h3><p><span class="badge green">Sem dívida pendente</span></p><p>Total pago: <strong>36.500 CVE</strong></p><button onclick="abrirModal('modalPagamento')">Efetuar pagamento</button></div>
-            <div class="card"><h3>Recibo rápido</h3><p>Gerar recibo simulado do último pagamento.</p><button onclick="toast('Recibo simulado gerado: REC-UNICV-2026-001.')">Gerar recibo</button></div>
-          </div><br>
-          <div class="card"><h3>Pagamentos Recentes</h3><table id="tabelaPagamentos"></table></div>
-        </section>
+    <section id="teacherArea" class="section teacher-area">
+      <div class="workspace teacher-area">
+        <aside class="side">
+          <span class="kicker" style="color:#ffd5dc">Teaching Studio</span>
+          <h2>Cleonice Morreira</h2>
+          <p>Laboratório de Projeto Multimédia I · Departamento de Tecnologias e Multimédia</p>
 
-        <section id="documentos" class="secao">
-          <div class="section-title">DOCUMENTOS</div>
-          <div class="grid">
-            <div class="card"><h3>Declaração de Matrícula</h3><p class="muted">Comprova inscrição ativa.</p><button onclick="solicitarDoc('Declaração de Matrícula')">Solicitar</button></div>
-            <div class="card"><h3>Certificado de Notas</h3><p class="muted">Documento com notas lançadas.</p><button onclick="solicitarDoc('Certificado de Notas')">Solicitar</button></div>
-            <div class="card"><h3>Comprovativo de Inscrição</h3><p class="muted">Para efeitos administrativos.</p><button onclick="solicitarDoc('Comprovativo de Inscrição')">Solicitar</button></div>
-          </div><br>
-          <div class="card"><h3>Pedidos efetuados</h3><div id="pedidosDocs" class="muted">Ainda não existem pedidos.</div></div>
-        </section>
+          <div id="teacherMenu" class="side-menu"></div>
+        </aside>
 
-        <!-- ÁREA DO DOCENTE -->
-        <section id="turmasDocente" class="secao">
-          <div class="section-title">TURMAS DO DOCENTE</div>
-          <div class="grid">
-            <div class="card card-button" onclick="mostrar('pautas')"><h3>TM-2</h3><p>5 alunos inscritos</p><span class="badge purple">LABORATÓRIO DE PROJETO MULTIMÉDIA I</span></div>
-            <div class="card card-button" onclick="mostrar('presencas')"><h3>Presenças</h3><p>Turma TM-2</p><span class="badge purple">5 alunos</span></div>
-            <div class="card card-button" onclick="mostrar('materiaisDocente')"><h3>Materiais</h3><p>Enviar conteúdos para a turma</p><span class="badge purple">TM-2</span></div>
-          </div>
-        </section>
+        <main class="work-content">
+          <div id="teacherDashboard" class="work-section active"></div>
+          <div id="teacherDisciplinas" class="work-section"></div>
+          <div id="teacherTurmas" class="work-section"></div>
+          <div id="teacherPresencas" class="work-section"></div>
+          <div id="teacherAvaliacoes" class="work-section"></div>
+          <div id="teacherConteudos" class="work-section"></div>
+          <div id="teacherMensagens" class="work-section"></div>
+          <div id="teacherAgenda" class="work-section"></div>
+          <div id="teacherAnalytics" class="work-section"></div>
+          <div id="teacherPerfil" class="work-section"></div>
+        </main>
+      </div>
+    </section>
+  </section>
 
-        <section id="pautas" class="secao">
-          <div class="section-title">LANÇAMENTO DE PAUTAS</div>
-          <div class="card">
-            <table id="tabelaPautas"></table><br>
-            <button onclick="toast('Pauta publicada em modo demo.')">Publicar pauta</button>
-          </div>
-        </section>
-
-        <section id="presencas" class="secao">
-          <div class="section-title">GESTÃO DE PRESENÇAS</div>
-          <div class="card">
-            <table id="tabelaPresencas"></table><br>
-            <button onclick="toast('Presenças guardadas com sucesso.')">Guardar presenças</button>
-          </div>
-        </section>
-
-        <section id="materiaisDocente" class="secao">
-          <div class="section-title">MATERIAIS DO DOCENTE</div>
-          <div class="grid">
-            <div class="card"><h3>Enviar slides</h3><input type="file"><button onclick="toast('Slides enviados em modo demo.')">Enviar</button></div>
-            <div class="card"><h3>Criar tarefa</h3><input placeholder="Título da tarefa"><textarea placeholder="Descrição"></textarea><button onclick="toast('Tarefa criada em modo demo.')">Criar tarefa</button></div>
-            <div class="card"><h3>Aviso à turma</h3><textarea placeholder="Mensagem para os alunos"></textarea><button onclick="toast('Aviso enviado à turma.')">Enviar aviso</button></div>
-          </div>
-        </section>
-
-        <section id="horarioDocente" class="secao">
-          <div class="section-title">HORÁRIO DO DOCENTE</div>
-          <div class="card"><table id="tabelaHorarioDocente"></table></div>
-        </section>
-
-        <!-- ÁREAS COMUNS -->
-        <section id="notificacoes" class="secao">
-          <div class="section-title">NOTIFICAÇÕES</div>
-          <div id="listaNotificacoes"></div>
-          <button onclick="toast('Notificações marcadas como lidas.')">Marcar todos como lidos</button>
-        </section>
-
-        <section id="suporte" class="secao">
-          <div class="section-title">SUPORTE</div>
-          <div class="grid-2">
-            <div class="card">
-              <label>Assunto</label><input id="supAssunto" placeholder="Ex.: Problema no acesso às notas">
-              <label>Mensagem</label><textarea id="supMsg" rows="5" placeholder="Descreva o problema"></textarea>
-              <button onclick="enviarSuporte()">Enviar pedido</button>
-              <p id="suporteRetorno" class="success"></p>
-            </div>
-            <div class="card"><h3>Ajuda rápida</h3><div class="notification"><strong>Moodle</strong><br>Clique em MOODLE no topo.</div><div class="notification"><strong>Site</strong><br>Use o menu SITE para abrir notícias oficiais.</div></div>
-          </div>
-        </section>
-      </main>
+  <div id="modalAI" class="modal">
+    <div class="modal-content">
+      <h2>UniAI</h2>
+      <p>Assistente académico experimental.</p>
+      <label>Pergunta</label>
+      <input id="perguntaAI" placeholder="Ex.: Como peço uma declaração de matrícula?">
+      <button onclick="responderAI()">Perguntar</button>
+      <p id="respostaAI"></p>
+      <button class="light" onclick="fecharAI()">Fechar</button>
     </div>
   </div>
 
-  <!-- =========================================================
-       MODAIS
-       ========================================================= -->
-  <div id="modalSite" class="modal"><div class="modal-content"><h2>Site Uni-CV</h2><p>Escolhe uma opção de interação:</p><div class="grid-2"><button onclick="window.open('https://www.unicv.edu.cv','_blank')">Abrir site oficial</button><button onclick="window.open('https://www.unicv.edu.cv/pt/universidade/noticia-unicv','_blank')">Notícias da universidade</button><button onclick="toast('Contactos e serviços em modo demo.')">Contactos e serviços</button><button onclick="toast('Calendário académico em modo demo.')">Calendário académico</button></div><div class="modal-actions"><button class="secondary" onclick="fecharModais()">Fechar</button></div></div></div>
-  <div id="modalEmail" class="modal"><div class="modal-content"><h2>E-mail académico</h2><label>Para</label><input id="emailPara" placeholder="exemplo@unicv.edu.cv"><label>Assunto</label><input id="emailAssunto"><label>Mensagem</label><textarea id="emailMsg" rows="4"></textarea><div class="modal-actions"><button class="secondary" onclick="fecharModais()">Cancelar</button><button onclick="fecharModais();toast('E-mail enviado em modo demo.')">Enviar</button></div></div></div>
-  <div id="modalSenha" class="modal"><div class="modal-content"><h2>Alterar palavra-passe</h2><label>Nova palavra-passe</label><input id="novaSenha" type="password"><label>Confirmar</label><input id="confSenha" type="password"><p id="senhaMsg"></p><div class="modal-actions"><button class="secondary" onclick="fecharModais()">Cancelar</button><button onclick="alterarSenha()">Guardar</button></div></div></div>
-  <div id="modalPagamento" class="modal"><div class="modal-content"><h2>Pagamento simulado</h2><label>Descrição</label><select id="pagDesc"><option>Propina mensal</option><option>Taxa administrativa</option><option>Inscrição</option></select><label>Valor</label><input id="pagValor" value="5.000 CVE"><div class="modal-actions"><button class="secondary" onclick="fecharModais()">Cancelar</button><button onclick="pagar()">Confirmar pagamento</button></div></div></div>
-  <div id="toast" class="toast"></div>
-
   <script>
-    /* =========================================================
-       1. DADOS DO SISTEMA
-       ========================================================= */
-    let perfilAtual = 'aluno';
+    let perfilAtual = "aluno";
 
-    const menus = {
-      aluno: [
-        ['home','Home','⌂'], ['perfilAluno','Perfil do Aluno','👤'], ['disciplinas','Unidades Curriculares','📚'], ['notas','Notas','📝'], ['horarioAluno','Horário','🕘'], ['pagamentos','Financeiro','💳'], ['documentos','Documentos','📄'], ['notificacoes','Notificações','🔔'], ['suporte','Suporte','🛠']
-      ],
-      docente: [
-        ['home','Dashboard Docente','⌂'], ['perfilDocente','Perfil do Docente','🎓'], ['turmasDocente','Turmas','👥'], ['pautas','Lançar Pautas','🧾'], ['presencas','Presenças','✅'], ['materiaisDocente','Materiais e Tarefas','📤'], ['horarioDocente','Horário Docente','🕘'], ['notificacoes','Notificações','🔔'], ['suporte','Suporte','🛠']
-      ]
-    };
-
-    const alunosTurma=[
-      {numero:'158656', nome:'Jean Claude Duarte Fernandes', nota:'17', presenca:'Presente'},
-      {numero:'158657', nome:'Geovanny Moniz', nota:'16', presenca:'Presente'},
-      {numero:'158658', nome:'Lina Silva', nota:'15', presenca:'Presente'},
-      {numero:'158659', nome:'Rui Alves', nota:'14', presenca:'Falta'},
-      {numero:'158660', nome:'Linda Gomes', nota:'18', presenca:'Presente'}
+    const studentMenuItems = [
+      ["studentDashboard","Dashboard"],
+      ["studentCurso","O Meu Curso"],
+      ["studentServicos","Serviços Académicos"],
+      ["studentCalendario","Calendário Académico"],
+      ["studentApoio","Centro de Apoio"],
+      ["studentUniAI","UniAI"],
+      ["studentCarreira","Carreira"],
+      ["studentVida","Vida Académica"],
+      ["studentPerfil","Perfil"]
     ];
 
-    const disciplinas=[
-      {nome:'Introdução a Base de Dados',docente:'Docente 1',estado:'Concluída',nota:'15',creditos:6},
-      {nome:'Gestão de Projeto Multimédia',docente:'Docente 2',estado:'Concluída',nota:'16',creditos:5},
-      {nome:'Tecnologia de Desenvolvimento Web II',docente:'Docente 3',estado:'Em curso',nota:'17',creditos:6},
-      {nome:'Laboratório de Projeto Multimédia I',docente:'Cleonice Morreira',estado:'Em avaliação',nota:'—',creditos:6},
-      {nome:'Sistemas de Compressão Multimédia',docente:'Docente 5',estado:'Concluída',nota:'14',creditos:5}
+    const teacherMenuItems = [
+      ["teacherDashboard","Dashboard"],
+      ["teacherDisciplinas","Minhas Disciplinas"],
+      ["teacherTurmas","Turmas"],
+      ["teacherPresencas","Presenças"],
+      ["teacherAvaliacoes","Avaliações"],
+      ["teacherConteudos","Conteúdos"],
+      ["teacherMensagens","Mensagens"],
+      ["teacherAgenda","Agenda"],
+      ["teacherAnalytics","Analytics"],
+      ["teacherPerfil","Perfil"]
     ];
 
-    let pagamentos=JSON.parse(localStorage.getItem('pagamentosUniCV')||'null')||[
-      ['05/04/2026','Propina mensal','5.000 CVE','Pago'],['05/03/2026','Propina mensal','5.000 CVE','Pago'],['05/02/2026','Propina mensal','5.000 CVE','Pago'],['05/01/2026','Propina mensal','5.000 CVE','Pago']
-    ];
-    let pedidos=JSON.parse(localStorage.getItem('docsUniCV')||'[]');
+    function selecionarPerfil(perfil){
+      perfilAtual = perfil;
+      document.getElementById("roleAluno").classList.toggle("active", perfil === "aluno");
+      document.getElementById("roleDocente").classList.toggle("active", perfil === "docente");
+      document.getElementById("loginUser").value = perfil === "aluno" ? "158656" : "cleonice@unicv.edu.cv";
+    }
 
-    /* =========================================================
-       2. LOGIN E TROCA DE INTERFACE
-       ========================================================= */
     function entrar(){
-      const pass=document.getElementById('loginPass').value;
-      perfilAtual=document.getElementById('tipoLogin').value;
-      if(pass!=='1234'){
-        document.getElementById('loginErro').innerText='Palavra-passe incorreta. Use 1234 para a demo.';
+      const senha = document.getElementById("loginPass").value;
+      if(senha !== "1234"){
+        alert("Senha errada. Usa 1234.");
         return;
       }
-      configurarInterfacePorPerfil();
-      document.getElementById('loginScreen').style.display='none';
-      document.getElementById('app').style.display='block';
-      mostrar('home');
-      toast(perfilAtual==='aluno'?'Sessão de aluno iniciada.':'Sessão de docente iniciada.');
+
+      document.getElementById("login").style.display = "none";
+      document.getElementById("app").style.display = "block";
+      configurarApp();
     }
 
-    function sair(){
-      document.getElementById('app').style.display='none';
-      document.getElementById('loginScreen').style.display='grid';
+    function entrarDireto(perfil){
+      perfilAtual = perfil;
+      document.getElementById("login").style.display = "none";
+      document.getElementById("app").style.display = "block";
+      configurarApp();
     }
 
-    function configurarInterfacePorPerfil(){
-      const menu=document.getElementById('menuPrincipal');
-      menu.innerHTML='';
-      menus[perfilAtual].forEach(([id,texto,icone])=>{
-        menu.innerHTML += `<div class="menu-item" data-target="${id}" onclick="mostrar('${id}')">${texto}<span>${icone}</span></div>`;
-      });
+    function configurarApp(){
+      renderMenus();
+      renderStudent();
+      renderTeacher();
 
-      document.getElementById('rolePill').innerText=perfilAtual==='aluno'?'Aluno':'Docente';
-      document.getElementById('chipNome').innerText=perfilAtual==='aluno'?'Jean Claude':'Cleonice Morreira';
-      document.getElementById('sidebarTitulo').innerText=perfilAtual==='aluno'?'Área do Aluno':'Área do Docente';
-      document.getElementById('sidebarSub').innerText=perfilAtual==='aluno'?'Portal académico pessoal':'Gestão pedagógica e turmas';
-
-      if(perfilAtual==='docente'){
-        document.getElementById('chipFoto').src='https://via.placeholder.com/120/1f2225/ffffff?text=CM';
+      if(perfilAtual === "aluno"){
+        document.getElementById("avatar").innerText = "JC";
+        document.getElementById("chipNome").innerText = "Jean Claude";
+        renderNavAluno();
+        mostrar("studentArea");
+        abrirStudent("studentDashboard");
       }else{
-        const foto=localStorage.getItem('fotoAluno');
-        document.getElementById('chipFoto').src=foto || 'https://via.placeholder.com/120/b20d2b/ffffff?text=JF';
+        document.getElementById("avatar").innerText = "CM";
+        document.getElementById("chipNome").innerText = "Cleonice";
+        renderNavDocente();
+        mostrar("teacherArea");
+        abrirTeacher("teacherDashboard");
       }
-
-      renderHome();
-      renderAvisos();
     }
 
-    function renderHome(){
-      const home=document.getElementById('home');
-      if(perfilAtual==='aluno'){
-        home.innerHTML=`
-          <div class="banner aluno"><h1>BEM-VINDO(A) AO PORTAL DO ALUNO</h1><p>Universidade de Cabo Verde</p><p><strong>JEAN CLAUDE DUARTE FERNANDES</strong> | Nº 158656</p><p>Tecnologia e multimedia</p><div class="banner-actions"><button onclick="mostrar('disciplinas')">Ver disciplinas</button><button class="secondary" onclick="mostrar('notas')">Consultar notas</button></div></div>
-          <div class="grid-4"><div class="card stat"><h2>5</h2><p>Disciplinas</p></div><div class="card stat"><h2>15.5</h2><p>Média Geral</p></div><div class="card stat"><h2>92%</h2><p>Assiduidade</p></div><div class="card stat"><h2>0</h2><p>Dívidas</p></div></div><br>
-          <div class="section-title">ACESSOS DO ALUNO</div>
-          <div class="grid"><div class="card card-button" onclick="mostrar('perfilAluno')"><h3>Perfil académico</h3><p class="muted">Foto, dados e cartão digital.</p></div><div class="card card-button" onclick="mostrar('documentos')"><h3>Pedir documentos</h3><p class="muted">Declarações e certificados.</p></div><div class="card card-button" onclick="mostrar('pagamentos')"><h3>Financeiro</h3><p class="muted">Pagamentos e recibos.</p></div></div>`;
-      }else{
-        home.innerHTML=`
-          <div class="banner docente"><h1>PAINEL DO DOCENTE</h1><p>Gestão pedagógica | Universidade de Cabo Verde</p><p><strong>Cleonice Morreira</strong> | Departamento de Tecnologias e Multimédia</p><div class="banner-actions"><button onclick="mostrar('pautas')">Lançar pauta</button><button class="secondary" onclick="mostrar('materiaisDocente')">Enviar material</button></div></div>
-          <div class="grid-4"><div class="card stat docente"><h2>1</h2><p>Turma</p></div><div class="card stat docente"><h2>5</h2><p>Alunos</p></div><div class="card stat docente"><h2>3</h2><p>Tarefas</p></div><div class="card stat docente"><h2>2</h2><p>Avisos</p></div></div><br>
-          <div class="section-title">FERRAMENTAS DO DOCENTE</div>
-          <div class="grid"><div class="card card-button" onclick="mostrar('turmasDocente')"><h3>Gerir turmas</h3><p class="muted">Consultar a turma TM-2 e os 5 alunos inscritos.</p></div><div class="card card-button" onclick="mostrar('pautas')"><h3>Lançar notas</h3><p class="muted">Atualizar pautas e avaliações.</p></div><div class="card card-button" onclick="mostrar('presencas')"><h3>Registar presenças</h3><p class="muted">Controlo de assiduidade.</p></div></div>`;
-      }
+    function renderNavAluno(){
+      document.getElementById("nav").innerHTML = `
+        <span onclick="mostrar('home')">Home</span>
+        <span onclick="mostrar('studentArea')">Minha área</span>
+        <span onclick="abrirSite()">Site</span>
+        <span onclick="abrirMoodle()">Moodle</span>
+        <span onclick="sair()">Sair</span>
+      `;
+    }
+
+    function renderNavDocente(){
+      document.getElementById("nav").innerHTML = `
+        <span onclick="mostrar('home')">Home</span>
+        <span onclick="mostrar('teacherArea')">Teaching Studio</span>
+        <span onclick="abrirSite()">Site</span>
+        <span onclick="abrirMoodle()">Moodle</span>
+        <span onclick="sair()">Sair</span>
+      `;
+    }
+
+    function renderMenus(){
+      document.getElementById("studentMenu").innerHTML = studentMenuItems.map((i,idx)=>`
+        <button class="${idx===0?'active':''}" onclick="abrirStudent('${i[0]}', this)">${i[1]}</button>
+      `).join("");
+
+      document.getElementById("teacherMenu").innerHTML = teacherMenuItems.map((i,idx)=>`
+        <button class="${idx===0?'active':''}" onclick="abrirTeacher('${i[0]}', this)">${i[1]}</button>
+      `).join("");
     }
 
     function mostrar(id){
-      document.querySelectorAll('.secao').forEach(s=>s.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-      document.querySelectorAll('.menu-item').forEach(i=>i.classList.remove('active'));
-      const item=document.querySelector(`[data-target="${id}"]`); if(item)item.classList.add('active');
-      if(id==='disciplinas')renderDisciplinas();
-      if(id==='notas')renderNotas();
-      if(id==='pagamentos')renderPagamentos();
-      if(id==='documentos')renderPedidos();
-      if(id==='horarioAluno')renderHorarioAluno();
-      if(id==='horarioDocente')renderHorarioDocente();
-      if(id==='pautas')renderPautas();
-      if(id==='presencas')renderPresencas();
-      if(id==='notificacoes')renderAvisos();
-      window.scrollTo({top:0,behavior:'smooth'});
+      document.querySelectorAll(".section").forEach(sec=>sec.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+      window.scrollTo({top:0,behavior:"smooth"});
     }
 
-    /* =========================================================
-       3. FUNÇÕES GERAIS
-       ========================================================= */
-    function abrirModal(id){document.getElementById(id).style.display='flex'}
-    function fecharModais(){document.querySelectorAll('.modal').forEach(m=>m.style.display='none')}
-    function abrirEmail(){abrirModal('modalEmail')}
-    function abrirMoodle(){window.open('https://moodle.unicv.edu.cv','_blank')}
-    function abrirSite(){abrirModal('modalSite')}
-    function toggleDark(){document.body.classList.toggle('dark');localStorage.setItem('darkUniCV',document.body.classList.contains('dark')?'1':'0')}
-    function toast(msg){let t=document.getElementById('toast');t.innerText=msg;t.style.display='block';setTimeout(()=>t.style.display='none',2600)}
-
-    function trocarFoto(e,id){
-      let f=e.target.files[0]; if(!f)return;
-      let reader=new FileReader();
-      reader.onload=function(){document.getElementById(id).src=reader.result;if(id==='fotoAluno')document.getElementById('chipFoto').src=reader.result;localStorage.setItem(id,reader.result);toast('Foto atualizada.')};
-      reader.readAsDataURL(f);
+    function abrirStudent(id, btn){
+      document.querySelectorAll("#studentArea .work-section").forEach(s=>s.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+      document.querySelectorAll("#studentMenu button").forEach(b=>b.classList.remove("active"));
+      if(btn) btn.classList.add("active");
     }
 
-    /* =========================================================
-       4. RENDERIZAÇÕES DO ALUNO
-       ========================================================= */
-    function renderDisciplinas(){
-      let q=(document.getElementById('pesquisaDisciplina')?.value||'').toLowerCase();
-      let tb=document.getElementById('tabelaDisciplinas');
-      tb.innerHTML='<tr><th>Disciplina</th><th>Docente</th><th>Estado</th><th>Ação</th></tr>';
-      disciplinas.filter(d=>d.nome.toLowerCase().includes(q)).forEach((d,i)=>{tb.innerHTML+=`<tr><td>${d.nome}</td><td>${d.docente}</td><td><span class="badge ${d.estado==='Concluída'?'green':'blue'}">${d.estado}</span></td><td><button class="small" onclick="verDisciplina(${i})">Ver detalhes</button> <button class="small secondary" onclick="abrirMoodle()">Moodle</button></td></tr>`});
+    function abrirTeacher(id, btn){
+      document.querySelectorAll("#teacherArea .work-section").forEach(s=>s.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+      document.querySelectorAll("#teacherMenu button").forEach(b=>b.classList.remove("active"));
+      if(btn) btn.classList.add("active");
     }
 
-    function verDisciplina(i){
-      let d=disciplinas[i];let box=document.getElementById('detalheDisciplina');box.classList.remove('hidden');
-      box.innerHTML=`<h3>${d.nome}</h3><p><strong>Docente:</strong> ${d.docente}</p><p><strong>Créditos:</strong> ${d.creditos}</p><p><strong>Estado:</strong> ${d.estado}</p><ul><li>Plano da unidade curricular</li><li>Slides das aulas</li><li>Trabalhos e tarefas</li><li>Fórum de dúvidas</li></ul><button onclick="abrirMoodle()">Abrir no Moodle</button>`;
+    function renderStudent(){
+      studentDashboard.innerHTML = `
+        <div class="page-title"><span class="kicker">Dashboard</span><h1>Bom dia, Jean Claude.</h1></div>
+        <div class="cards">
+          <div class="card stat"><span>Percurso académico</span><strong>78%</strong><small>conclusão estimada</small></div>
+          <div class="card stat"><span>Média atual</span><strong>16</strong><small>valores</small></div>
+          <div class="card stat"><span>Propina</span><strong>OK</strong><small>situação regular</small></div>
+          <div class="card stat"><span>Pedidos</span><strong>2</strong><small>em processamento</small></div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Próxima aula</h3>
+            <div class="step"><div class="step-time">09:00</div><div><strong>Laboratório de Projeto Multimédia I</strong><br>Lab 2 · Cleonice Morreira</div></div>
+          </div>
+
+          <div class="card">
+            <h3>Student Journey</h3>
+            <p>Créditos concluídos: 72 ECTS</p>
+            <div class="progress"><span style="width:78%"></span></div>
+            <p>Estimativa de graduação: Julho 2028</p>
+          </div>
+        </div>
+      `;
+
+      studentCurso.innerHTML = `
+  <div class="page-title">
+    <span class="kicker">O Meu Curso</span>
+    <h1>Tecnologia e multimedia</h1>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>Resumo do curso</h3>
+      <p><strong>Ano:</strong> 2.º Ano</p>
+      <p><strong>Estado:</strong> Matrícula ativa</p>
+      <p><strong>Créditos concluídos:</strong> 72 ECTS</p>
+      <p><strong>Unidades concluídas:</strong> 24 / 30</p>
+    </div>
+
+    <div class="card">
+      <h3>Docente em destaque</h3>
+      <p><strong>Cleonice Moreira</strong></p>
+      <p>Laboratório de Projeto Multimédia I</p>
+      <p>Atendimento: Quarta-feira, 15:00 - 17:00</p>
+      <button class="gold">Ver perfil da docente</button>
+    </div>
+  </div>
+
+  <br>
+
+  <table>
+    <tr>
+      <th>Ano</th>
+      <th>Unidade Curricular</th>
+      <th>Docente</th>
+      <th>Créditos</th>
+      <th>Estado</th>
+      <th>Nota</th>
+    </tr>
+
+    <tr>
+      <td>2.º</td>
+      <td>Introdução a Base de Dados</td>
+      <td>Celistino</td>
+      <td>6</td>
+      <td>Concluída</td>
+      <td>15</td>
+    </tr>
+
+    <tr>
+      <td>2.º</td>
+      <td>Gestão de Projetos Multimédia</td>
+      <td>Domingos Andrade</td>
+      <td>5</td>
+      <td>Concluída</td>
+      <td>16</td>
+    </tr>
+
+    <tr>
+      <td>2.º</td>
+      <td>Tecnologia Web 2</td>
+      <td>Elcelina Silva</td>
+      <td>6</td>
+      <td>Em curso</td>
+      <td>17</td>
+    </tr>
+
+    <tr>
+      <td>2.º</td>
+      <td>Laboratório de Projeto Multimédia I</td>
+      <td>Cleonice Moreira</td>
+      <td>6</td>
+      <td>Em avaliação</td>
+      <td>—</td>
+    </tr>
+
+    <tr>
+      <td>2.º</td>
+      <td>Sistema de Compressão Multimédia</td>
+      <td>Aristides Lopes Silva</td>
+      <td>5</td>
+      <td>Concluída</td>
+      <td>14</td>
+    </tr>
+  </table>
+`;
+
+      studentServicos.innerHTML = `
+        <div class="page-title"><span class="kicker">Serviços Académicos</span><h1>Balcão Online</h1></div>
+
+        <div class="grid-3">
+          <div class="card"><h3>Declaração de matrícula</h3><p>Documento para comprovar inscrição ativa.</p><button onclick="alert('Pedido registado.')">Solicitar</button></div>
+          <div class="card"><h3>Certificado de notas</h3><p>Histórico de notas lançadas.</p><button onclick="alert('Pedido registado.')">Solicitar</button></div>
+          <div class="card"><h3>Declaração de frequência</h3><p>Documento para bolsa, estágio ou trabalho.</p><button onclick="alert('Pedido registado.')">Solicitar</button></div>
+          <div class="card"><h3>Financeiro</h3><p>Propinas, recibos e referências.</p><button onclick="alert('Pagamento simulado registado.')">Pagar propina</button></div>
+          <div class="card"><h3>Bolsa de estudos</h3><p>Consultar estado e anexar documentos.</p><button class="light">Ver estado</button></div>
+          <div class="card"><h3>Inscrições</h3><p>Renovação de matrícula e inscrições em unidades.</p><button class="gold">Iniciar pedido</button></div>
+        </div>
+      `;
+
+      studentCalendario.innerHTML = `
+        <div class="page-title"><span class="kicker">Calendário Académico</span><h1>Prazos importantes</h1></div>
+        <div class="timeline">
+          <div class="step"><div class="step-time">JAN</div><div><strong>Inscrição semestral</strong><br>Renovação de matrícula e escolha de unidades curriculares.</div></div>
+          <div class="step"><div class="step-time">MAR</div><div><strong>Primeiras avaliações</strong><br>Testes e trabalhos práticos.</div></div>
+          <div class="step"><div class="step-time">JUN</div><div><strong>Exames</strong><br>Época normal de exames.</div></div>
+          <div class="step"><div class="step-time">JUL</div><div><strong>Época de recurso</strong><br>Revisões e exames de recurso.</div></div>
+        </div>
+      `;
+
+      studentApoio.innerHTML = `
+        <div class="page-title"><span class="kicker">Centro de Apoio</span><h1>Suporte técnico</h1></div>
+        <div class="grid-2">
+          <div class="card">
+            <h3>Abrir ticket</h3>
+            <label>Assunto</label><input placeholder="Ex.: Problema no Moodle">
+            <label>Descrição</label><textarea placeholder="Descreve o problema"></textarea>
+            <button onclick="alert('Ticket criado: #UNICV-2045')">Enviar ticket</button>
+          </div>
+          <div class="card">
+            <h3>FAQ rápida</h3>
+            <p><strong>Como pedir documento?</strong><br>Serviços Académicos → Balcão Online → selecionar documento.</p>
+            <p><strong>Como pagar propina?</strong><br>Serviços Académicos → Financeiro → Pagar propina.</p>
+            <p><strong>Problema técnico?</strong><br>Centro de Apoio → Abrir ticket.</p>
+          </div>
+        </div>
+      `;
+
+      studentUniAI.innerHTML = `
+        <div class="page-title"><span class="kicker">UniAI</span><h1>Chatbot académico</h1></div>
+        <div class="grid-2">
+          <div class="card">
+            <h3>Conversa com o UniAI</h3>
+            <input id="perguntaRapida" placeholder="Ex.: Como tiro uma declaração de matrícula?">
+            <button onclick="respostaRapida()">Perguntar</button>
+            <p id="respostaRapidaBox"></p>
+          </div>
+          <div class="card">
+            <h3>Perguntas úteis</h3>
+            <p>Quando é o próximo exame?</p>
+            <p>Quem é a docente da minha disciplina?</p>
+            <p>Como pedir certificado de notas?</p>
+            <p>Qual o estado da minha propina?</p>
+          </div>
+        </div>
+      `;
+
+      studentCarreira.innerHTML = `
+        <div class="page-title"><span class="kicker">Carreira e Empregabilidade</span><h1>Do curso ao mercado</h1></div>
+        <div class="grid-3">
+          <div class="card"><h3>CV Builder</h3><p>Gerar currículo académico com competências do curso.</p><button>Criar CV</button></div>
+          <div class="card"><h3>Estágios</h3><p>Oportunidades em empresas parceiras.</p><button class="gold">Ver vagas</button></div>
+          <div class="card"><h3>Portfólio</h3><p>Projetos, trabalhos e entregas organizadas.</p><button class="light">Abrir portfólio</button></div>
+        </div>
+      `;
+
+      studentVida.innerHTML = `
+        <div class="page-title"><span class="kicker">Vida Académica</span><h1>Campus e comunidade</h1></div>
+        <div class="grid-3">
+          <div class="card"><h3>Eventos</h3><p>Semana da Tecnologia e Multimédia.</p><button>Inscrever</button></div>
+          <div class="card"><h3>Clubes</h3><p>Design, programação, vídeo e fotografia.</p><button class="light">Explorar</button></div>
+          <div class="card"><h3>Mobilidade</h3><p>Intercâmbio, projetos e oportunidades internacionais.</p><button class="gold">Ver oportunidades</button></div>
+        </div>
+      `;
+
+      studentPerfil.innerHTML = `
+        <div class="page-title"><span class="kicker">Perfil</span><h1>Dados pessoais</h1></div>
+        <div class="grid-2">
+          <div class="card">
+            <h3>Jean Claude Duarte Fernandes</h3>
+            <p><strong>Nº:</strong> 158656</p>
+            <p><strong>Curso:</strong> Tecnologia e multimedia</p>
+            <p><strong>Ano:</strong> 2.º Ano</p>
+            <p><strong>Estado:</strong> Matrícula ativa</p>
+            <button>Editar perfil</button>
+          </div>
+          <div class="card">
+            <h3>Cartão digital</h3>
+            <p>QR académico, validação de estudante e acesso a serviços digitais.</p>
+            <button class="gold">Ver QR ID</button>
+          </div>
+        </div>
+      `;
     }
 
-    function renderNotas(){
-      let tb=document.getElementById('tabelaNotas');tb.innerHTML='<tr><th>Disciplina</th><th>Nota</th><th>Estado</th><th>Ação</th></tr>';
-      disciplinas.forEach(d=>tb.innerHTML+=`<tr><td>${d.nome}</td><td>${d.nota}</td><td>${d.nota==='—'?'Em avaliação':'Aprovado'}</td><td><button class="small" onclick="toast('Pedido de revisão registado.')">Pedir revisão</button></td></tr>`);
+    function renderTeacher(){
+      teacherDashboard.innerHTML = `
+  <div class="page-title">
+    <span class="kicker">Dashboard docente</span>
+    <h1>Bom dia, Cleonice.</h1>
+  </div>
+
+  <div class="cards">
+    <div class="card stat">
+      <span>Disciplinas</span>
+      <strong>1</strong>
+      <small>Laboratório de Projeto Multimédia I</small>
+    </div>
+
+    <div class="card stat">
+      <span>Turmas</span>
+      <strong>2</strong>
+      <small>TM-2 e TM-1</small>
+    </div>
+
+    <div class="card stat">
+      <span>Alunos</span>
+      <strong>42</strong>
+      <small>inscritos nas turmas</small>
+    </div>
+
+    <div class="card stat">
+      <span>Pendências</span>
+      <strong>6</strong>
+      <small>tarefas por corrigir</small>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>Ações rápidas</h3>
+      <button>Publicar material</button>
+      <button class="light">Criar tarefa</button>
+      <button class="gold">Enviar aviso</button>
+    </div>
+
+    <div class="card">
+      <h3>UniAI pedagógico</h3>
+      <p>
+        A turma TM-2 apresenta bom desempenho geral, mas há alunos com atrasos
+        na entrega do protótipo. Recomenda-se enviar um aviso de reforço.
+      </p>
+      <button class="gold">Gerar resumo pedagógico</button>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="grid-3">
+    <div class="card">
+      <h3>Próxima aula</h3>
+      <p><strong>Turma:</strong> TM-2</p>
+      <p><strong>Disciplina:</strong> Laboratório de Projeto Multimédia I</p>
+      <p><strong>Hora:</strong> Quarta-feira, 09:00 - 12:00</p>
+      <p><strong>Sala:</strong> Lab 2</p>
+    </div>
+
+    <div class="card">
+      <h3>Trabalhos pendentes</h3>
+      <p>6 trabalhos aguardam correção.</p>
+      <p>Prazo recomendado para lançamento: sexta-feira.</p>
+      <button>Corrigir trabalhos</button>
+    </div>
+
+    <div class="card">
+      <h3>Atendimento</h3>
+      <p>2 pedidos de atendimento pendentes.</p>
+      <p>Horário: Quarta-feira, 15:00 - 17:00.</p>
+      <button class="light">Gerir atendimento</button>
+    </div>
+  </div>
+`;
+
+      teacherDisciplinas.innerHTML = `
+  <div class="page-title">
+    <span class="kicker">Minhas Disciplinas</span>
+    <h1>Unidades lecionadas</h1>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>Laboratório de Projeto Multimédia I</h3>
+      <p><strong>Docente:</strong> Cleonice Moreira</p>
+      <p><strong>Turmas:</strong> TM-2 e TM-1</p>
+      <p><strong>Créditos:</strong> 6 ECTS</p>
+      <p><strong>Estado:</strong> Em curso</p>
+      <button class="gold">Abrir disciplina</button>
+    </div>
+
+    <div class="card">
+      <h3>Plano da disciplina</h3>
+      <p>Objetivos, conteúdos programáticos, critérios de avaliação e materiais.</p>
+      <button class="light">Editar plano</button>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="card">
+    <h3>Estrutura da unidade curricular</h3>
+    <table>
+      <tr>
+        <th>Módulo</th>
+        <th>Conteúdo</th>
+        <th>Estado</th>
+      </tr>
+
+      <tr>
+        <td>Módulo 1</td>
+        <td>Introdução ao projeto multimédia</td>
+        <td>Concluído</td>
+      </tr>
+
+      <tr>
+        <td>Módulo 2</td>
+        <td>Pesquisa, conceito e público-alvo</td>
+        <td>Concluído</td>
+      </tr>
+
+      <tr>
+        <td>Módulo 3</td>
+        <td>Prototipagem e interface</td>
+        <td>Em curso</td>
+      </tr>
+
+      <tr>
+        <td>Módulo 4</td>
+        <td>Apresentação e defesa do projeto</td>
+        <td>Pendente</td>
+      </tr>
+    </table>
+  </div>
+`;
+
+      teacherTurmas.innerHTML = `
+        <div class="page-title"><span class="kicker">Turmas</span><h1>TM-2</h1></div>
+        <table>
+          <tr><th>Nº</th><th>Aluno</th><th>Disciplina</th><th>Nota</th><th>Estado</th></tr>
+          <tr><td>158656</td><td>Jean Claude Duarte Fernandes</td><td>Lab Projeto Multimédia I</td><td>17</td><td><span class="badge">Ativo</span></td></tr>
+          <tr><td>158657</td><td>Geovanny Moniz</td><td>Lab Projeto Multimédia I</td><td>16</td><td><span class="badge">Ativo</span></td></tr>
+          <tr><td>158658</td><td>Lina Silva</td><td>Lab Projeto Multimédia I</td><td>15</td><td><span class="badge">Ativo</span></td></tr>
+          <tr><td>158659</td><td>Rui Alves</td><td>Lab Projeto Multimédia I</td><td>14</td><td><span class="badge">Atenção</span></td></tr>
+          <tr><td>158660</td><td>Linda Gomes</td><td>Lab Projeto Multimédia I</td><td>18</td><td><span class="badge">Ativo</span></td></tr>
+        </table>
+      `;
+
+      teacherPresencas.innerHTML = `
+        <div class="page-title"><span class="kicker">Presenças</span><h1>Marcar presenças</h1></div>
+        <table>
+          <tr><th>Aluno</th><th>Aula 08</th><th>Estado</th></tr>
+          <tr><td>Jean Claude Duarte Fernandes</td><td>09:00</td><td><select><option>Presente</option><option>Falta</option></select></td></tr>
+          <tr><td>Geovanny Moniz</td><td>09:00</td><td><select><option>Presente</option><option>Falta</option></select></td></tr>
+          <tr><td>Lina Silva</td><td>09:00</td><td><select><option>Presente</option><option>Falta</option></select></td></tr>
+          <tr><td>Rui Alves</td><td>09:00</td><td><select><option>Falta</option><option>Presente</option></select></td></tr>
+        </table><br>
+        <button>Guardar presenças</button>
+      `;
+
+      teacherAvaliacoes.innerHTML = `
+        <div class="page-title"><span class="kicker">Avaliações</span><h1>Pautas e notas</h1></div>
+        <table>
+          <tr><th>Aluno</th><th>Trabalho</th><th>Teste</th><th>Nota final</th></tr>
+          <tr><td>Jean Claude Duarte Fernandes</td><td><input value="17"></td><td><input value="16"></td><td>17</td></tr>
+          <tr><td>Geovanny Moniz</td><td><input value="16"></td><td><input value="15"></td><td>16</td></tr>
+          <tr><td>Lina Silva</td><td><input value="15"></td><td><input value="14"></td><td>15</td></tr>
+        </table><br>
+        <button>Publicar pauta</button>
+      `;
+
+      teacherConteudos.innerHTML = `
+  <div class="page-title">
+    <span class="kicker">Conteúdos</span>
+    <h1>Materiais e tarefas</h1>
+  </div>
+
+  <div class="grid-3">
+    <div class="card">
+      <h3>Enviar material</h3>
+      <p>PDF, PPT, DOCX, imagens ou links externos.</p>
+      <input type="file">
+      <button>Enviar material</button>
+    </div>
+
+    <div class="card">
+      <h3>Criar tarefa</h3>
+      <input placeholder="Título da tarefa">
+      <textarea placeholder="Descrição da tarefa"></textarea>
+      <button>Criar tarefa</button>
+    </div>
+
+    <div class="card">
+      <h3>Criar aviso</h3>
+      <textarea placeholder="Mensagem para a turma"></textarea>
+      <button class="gold">Publicar aviso</button>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="card">
+    <h3>Materiais publicados</h3>
+    <table>
+      <tr>
+        <th>Título</th>
+        <th>Tipo</th>
+        <th>Data</th>
+        <th>Ação</th>
+      </tr>
+
+      <tr>
+        <td>Briefing do projeto final</td>
+        <td>PDF</td>
+        <td>12/05/2026</td>
+        <td><button class="light">Editar</button></td>
+      </tr>
+
+      <tr>
+        <td>Slides sobre prototipagem</td>
+        <td>PPT</td>
+        <td>18/05/2026</td>
+        <td><button class="light">Editar</button></td>
+      </tr>
+
+      <tr>
+        <td>Checklist de avaliação</td>
+        <td>DOCX</td>
+        <td>21/05/2026</td>
+        <td><button class="light">Editar</button></td>
+      </tr>
+    </table>
+  </div>
+`;
+
+      teacherMensagens.innerHTML = `
+        <div class="page-title"><span class="kicker">Mensagens</span><h1>Comunicação</h1></div>
+        <div class="grid-2">
+          <div class="card"><h3>Aviso à turma</h3><textarea placeholder="Mensagem..."></textarea><button>Enviar aviso</button></div>
+          <div class="card"><h3>Mensagens recentes</h3><p>“Relembro entrega do protótipo até sexta-feira.”</p></div>
+        </div>
+      `;
+
+      teacherAgenda.innerHTML = `
+        <div class="page-title"><span class="kicker">Agenda</span><h1>Semana docente</h1></div>
+        <div class="timeline">
+          <div class="step"><div class="step-time">Seg</div><div><strong>Aula TM-2</strong><br>09:00 - 12:00 · Lab 2</div></div>
+          <div class="step"><div class="step-time">Qua</div><div><strong>Atendimento</strong><br>15:00 - 17:00</div></div>
+          <div class="step"><div class="step-time">Sex</div><div><strong>Correção de trabalhos</strong><br>Entrega do protótipo</div></div>
+        </div>
+      `;
+
+      teacherAnalytics.innerHTML = `
+        <div class="page-title"><span class="kicker">Analytics</span><h1>Dados pedagógicos</h1></div>
+        <div class="cards">
+          <div class="card stat"><span>Média da turma</span><strong>16</strong><small>valores</small></div>
+          <div class="card stat"><span>Assiduidade</span><strong>80%</strong><small>última aula</small></div>
+          <div class="card stat"><span>Risco</span><strong>1</strong><small>aluno em atenção</small></div>
+          <div class="card stat"><span>Tarefas</span><strong>3</strong><small>ativas</small></div>
+        </div>
+      `;
+
+      teacherPerfil.innerHTML = `
+        <div class="page-title"><span class="kicker">Perfil docente</span><h1>Cleonice Morreira</h1></div>
+        <div class="grid-2">
+          <div class="card">
+            <h3>Dados profissionais</h3>
+            <p><strong>Departamento:</strong> Tecnologias e Multimédia</p>
+            <p><strong>Disciplina:</strong> Laboratório de Projeto Multimédia I</p>
+            <p><strong>Atendimento:</strong> Quarta-feira, 15:00 - 17:00</p>
+          </div>
+          <div class="card">
+            <h3>Ferramentas docentes</h3>
+            <p>Pautas, presenças, conteúdos, comunicação e analytics pedagógico.</p>
+          </div>
+        </div>
+      `;
     }
 
-    function renderHorarioAluno(){
-      document.getElementById('tabelaHorarioAluno').innerHTML='<tr><th>Dia</th><th>Disciplina</th><th>Hora</th><th>Sala</th></tr><tr><td>Segunda</td><td>Introdução a Base de Dados</td><td>08:00 - 10:00</td><td>Sala 12</td></tr><tr><td>Quarta</td><td>LABORATÓRIO DE PROJETO MULTIMÉDIA I</td><td>14:00 - 16:00</td><td>Lab 2</td></tr><tr><td>Sexta</td><td>Sistemas de Compressão</td><td>11:00 - 13:00</td><td>Sala 05</td></tr>';
+    function respostaRapida(){
+      document.getElementById("respostaRapidaBox").innerText =
+        "Para pedir uma declaração: Serviços Académicos → Balcão Online → escolher o documento → Solicitar.";
     }
 
-    function renderPagamentos(){
-      let tb=document.getElementById('tabelaPagamentos');tb.innerHTML='<tr><th>Data</th><th>Descrição</th><th>Valor</th><th>Estado</th></tr>';
-      pagamentos.forEach(p=>tb.innerHTML+=`<tr><td>${p[0]}</td><td>${p[1]}</td><td>${p[2]}</td><td><span class="badge green">${p[3]}</span></td></tr>`);
+    function abrirSite(){
+      window.open("https://www.unicv.edu.cv", "_blank");
     }
 
-    function pagar(){
-      pagamentos.unshift([new Date().toLocaleDateString('pt-PT'),document.getElementById('pagDesc').value,document.getElementById('pagValor').value,'Pago']);
-      localStorage.setItem('pagamentosUniCV',JSON.stringify(pagamentos));fecharModais();renderPagamentos();toast('Pagamento registado com sucesso.');
+    function abrirMoodle(){
+      window.open("https://moodle2.unicv.cv/", "_blank");
     }
 
-    function solicitarDoc(nome){
-      pedidos.unshift({nome,data:new Date().toLocaleDateString('pt-PT'),estado:'Em processamento'});localStorage.setItem('docsUniCV',JSON.stringify(pedidos));renderPedidos();toast(nome+' solicitado.');
+    function abrirAI(){
+      document.getElementById("modalAI").style.display = "flex";
     }
 
-    function renderPedidos(){
-      let div=document.getElementById('pedidosDocs');if(!pedidos.length){div.innerText='Ainda não existem pedidos.';return}
-      div.innerHTML='<table><tr><th>Documento</th><th>Data</th><th>Estado</th></tr>'+pedidos.map(p=>`<tr><td>${p.nome}</td><td>${p.data}</td><td><span class="badge yellow">${p.estado}</span></td></tr>`).join('')+'</table>';
+    function fecharAI(){
+      document.getElementById("modalAI").style.display = "none";
     }
 
-    /* =========================================================
-       5. RENDERIZAÇÕES DO DOCENTE
-       ========================================================= */
-    function renderPautas(){
-      const linhas = alunosTurma.map((a,i)=>
-        `<tr><td>${a.numero}</td><td>${a.nome}</td><td>LABORATÓRIO DE PROJETO MULTIMÉDIA I</td><td><input value="${a.nota}" style="max-width:90px"></td><td><button class="small" onclick="toast('Nota guardada para ${a.nome}.')">Guardar</button></td></tr>`
-      ).join('');
-      document.getElementById('tabelaPautas').innerHTML='<tr><th>Nº</th><th>Aluno</th><th>Disciplina</th><th>Nota</th><th>Ação</th></tr>'+linhas;
+    function responderAI(){
+      document.getElementById("respostaAI").innerText =
+        "Sugestão UniAI: organiza a apresentação mostrando a lógica: primeiro o curso, depois unidades curriculares, notas e docentes; os documentos e propinas ficam nos Serviços Académicos.";
     }
 
-    function renderPresencas(){
-      const linhas = alunosTurma.map(a=>
-        `<tr><td>${a.numero}</td><td>${a.nome}</td><td>Aula 08</td><td><select><option ${a.presenca==='Presente'?'selected':''}>Presente</option><option ${a.presenca==='Falta'?'selected':''}>Falta</option></select></td></tr>`
-      ).join('');
-      document.getElementById('tabelaPresencas').innerHTML='<tr><th>Nº</th><th>Aluno</th><th>Aula</th><th>Estado</th></tr>'+linhas;
+    function sair(){
+      document.getElementById("app").style.display = "none";
+      document.getElementById("login").style.display = "grid";
     }
-
-    function renderHorarioDocente(){
-      document.getElementById('tabelaHorarioDocente').innerHTML='<tr><th>Dia</th><th>Turma</th><th>Disciplina</th><th>Hora</th><th>Sala</th></tr><tr><td>Segunda</td><td>TM-2</td><td>LABORATÓRIO DE PROJETO MULTIMÉDIA I</td><td>14:00 - 16:00</td><td>Lab 2</td></tr><tr><td>Quarta</td><td>TM-1</td><td>LABORATÓRIO DE PROJETO MULTIMÉDIA I</td><td>08:00 - 10:00</td><td>Sala 12</td></tr>';
-    }
-
-    /* =========================================================
-       6. ÁREAS COMUNS
-       ========================================================= */
-    function renderAvisos(){
-      let div=document.getElementById('listaNotificacoes');
-      if(!div)return;
-      if(perfilAtual==='aluno'){
-        div.innerHTML='<div class="notification"><strong>📢 Nova nota publicada</strong><br>Tecnologia Web II já tem nota disponível.</div><div class="notification"><strong>💳 Situação financeira regularizada</strong><br>Não existem dívidas pendentes.</div><div class="notification"><strong>📚 Moodle atualizado</strong><br>Novos materiais disponíveis.</div>';
-      }else{
-        div.innerHTML='<div class="notification docente"><strong>🧾 Pauta pendente</strong><br>Existem notas por confirmar na turma TM-2.</div><div class="notification docente"><strong>✅ Presenças</strong><br>A aula de quarta-feira ainda não tem presenças lançadas.</div><div class="notification docente"><strong>📤 Materiais</strong><br>Nova tarefa pode ser publicada no Moodle.</div>';
-      }
-    }
-
-    function enviarSuporte(){
-      let a=document.getElementById('supAssunto').value.trim(),m=document.getElementById('supMsg').value.trim();
-      if(!a||!m){document.getElementById('suporteRetorno').className='danger';document.getElementById('suporteRetorno').innerText='Preencha o assunto e a mensagem.';return}
-      document.getElementById('suporteRetorno').className='success';document.getElementById('suporteRetorno').innerText='Pedido enviado. Ticket #UNICV-'+Math.floor(Math.random()*9000+1000);
-      document.getElementById('supAssunto').value='';document.getElementById('supMsg').value='';
-    }
-
-    function alterarSenha(){
-      let n=document.getElementById('novaSenha').value,c=document.getElementById('confSenha').value,msg=document.getElementById('senhaMsg');
-      if(n.length<4){msg.className='danger';msg.innerText='A palavra-passe deve ter pelo menos 4 caracteres.';return}
-      if(n!==c){msg.className='danger';msg.innerText='As palavras-passe não coincidem.';return}
-      msg.className='success';msg.innerText='Palavra-passe alterada com sucesso.';setTimeout(fecharModais,900);
-    }
-
-    window.onload=function(){
-      if(localStorage.getItem('darkUniCV')==='1')document.body.classList.add('dark');
-      ['fotoAluno','fotoDocente'].forEach(id=>{let v=localStorage.getItem(id);if(v)document.getElementById(id).src=v});
-      configurarInterfacePorPerfil();
-    };
   </script>
 </body>
 </html>
