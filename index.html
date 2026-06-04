@@ -302,7 +302,7 @@
     }
 
     .future-role.active{
-      background:linear-gradient(135deg,#ab162a,#ef304b);
+      background:linear-gradient(135deg,#0066ff,#00b7ff);
     }
 
     .future-role span{
@@ -359,13 +359,17 @@
     }
 
     .future-login-btn{
-      width:100%;
-      border-radius:18px;
-      padding:16px;
-      background:linear-gradient(135deg,#ab162a,#f02f4b);
-      box-shadow:0 18px 45px rgba(171,22,42,.45);
-      font-size:16px;
-    }
+  width:100%;
+  border-radius:18px;
+  padding:16px;
+  background:linear-gradient(135deg,#0066ff,#00b7ff);
+  color:white;
+  font-weight:900;
+  font-size:16px;
+  box-shadow:0 18px 45px rgba(0,102,255,.45);
+  transition:.3s;
+}
+    
 
     .future-demo{
       font-size:13px;
@@ -416,7 +420,11 @@
       cursor:pointer;
     }
 
-    .nav span:hover{color:var(--red)}
+    .future-login-btn:hover{
+  transform:translateY(-3px);
+  background:linear-gradient(135deg,#0052cc,#00cfff);
+  box-shadow:0 20px 55px rgba(0,183,255,.55);
+}
 
     .profile-chip{
       display:flex;
@@ -1364,7 +1372,7 @@
       document.getElementById("loginUser").value = perfil === "aluno" ? "158656" : "cleonice@unicv.edu.cv";
     }
 
-   function entrar(){
+  function entrar(){
   const senha = document.getElementById("loginPass").value;
 
   if(senha !== "1234"){
@@ -1377,8 +1385,9 @@
   const loading = document.getElementById("loadingScreen");
   const circle = document.getElementById("loadingCircle");
   const percent = document.getElementById("loadingPercent");
+  const loadingText = document.getElementById("loadingText");
 
-  if(!login || !app || !loading || !circle || !percent){
+  if(!login || !app || !loading || !circle || !percent || !loadingText){
     alert("Erro: algum elemento do loading/login não foi encontrado.");
     return;
   }
@@ -1401,14 +1410,24 @@
     if(progresso >= 100){
       clearInterval(timer);
 
+      percent.innerHTML = "✓";
+
+      circle.style.background =
+        "conic-gradient(#00b7ff 360deg, #00b7ff 360deg)";
+
+      circle.style.boxShadow =
+        "0 0 70px rgba(0,183,255,.85)";
+
+      loadingText.innerHTML = "✅ Sistema Inicializado";
+
       setTimeout(function(){
         loading.style.display = "none";
         app.style.display = "block";
         configurarApp();
-      }, 400);
+      }, 1200);
     }
   }, 30);
-} 
+}
 
     function entrarDireto(perfil){
       perfilAtual = perfil;
@@ -1562,7 +1581,9 @@
 </div>
           <div class="card"><h3>Bolsa de estudos</h3><p>Consultar estado e anexar documentos.</p><button class="light" onclick="abrirBolsa()">
   Ver estado
+
 </button></div>
+
           <div class="card"><h3>Inscrições</h3><p>Renovação de matrícula e inscrições em unidades.</p><button class="gold" onclick="abrirInscricoes()">
   Inscrever em Exame
 </button></div>
