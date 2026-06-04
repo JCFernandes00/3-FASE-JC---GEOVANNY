@@ -1560,8 +1560,12 @@
   <p>Propinas, dívidas, recibos e referências de pagamento.</p>
   <button onclick="abrirFinanceiro()">Pagar propina</button>
 </div>
-          <div class="card"><h3>Bolsa de estudos</h3><p>Consultar estado e anexar documentos.</p><button class="light">Ver estado</button></div>
-          <div class="card"><h3>Inscrições</h3><p>Renovação de matrícula e inscrições em unidades.</p><button class="gold">Iniciar pedido</button></div>
+          <div class="card"><h3>Bolsa de estudos</h3><p>Consultar estado e anexar documentos.</p><button class="light" onclick="abrirBolsa()">
+  Ver estado
+</button></div>
+          <div class="card"><h3>Inscrições</h3><p>Renovação de matrícula e inscrições em unidades.</p><button class="gold" onclick="abrirInscricoes()">
+  Inscrever em Exame
+</button></div>
         </div>
       `;
 
@@ -1699,8 +1703,8 @@
         <div class="page-title"><span class="kicker">Turmas</span><h1>TM-2</h1></div>
         <table>
           <tr><th>Nº</th><th>Aluno</th><th>Disciplina</th><th>Nota</th><th>Estado</th></tr>
-          <tr><td>158656</td><td>Jean Claude Duarte Fernandes</td><td>Laboratório de Projeto Multimédia I</td><td>17</td><td><span class="badge">Ativo</span></td></tr>
-          <tr><td>158657</td><td>Geovanny Moniz</td><td>Laboratório de Projeto Multimédia I</td><td>16</td><td><span class="badge">Ativo</span></td></tr>
+          <tr><td>158656</td><td>Jean Claude Duarte Fernandes</td><td>Laboratório de Projeto Multimédia I</td><td>18</td><td><span class="badge">Ativo</span></td></tr>
+          <tr><td>158657</td><td>Geovanny Moniz</td><td>Laboratório de Projeto Multimédia I</td><td>9</td><td><span class="badge">Ativo</span></td></tr>
           <tr><td>158658</td><td>Lina Silva</td><td>Laboratório de Projeto Multimédia I</td><td>15</td><td><span class="badge">Ativo</span></td></tr>
         </table>
       `;
@@ -1859,6 +1863,69 @@ function confirmarPagamentoSimulado(){
       Baixar recibo
     </button>
   `;
+  function abrirInscricoes(){
+  document.getElementById("modalInscricoes").style.display = "flex";
+}
+
+function fecharInscricoes(){
+  document.getElementById("modalInscricoes").style.display = "none";
+}
+}
+function confirmarExameBD(){
+
+  document
+    .getElementById("resultadoInscricao")
+    .classList.remove("hidden");
+
+  document
+    .getElementById("resultadoInscricao")
+    .innerHTML = `
+
+      <h3>
+        ✅ Inscrição efetuada
+      </h3>
+
+      <p>
+        Disciplina:
+        <strong>Base de Dados</strong>
+      </p>
+
+      <p>
+        Época:
+        <strong>Normal</strong>
+      </p>
+
+      <p>
+        Data prevista:
+        <strong>15 Julho 2026</strong>
+      </p>
+
+      <p>
+        Sala:
+        <strong>Laboratório 3</strong>
+      </p>
+
+      <p>
+        Código:
+        <strong>
+          EX-${Math.floor(10000 + Math.random()*90000)}
+        </strong>
+      </p>
+
+      <button class="gold"
+        onclick="baixarComprovativoExame()">
+
+        Baixar comprovativo
+
+      </button>
+  `;
+}
+function baixarComprovativoExame(){
+
+  alert(
+    "Comprovativo de inscrição no exame gerado com sucesso."
+  );
+
 }
 
     function sair(){
