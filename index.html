@@ -952,8 +952,188 @@
   border-right:0;
 }
     
+}.modal-docente{
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,.8);
+  z-index:9999;
+}
+
+.modal-docente-card{
+  width:90%;
+  max-width:700px;
+  background:#171717;
+  color:white;
+  padding:35px;
+  border-radius:24px;
+  border:1px solid rgba(255,255,255,.15);
+  box-shadow:0 30px 100px rgba(0,0,0,.6);
+}
+
+.modal-close{
+  float:right;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+}
+
+.docente-header{
+  display:flex;
+  gap:20px;
+  align-items:center;
+}
+
+.docente-avatar{
+  width:90px;
+  height:90px;
+  border-radius:20px;
+  display:grid;
+  place-items:center;
+  font-size:34px;
+  font-weight:900;
+  background:linear-gradient(135deg,#ab162a,#ef304b);
+}
+
+.docente-grid{
+  margin-top:25px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+
+.docente-grid div{
+  padding:15px;
+  border-radius:16px;
+  background:rgba(255,255,255,.08);
+}
+
+.docente-grid strong{
+  display:block;
+  color:#ffd27a;
+}
+
+.docente-actions{
+  margin-top:25px;
+  display:flex;
+  gap:10px;
+}
+.modal-financeiro{
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,.82);
+  z-index:9999;
+  padding:24px;
+}
+
+.financeiro-card{
+  width:100%;
+  max-width:920px;
+  max-height:90vh;
+  overflow:auto;
+  background:linear-gradient(145deg, #151515, #2a1116);
+  color:white;
+  padding:36px;
+  border-radius:30px;
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:0 30px 100px rgba(0,0,0,.65);
+  position:relative;
+  font-family:Arial,sans-serif;
+}
+
+.financeiro-card h2{
+  font-family:Georgia,serif;
+  font-size:44px;
+  margin:8px 0;
+}
+
+.financeiro-card p{
+  color:rgba(255,255,255,.75);
+}
+
+.financeiro-kicker{
+  color:#ffd27a;
+  text-transform:uppercase;
+  letter-spacing:.18em;
+  font-size:12px;
+  font-weight:900;
+}
+
+.financeiro-resumo{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+  margin:28px 0;
+}
+
+.financeiro-resumo div{
+  padding:20px;
+  border-radius:20px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.14);
+}
+
+.financeiro-resumo strong{
+  display:block;
+  font-size:28px;
+  color:#ffd27a;
+  margin-bottom:6px;
+}
+
+.financeiro-resumo span{
+  color:rgba(255,255,255,.75);
+  font-size:13px;
+}
+
+.pagamento-box{
+  margin-top:26px;
+  padding:24px;
+  border-radius:22px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.14);
+}
+
+.referencia-box{
+  margin-top:20px;
+  padding:22px;
+  border-radius:20px;
+  background:#0f0f0f;
+  border:1px solid rgba(214,168,79,.35);
+}
+
+.referencia-box strong{
+  color:#ffd27a;
+}
+
+.modal-close{
+  position:absolute;
+  top:18px;
+  right:18px;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  padding:0;
+  background:rgba(255,255,255,.12);
+  color:white;
+  font-size:26px;
+}
+
+@media(max-width:760px){
+  .financeiro-resumo{
+    grid-template-columns:1fr;
+  }
+
+  .financeiro-card{
+    padding:24px;
+  }
 }
   </style>
+
 </head>
 
 <body>
@@ -1354,7 +1534,9 @@
             <p><strong>Cleonice Moreira</strong></p>
             <p>Laboratório de Projeto Multimédia I</p>
             <p>Atendimento: Quarta-feira, 15:00 - 17:00</p>
-            <button class="gold">Ver perfil da docente</button>
+            <button class="gold" onclick="abrirPerfilDocente()">
+  Conhecer a Docente
+</button>
           </div>
         </div>
         <br>
@@ -1373,7 +1555,11 @@
           <div class="card"><h3>Declaração de matrícula</h3><p>Documento para comprovar inscrição ativa.</p><button onclick="alert('Pedido registado.')">Solicitar</button></div>
           <div class="card"><h3>Certificado de notas</h3><p>Histórico de notas lançadas.</p><button onclick="alert('Pedido registado.')">Solicitar</button></div>
           <div class="card"><h3>Declaração de frequência</h3><p>Documento para bolsa, estágio ou trabalho.</p><button onclick="alert('Pedido registado.')">Solicitar</button></div>
-          <div class="card"><h3>Financeiro</h3><p>Propinas, recibos e referências.</p><button onclick="alert('Pagamento simulado registado.')">Pagar propina</button></div>
+          <div class="card">
+  <h3>Financeiro</h3>
+  <p>Propinas, dívidas, recibos e referências de pagamento.</p>
+  <button onclick="abrirFinanceiro()">Pagar propina</button>
+</div>
           <div class="card"><h3>Bolsa de estudos</h3><p>Consultar estado e anexar documentos.</p><button class="light">Ver estado</button></div>
           <div class="card"><h3>Inscrições</h3><p>Renovação de matrícula e inscrições em unidades.</p><button class="gold">Iniciar pedido</button></div>
         </div>
@@ -1623,6 +1809,57 @@
       document.getElementById("respostaAI").innerText =
         "Sugestão UniAI: organiza a apresentação mostrando a lógica: primeiro o curso, depois unidades curriculares, notas e docentes; os documentos e propinas ficam nos Serviços Académicos.";
     }
+    function abrirPerfilDocente(){
+  document.getElementById("modalDocente").style.display = "flex";
+}
+
+function fecharPerfilDocente(){
+  document.getElementById("modalDocente").style.display = "none";
+}
+
+function abrirFinanceiro(){
+  document.getElementById("modalFinanceiro").style.display = "flex";
+}
+
+function fecharFinanceiro(){
+  document.getElementById("modalFinanceiro").style.display = "none";
+}
+
+function gerarReferenciaPagamento(){
+  const valor = document.getElementById("valorPagamento").value;
+  const metodo = document.getElementById("metodoPagamento").value;
+
+  const referencia = "UCV-" + Math.floor(100000 + Math.random() * 900000);
+  const entidade = "20888";
+
+  document.getElementById("referenciaPagamento").classList.remove("hidden");
+
+  document.getElementById("referenciaPagamento").innerHTML = `
+    <h3>Referência gerada com sucesso</h3>
+
+    <p><strong>Entidade:</strong> ${entidade}</p>
+    <p><strong>Referência:</strong> ${referencia}</p>
+    <p><strong>Valor:</strong> ${Number(valor).toLocaleString("pt-PT")}$00</p>
+    <p><strong>Método:</strong> ${metodo}</p>
+    <p><strong>Estado:</strong> A aguardar pagamento</p>
+
+    <button onclick="confirmarPagamentoSimulado()">
+      Confirmar pagamento simulado
+    </button>
+  `;
+}
+
+function confirmarPagamentoSimulado(){
+  document.getElementById("referenciaPagamento").innerHTML = `
+    <h3>✅ Pagamento simulado com sucesso</h3>
+    <p>O pagamento foi registado no sistema académico.</p>
+    <p><strong>Recibo:</strong> REC-UNICV-${Math.floor(1000 + Math.random() * 9000)}</p>
+
+    <button class="gold" onclick="alert('Recibo descarregado em modo simulação.')">
+      Baixar recibo
+    </button>
+  `;
+}
 
     function sair(){
       document.getElementById("app").style.display = "none";
@@ -1719,7 +1956,144 @@
       </div>
 
     </div>
+  </div> -------------------
+
+<div id="modalDocente" class="modal-docente">
+
+  <div class="modal-docente-card">
+
+    <button class="modal-close"
+      onclick="fecharPerfilDocente()">×</button>
+
+    <div class="docente-header">
+
+      <div class="docente-avatar">
+        CM
+      </div>
+
+      <div>
+        <span class="docente-kicker">
+          Perfil Académico
+        </span>
+
+        <h2>Cleonice Moreira</h2>
+
+        <p>
+          Docente da Universidade de Cabo Verde
+        </p>
+      </div>
+
+    </div>
+
+    <div class="docente-grid">
+
+      <div>
+        <strong>Departamento</strong>
+        <span>Tecnologias e Multimédia</span>
+      </div>
+
+      <div>
+        <strong>Atendimento</strong>
+        <span>Quarta-feira · 15h às 17h</span>
+      </div>
+
+      <div>
+        <strong>Gabinete</strong>
+        <span>Bloco B · Sala 12</span>
+      </div>
+
+      <div>
+        <strong>Email</strong>
+        <span>cleonice@unicv.edu.cv</span>
+      </div>
+
+    </div>
+
+    <div class="docente-actions">
+
+      <button onclick="solicitarAtendimento()">
+        Solicitar Atendimento
+      </button>
+
+      <button class="gold"
+        onclick="enviarMensagemDocente()">
+        Enviar Mensagem
+      </button>
+
+    </div>
+
   </div>
+
+</div>
+<div id="modalFinanceiro" class="modal-financeiro">
+  <div class="financeiro-card">
+    <button class="modal-close" onclick="fecharFinanceiro()">×</button>
+
+    <span class="financeiro-kicker">Serviços Académicos</span>
+    <h2>Área Financeira</h2>
+    <p>Consulta de propinas, dívidas e simulação de pagamento.</p>
+
+    <div class="financeiro-resumo">
+      <div>
+        <strong>2</strong>
+        <span>Mensalidades pendentes</span>
+      </div>
+      <div>
+        <strong>10.000$00</strong>
+        <span>Total em dívida</span>
+      </div>
+      <div>
+        <strong>REGULARIZÁVEL</strong>
+        <span>Estado financeiro</span>
+      </div>
+    </div>
+
+    <h3>Dívidas Pendentes</h3>
+
+    <table>
+      <tr>
+        <th>Descrição</th>
+        <th>Vencimento</th>
+        <th>Valor</th>
+        <th>Estado</th>
+      </tr>
+      <tr>
+        <td>Propina Maio 2026</td>
+        <td>10/05/2026</td>
+        <td>5.000$00</td>
+        <td><span class="badge">Pendente</span></td>
+      </tr>
+      <tr>
+        <td>Propina Junho 2026</td>
+        <td>10/06/2026</td>
+        <td>5.000$00</td>
+        <td><span class="badge">Pendente</span></td>
+      </tr>
+    </table>
+
+    <div class="pagamento-box">
+      <h3>Simular pagamento</h3>
+
+      <label>Selecionar valor</label>
+      <select id="valorPagamento">
+        <option value="5000">Pagar Maio - 5.000$00</option>
+        <option value="10000">Pagar Maio + Junho - 10.000$00</option>
+      </select>
+
+      <label>Método de pagamento</label>
+      <select id="metodoPagamento">
+        <option>Referência bancária</option>
+        <option>Cartão Vinti4</option>
+        <option>Transferência bancária</option>
+        <option>Pagamento presencial</option>
+      </select>
+
+      <button class="gold" onclick="gerarReferenciaPagamento()">Gerar referência</button>
+
+      <div id="referenciaPagamento" class="referencia-box hidden"></div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
 
