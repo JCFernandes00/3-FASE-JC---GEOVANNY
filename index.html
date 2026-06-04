@@ -1875,15 +1875,48 @@ function gerarReferenciaPagamento(){
 }
 
 function confirmarPagamentoSimulado(){
-  document.getElementById("referenciaPagamento").innerHTML = `
-    <h3>✅ Pagamento simulado com sucesso</h3>
-    <p>O pagamento foi registado no sistema académico.</p>
-    <p><strong>Recibo:</strong> REC-UNICV-${Math.floor(1000 + Math.random() * 9000)}</p>
 
-    <button class="gold" onclick="alert('Recibo descarregado em modo simulação.')">
+  const recibo = "REC-UNICV-" + Math.floor(1000 + Math.random() * 9000);
+
+  document.getElementById("referenciaPagamento").innerHTML = `
+    <h3>✅ Pagamento processado com sucesso</h3>
+
+    <p>O pagamento foi registado no sistema académico.</p>
+
+    <p><strong>Recibo:</strong> ${recibo}</p>
+
+    <p>
+      📧 Comprovativo enviado para:
+      <strong>duartejean852@gmail.com</strong>
+    </p>
+
+    <p>
+      📅 Data:
+      <strong>${new Date().toLocaleString("pt-PT")}</strong>
+    </p>
+
+    <p><strong>Estado:</strong> Email entregue</p>
+
+    <button class="gold" onclick="verEmailRecibo('${recibo}')">
+      Ver Email
+    </button>
+
+    <button onclick="alert('Recibo descarregado em modo simulação.')">
       Baixar recibo
     </button>
   `;
+}
+
+function verEmailRecibo(recibo){
+  alert(
+    "EMAIL ENVIADO\n\n" +
+    "Para: duartejean852@gmail.com\n" +
+    "Assunto: Comprovativo de Pagamento\n\n" +
+    "O seu pagamento foi confirmado com sucesso.\n" +
+    "Recibo: " + recibo + "\n\n" +
+    "Universidade de Cabo Verde"
+  );
+}
   function abrirInscricoes(){
   document.getElementById("modalInscricoes").style.display = "flex";
 }
@@ -1891,7 +1924,7 @@ function confirmarPagamentoSimulado(){
 function fecharInscricoes(){
   document.getElementById("modalInscricoes").style.display = "none";
 }
-}
+
 function confirmarExameBD(){
 
   document
@@ -1946,7 +1979,7 @@ function baixarComprovativoExame(){
   alert(
     "Comprovativo de inscrição no exame gerado com sucesso."
   );
-
+ 
 }
 
     function sair(){
