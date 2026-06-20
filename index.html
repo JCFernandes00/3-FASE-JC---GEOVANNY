@@ -1,2221 +1,1707 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UniCV Future 2.0</title>
-
-  <style>
-    :root{
-      --red:#ab162a;
-      --red-dark:#7d0d1d;
-      --gold:#d6a84f;
-      --cream:#f6efe4;
-      --soft:#f7f4ef;
-      --ink:#111;
-      --muted:#6f6a62;
-      --line:#ded5c8;
-      --white:#fff;
-      --shadow:0 22px 60px rgba(0,0,0,.14);
-    }
-
-    *{box-sizing:border-box}
-
-    body{
-      margin:0;
-      background:var(--cream);
-      color:var(--ink);
-      font-family:Georgia,"Times New Roman",serif;
-    }
-
-    button,input,textarea,select{
-      font-family:Arial,sans-serif;
-    }
-
-    button{
-      border:0;
-      background:var(--red);
-      color:white;
-      padding:12px 18px;
-      cursor:pointer;
-      font-weight:700;
-    }
-
-    button:hover{background:var(--red-dark)}
-
-    button.light{
-      background:white;
-      color:var(--red);
-      border:1px solid var(--line);
-    }
-
-    button.dark{
-      background:var(--ink);
-      color:white;
-    }
-
-    button.gold{
-      background:var(--gold);
-      color:#1d1304;
-    }
-
-    input,textarea,select{
-      width:100%;
-      padding:12px;
-      border:1px solid var(--line);
-      background:white;
-      margin:8px 0 14px;
-      font-size:15px;
-    }
-
-    .hidden{display:none!important}
-
-    /* LOGIN FUTURISTA */
-
-    .future-login{
-      min-height:100vh;
-      display:grid;
-      grid-template-columns:1.15fr .85fr;
-      position:relative;
-      overflow:hidden;
-      background:#050505;
-      color:white;
-      font-family:Arial,sans-serif;
-    }
-
-    .future-bg{
-      position:absolute;
-      inset:0;
-      background:
-        linear-gradient(90deg, rgba(0,0,0,.18), rgba(0,0,0,.82)),
-        url("matricula_unicv-2.jpeg");
-      background-size:cover;
-      background-position:center;
-      z-index:0;
-      filter:brightness(.82) saturate(1.2);
-      animation:bgMove 16s ease-in-out infinite alternate;
-    }
-
-    @keyframes bgMove{
-      from{transform:scale(1.04) translateX(0)}
-      to{transform:scale(1.10) translateX(-22px)}
-    }
-
-    .future-grid{
-      position:absolute;
-      inset:0;
-      z-index:1;
-      background-image:
-        linear-gradient(rgba(255,255,255,.055) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.055) 1px, transparent 1px);
-      background-size:60px 60px;
-      mask-image:linear-gradient(to bottom, transparent, black, transparent);
-    }
-
-    .future-glow{
-      position:absolute;
-      width:420px;
-      height:420px;
-      border-radius:50%;
-      filter:blur(95px);
-      opacity:.72;
-      z-index:1;
-      animation:pulseGlow 7s infinite alternate ease-in-out;
-    }
-
-    .glow-1{
-      background:#ab162a;
-      top:-120px;
-      right:18%;
-    }
-
-    .glow-2{
-      background:#d6a84f;
-      bottom:-140px;
-      left:8%;
-    }
-
-    @keyframes pulseGlow{
-      from{transform:scale(1)}
-      to{transform:scale(1.25)}
-    }
-
-    .future-left,
-    .future-right{
-      position:relative;
-      z-index:2;
-    }
-
-    .future-left{
-      padding:60px;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:14px;
-      font-family:Arial,sans-serif;
-      font-weight:900;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-    }
-
-    .brand-logo{
-      width:48px;
-      height:48px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background:white;
-      border:1px solid rgba(255,255,255,.35);
-      padding:6px;
-      border-radius:14px;
-      overflow:hidden;
-    }
-
-    .brand-logo img{
-      width:36px;
-      height:36px;
-      object-fit:contain;
-      display:block;
-    }
-
-    .future-title-box{
-      max-width:780px;
-    }
-
-    .future-kicker{
-      color:#ffd27a;
-      font-size:12px;
-      font-weight:900;
-      letter-spacing:.22em;
-      text-transform:uppercase;
-    }
-
-    .future-title-box h1{
-      margin:20px 0;
-      font-family:Georgia,serif;
-      font-size:clamp(54px,8vw,105px);
-      line-height:.88;
-      color:white;
-      text-shadow:0 25px 70px rgba(0,0,0,.65);
-    }
-
-    .future-title-box p{
-      max-width:620px;
-      font-size:21px;
-      line-height:1.55;
-      color:rgba(255,255,255,.85);
-    }
-
-    .future-stats{
-      display:flex;
-      gap:16px;
-      flex-wrap:wrap;
-    }
-
-    .future-stats div{
-      min-width:145px;
-      padding:18px;
-      border-radius:20px;
-      background:rgba(255,255,255,.10);
-      border:1px solid rgba(255,255,255,.20);
-      backdrop-filter:blur(18px);
-    }
-
-    .future-stats strong{
-      display:block;
-      font-size:30px;
-      color:#ffd27a;
-    }
-
-    .future-stats span{
-      font-size:13px;
-      color:rgba(255,255,255,.75);
-    }
-
-    .future-right{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:50px;
-    }
-
-    .future-card{
-      width:100%;
-      max-width:470px;
-      padding:38px;
-      border-radius:30px;
-      background:rgba(20,20,20,.55);
-      border:1px solid rgba(255,255,255,.25);
-      box-shadow:0 30px 100px rgba(0,0,0,.60);
-      backdrop-filter:blur(28px);
-      animation:cardEnter .8s ease both;
-    }
-
-    @keyframes cardEnter{
-      from{opacity:0;transform:translateY(30px) scale(.96)}
-      to{opacity:1;transform:translateY(0) scale(1)}
-    }
-
-    .future-logo{
-      width:86px;
-      display:block;
-      margin:0 auto 20px;
-    }
-
-    .future-card h2{
-      text-align:center;
-      font-size:38px;
-      margin:0;
-      color:white;
-    }
-
-    .future-card p{
-      text-align:center;
-      color:rgba(255,255,255,.75);
-    }
-
-    .future-role-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:14px;
-      margin:24px 0;
-    }
-
-    .future-role{
-      padding:22px 16px;
-      border-radius:22px;
-      background:rgba(255,255,255,.10);
-      border:1px solid rgba(255,255,255,.22);
-      color:white;
-      text-align:center;
-      transition:.3s ease;
-    }
-
-    .future-role:hover{
-      transform:translateY(-8px);
-      box-shadow:0 18px 50px rgba(171,22,42,.45);
-    }
-
-    .future-role.active{
-      background:linear-gradient(135deg,#0066ff,#00b7ff);
-    }
-
-    .future-role span{
-      display:block;
-      font-size:30px;
-      margin-bottom:8px;
-    }
-
-    .future-role strong{
-      display:block;
-      font-size:17px;
-    }
-
-    .future-role small{
-      opacity:.75;
-    }
-
-    .future-card label{
-      font-weight:700;
-      font-size:14px;
-    }
-
-    .future-card input{
-      border-radius:16px;
-      background:rgba(255,255,255,.12);
-      border:1px solid rgba(255,255,255,.28);
-      color:white;
-      outline:none;
-    }
-
-    .future-options{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:12px;
-      margin:4px 0 18px;
-      font-size:13px;
-    }
-
-    .future-options label{
-      display:flex;
-      align-items:center;
-      gap:8px;
-    }
-
-    .future-options input{
-      width:auto;
-      margin:0;
-    }
-
-    .future-options a{
-      color:#ffd27a;
-      text-decoration:none;
-    }
-
-    .future-login-btn{
-  width:100%;
-  border-radius:18px;
-  padding:16px;
-  background:linear-gradient(135deg,#0066ff,#00b7ff);
-  color:white;
-  font-weight:900;
-  font-size:16px;
-  box-shadow:0 18px 45px rgba(0,102,255,.45);
-  transition:.3s;
-}
-    
-
-    .future-demo{
-      font-size:13px;
-      margin-bottom:0;
-    }
-
-    .login-exit{
-      animation:loginExit .7s forwards ease-in-out;
-    }
-
-    @keyframes loginExit{
-      to{
-        opacity:0;
-        transform:scale(1.04);
-        filter:blur(10px);
-      }
-    }
-
-    /* APP */
-
-    .app{display:none}
-
-    .topbar{
-      min-height:76px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:0 36px;
-      background:var(--cream);
-      border-bottom:1px solid var(--line);
-      position:sticky;
-      top:0;
-      z-index:20;
-      gap:20px;
-    }
-
-    .nav{
-      display:flex;
-      gap:20px;
-      align-items:center;
-      font-family:Arial,sans-serif;
-      font-weight:700;
-      font-size:14px;
-      flex-wrap:wrap;
-    }
-
-    .nav span{
-      cursor:pointer;
-    }
-
-    .future-login-btn:hover{
-  transform:translateY(-3px);
-  background:linear-gradient(135deg,#0052cc,#00cfff);
-  box-shadow:0 20px 55px rgba(0,183,255,.55);
-}
-
-    .profile-chip{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      font-family:Arial,sans-serif;
-      font-weight:700;
-    }
-
-    .avatar{
-      width:38px;
-      height:38px;
-      display:grid;
-      place-items:center;
-      background:var(--red);
-      color:white;
-      border-radius:50%;
-      font-size:13px;
-    }
-
-    .section{
-      display:none;
-      animation:fade .25s ease;
-    }
-
-    .section.active{display:block}
-
-    @keyframes fade{
-      from{opacity:0;transform:translateY(10px)}
-      to{opacity:1;transform:translateY(0)}
-    }
-
-    .kicker{
-      font-family:Arial,sans-serif;
-      color:var(--red);
-      font-weight:900;
-      text-transform:uppercase;
-      letter-spacing:.16em;
-      font-size:12px;
-    }
-
-    .editorial-hero{
-      min-height:calc(100vh - 76px);
-      display:grid;
-      grid-template-columns:1.15fr .85fr;
-      border-bottom:1px solid var(--line);
-    }
-
-    .editorial-text{
-      padding:70px;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-    }
-
-    .editorial-text h1{
-      font-size:clamp(54px,7vw,98px);
-      line-height:.92;
-      margin:18px 0 22px;
-    }
-
-    .editorial-text p{
-      font-size:21px;
-      color:#3b352f;
-      line-height:1.55;
-      max-width:760px;
-    }
-
-    .hero-actions{
-      margin-top:30px;
-      display:flex;
-      gap:14px;
-      flex-wrap:wrap;
-    }
-
-    .editorial-image{
-      background:
-        linear-gradient(rgba(171,22,42,.1),rgba(0,0,0,.18)),
-        url("matricula_unicv-2.jpeg");
-      background-size:cover;
-      background-position:center;
-      min-height:600px;
-    }
-
-    .feature-row{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      border-bottom:1px solid var(--line);
-    }
-
-    .feature{
-      padding:38px;
-      min-height:240px;
-      border-right:1px solid var(--line);
-      background:var(--soft);
-    }
-
-    .feature:last-child{border-right:0}
-
-    .feature h3{
-      font-size:30px;
-      margin:10px 0;
-    }
-
-    .feature p{
-      color:var(--muted);
-      font-family:Arial,sans-serif;
-      line-height:1.5;
-    }
-
-    .workspace{
-      min-height:calc(100vh - 76px);
-      display:grid;
-      grid-template-columns:285px 1fr;
-      background:#111;
-      color:white;
-      font-family:Arial,sans-serif;
-    }
-
-    .teacher-area .workspace{
-      background:#f5f1e9;
-      color:var(--ink);
-    }
-
-    .side{
-      padding:28px;
-      border-right:1px solid rgba(255,255,255,.12);
-      background:#171717;
-    }
-
-    .teacher-area .side{
-      background:var(--red);
-      color:white;
-      border-right:0;
-    }
-
-    .side h2{
-      font-family:Georgia,serif;
-      font-size:34px;
-      line-height:1;
-      margin:20px 0;
-    }
-
-    .side p{
-      color:#d8d8d8;
-      line-height:1.5;
-    }
-
-    .teacher-area .side p{color:#ffe3e8}
-
-    .side-menu{
-      display:grid;
-      gap:10px;
-      margin-top:24px;
-    }
-
-    .side-menu button{
-      text-align:left;
-      background:rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.14);
-    }
-
-    .side-menu button.active{
-      background:var(--gold);
-      color:#1d1304;
-    }
-
-    .work-content{
-      padding:36px;
-    }
-
-    .work-section{display:none}
-    .work-section.active{display:block}
-
-    .page-title h1{
-      font-family:Georgia,serif;
-      font-size:54px;
-      line-height:1;
-      margin:10px 0 24px;
-    }
-
-    .cards{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:18px;
-      margin-bottom:22px;
-    }
-
-    .card{
-      background:#1b1b1b;
-      border:1px solid rgba(255,255,255,.12);
-      padding:24px;
-      color:white;
-    }
-
-    .teacher-area .card{
-      background:white;
-      color:var(--ink);
-      border:1px solid var(--line);
-      box-shadow:0 12px 40px rgba(0,0,0,.08);
-    }
-
-    .card h3{
-      margin:0 0 14px;
-      font-size:25px;
-      font-family:Georgia,serif;
-    }
-
-    .card p{
-      color:#d8d8d8;
-      line-height:1.5;
-    }
-
-    .teacher-area .card p{color:var(--muted)}
-
-    .stat strong{
-      display:block;
-      font-size:42px;
-      color:var(--gold);
-      margin:10px 0 3px;
-    }
-
-    .teacher-area .stat strong{color:var(--red)}
-
-    .grid-2{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:20px;
-    }
-
-    .grid-3{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:20px;
-    }
-
-    .timeline{
-      display:grid;
-      gap:12px;
-    }
-
-    .step{
-      display:grid;
-      grid-template-columns:85px 1fr;
-      gap:16px;
-      padding:16px;
-      background:rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.1);
-    }
-
-    .teacher-area .step{
-      background:var(--soft);
-      border:1px solid var(--line);
-    }
-
-    .step-time{
-      color:var(--gold);
-      font-weight:900;
-    }
-
-    table{
-      width:100%;
-      border-collapse:collapse;
-      font-family:Arial,sans-serif;
-      background:white;
-      color:var(--ink);
-    }
-
-    th,td{
-      padding:14px;
-      border-bottom:1px solid var(--line);
-      text-align:left;
-    }
-
-    th{
-      background:var(--soft);
-      color:var(--red);
-    }
-
-    .badge{
-      display:inline-block;
-      padding:6px 10px;
-      background:var(--soft);
-      color:var(--red);
-      font-family:Arial,sans-serif;
-      font-weight:900;
-      font-size:12px;
-    }
-
-    .progress{
-      background:#333;
-      height:12px;
-      overflow:hidden;
-      margin-top:8px;
-    }
-
-    .progress span{
-      display:block;
-      height:100%;
-      background:var(--gold);
-    }
-
-    .modal{
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,.55);
-      display:none;
-      align-items:center;
-      justify-content:center;
-      z-index:100;
-      padding:20px;
-    }
-
-    .modal-content{
-      background:white;
-      padding:34px;
-      max-width:640px;
-      width:100%;
-      box-shadow:var(--shadow);
-      color:var(--ink);
-    }
-
-    .modal-content h2{
-      font-size:38px;
-      margin:0 0 12px;
-    }
-
-    @media(max-width:950px){
-      .future-login,
-      .editorial-hero,
-      .workspace,
-      .grid-2,
-      .grid-3{
-        grid-template-columns:1fr;
-      }
-
-      .feature-row,
-      .cards{
-        grid-template-columns:1fr;
-      }
-
-      .topbar{
-        align-items:flex-start;
-        flex-direction:column;
-        padding:18px;
-      }
-
-      .future-left{
-        padding:28px;
-        min-height:55vh;
-      }
-
-      .future-right{
-        padding:24px;
-      }
-
-      .future-title-box h1{
-        font-size:46px;
-      }
-
-      .future-role-grid{
-        grid-template-columns:1fr;
-      }
-
-      .editorial-text,
-      .work-content,
-      .side{
-        padding:26px;
-      }
-
-      .editorial-text h1,
-      .page-title h1{
-        font-size:42px;
-      }
-      .loading-screen{
-  position:fixed;
-  inset:0;
-  background:#050505;
-  display:none;
-  justify-content:center;
-  align-items:center;
-  z-index:9999;
-}
-
-.loading-content{
-  width:420px;
-  text-align:center;
-  color:white;
-  font-family:Arial,sans-serif;
-}
-
-.loading-logo{
-  width:100px;
-  margin-bottom:25px;
-}
-
-.loading-content h1{
-  margin:0;
-  font-size:42px;
-  letter-spacing:.12em;
-}
-
-.loading-content p{
-  color:rgba(255,255,255,.75);
-  margin:18px 0;
-}
-
-.loading-bar{
-  width:100%;
-  height:12px;
-  background:#222;
-  border-radius:20px;
-  overflow:hidden;
-}
-
-#loadingProgress{
-  width:0%;
-  height:100%;
-  background:linear-gradient(90deg,#ab162a,#ef304b);
-  transition:.15s;
-}
-
-#loadingPercent{
-  display:block;
-  margin-top:15px;
-  font-size:22px;
-  font-weight:900;
-  color:#ffd27a;
-}
-.loading-screen{
-  display:none;
-}
-/* LOADING FUTURISTA PREMIUM */
-
-.loading-screen{
-  position:fixed;
-  inset:0;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:99999;
-  background:
-    linear-gradient(rgba(0,0,0,.78), rgba(0,0,0,.9)),
-    url("matricula_unicv-2.jpeg");
-  background-size:cover;
-  background-position:center;
-  color:white;
-  font-family:Arial,sans-serif;
-}
-
-.loading-screen::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:
-    radial-gradient(circle at 50% 45%, rgba(171,22,42,.35), transparent 28%),
-    radial-gradient(circle at 70% 20%, rgba(214,168,79,.18), transparent 30%);
-}
-
-.loading-content{
-  position:relative;
-  z-index:2;
-  text-align:center;
-  width:460px;
-}
-
-.loading-logo{
-  width:150px;
-  margin-bottom:22px;
-  filter:drop-shadow(0 0 25px rgba(171,22,42,.6));
-}
-
-.loading-content h1{
-  font-size:28px;
-  letter-spacing:.45em;
-  margin:0;
-  color:white;
-}
-
-.loading-content h1 span{
-  color:#d6a84f;
-}
-
-.loading-content p{
-  margin:18px 0 28px;
-  color:rgba(255,255,255,.75);
-}
-
-.loading-circle{
-  width:150px;
-  height:150px;
-  margin:0 auto 26px;
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  background:
-    conic-gradient(#ef304b 0deg, #ef304b 0deg, rgba(255,255,255,.12) 0deg);
-  box-shadow:0 0 45px rgba(239,48,75,.55);
-}
-
-.loading-circle-inner{
-  width:118px;
-  height:118px;
-  border-radius:50%;
-  background:#090909;
-  display:grid;
-  place-items:center;
-  border:1px solid rgba(255,255,255,.18);
-}
-
-#loadingPercent{
-  font-size:34px;
-  font-weight:900;
-  color:white;
-}
-
-.loading-modules{
-  display:flex;
-  justify-content:center;
-  gap:28px;
-  flex-wrap:wrap;
-  margin-top:28px;
-  color:rgba(255,255,255,.82);
-  font-size:14px;
-}
-
-.loading-modules span{
-  border-right:1px solid rgba(214,168,79,.45);
-  padding-right:24px;
-}
-
-.loading-modules span:last-child{
-  border-right:0;
-}
-    
-}.modal-docente{
-  position:fixed;
-  inset:0;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  background:rgba(0,0,0,.8);
-  z-index:9999;
-}
-
-.modal-docente-card{
-  width:90%;
-  max-width:700px;
-  background:#171717;
-  color:white;
-  padding:35px;
-  border-radius:24px;
-  border:1px solid rgba(255,255,255,.15);
-  box-shadow:0 30px 100px rgba(0,0,0,.6);
-}
-
-.modal-close{
-  float:right;
-  width:42px;
-  height:42px;
-  border-radius:50%;
-}
-
-.docente-header{
-  display:flex;
-  gap:20px;
-  align-items:center;
-}
-
-.docente-avatar{
-  width:90px;
-  height:90px;
-  border-radius:20px;
-  display:grid;
-  place-items:center;
-  font-size:34px;
-  font-weight:900;
-  background:linear-gradient(135deg,#ab162a,#ef304b);
-}
-
-.docente-grid{
-  margin-top:25px;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:15px;
-}
-
-.docente-grid div{
-  padding:15px;
-  border-radius:16px;
-  background:rgba(255,255,255,.08);
-}
-
-.docente-grid strong{
-  display:block;
-  color:#ffd27a;
-}
-
-.docente-actions{
-  margin-top:25px;
-  display:flex;
-  gap:10px;
-}
-.modal-financeiro{
-  position:fixed;
-  inset:0;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  background:rgba(0,0,0,.82);
-  z-index:9999;
-  padding:24px;
-}
-
-.financeiro-card{
-  width:100%;
-  max-width:920px;
-  max-height:90vh;
-  overflow:auto;
-  background:linear-gradient(145deg, #151515, #2a1116);
-  color:white;
-  padding:36px;
-  border-radius:30px;
-  border:1px solid rgba(255,255,255,.18);
-  box-shadow:0 30px 100px rgba(0,0,0,.65);
-  position:relative;
-  font-family:Arial,sans-serif;
-}
-
-.financeiro-card h2{
-  font-family:Georgia,serif;
-  font-size:44px;
-  margin:8px 0;
-}
-
-.financeiro-card p{
-  color:rgba(255,255,255,.75);
-}
-
-.financeiro-kicker{
-  color:#ffd27a;
-  text-transform:uppercase;
-  letter-spacing:.18em;
-  font-size:12px;
-  font-weight:900;
-}
-
-.financeiro-resumo{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:16px;
-  margin:28px 0;
-}
-
-.financeiro-resumo div{
-  padding:20px;
-  border-radius:20px;
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.14);
-}
-
-.financeiro-resumo strong{
-  display:block;
-  font-size:28px;
-  color:#ffd27a;
-  margin-bottom:6px;
-}
-
-.financeiro-resumo span{
-  color:rgba(255,255,255,.75);
-  font-size:13px;
-}
-
-.pagamento-box{
-  margin-top:26px;
-  padding:24px;
-  border-radius:22px;
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.14);
-}
-
-.referencia-box{
-  margin-top:20px;
-  padding:22px;
-  border-radius:20px;
-  background:#0f0f0f;
-  border:1px solid rgba(214,168,79,.35);
-}
-
-.referencia-box strong{
-  color:#ffd27a;
-}
-
-.modal-close{
-  position:absolute;
-  top:18px;
-  right:18px;
-  width:42px;
-  height:42px;
-  border-radius:50%;
-  padding:0;
-  background:rgba(255,255,255,.12);
-  color:white;
-  font-size:26px;
-}
-
-@media(max-width:760px){
-  .financeiro-resumo{
-    grid-template-columns:1fr;
-  }
-
-  .financeiro-card{
-    padding:24px;
-  }
-}
-  </style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniCV Future</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        .app-toast{position:fixed;right:28px;bottom:28px;max-width:360px;background:#2c2a2b;color:#fff;padding:14px 18px;border-radius:14px;box-shadow:0 18px 40px rgba(0,0,0,.25);opacity:0;pointer-events:none;transform:translateY(12px);transition:.25s;z-index:3000;font-weight:700}.app-toast.show{opacity:1;transform:translateY(0)}.modal-backdrop{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(15,23,42,.52);z-index:2500}.modal-backdrop.show{display:flex}.app-modal{width:100%;max-width:440px;background:#fff;border-radius:22px;padding:26px;box-shadow:0 24px 70px rgba(0,0,0,.28)}.app-modal span{color:#8b0f22;font-size:13px;font-weight:900}.app-modal h2{margin-top:8px;color:#0f172a;font-family:'Poppins',Arial,sans-serif}.app-modal p{margin-top:8px;color:#64748b;line-height:1.5}.modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:22px}.modal-actions button{border:1px solid #e5e7eb;background:#f8fafc;color:#475569;padding:11px 14px;border-radius:12px;font-weight:900}.modal-actions button:last-child{background:#8b0f22;border-color:#8b0f22;color:#fff}body.dark-mode .app-modal{background:#202124;border:1px solid #303238}body.dark-mode .app-modal h2{color:#f8fafc}body.dark-mode .app-modal p{color:#a8b0bd}
+    </style>
 </head>
-
 <body>
-  <section id="login" class="future-login">
-    <div class="future-bg"></div>
-    <div class="future-grid"></div>
-    <div class="future-glow glow-1"></div>
-    <div class="future-glow glow-2"></div>
 
-    <div class="future-left">
-      <div class="brand">
-        <div class="brand-logo">
-          <img src="logotipo_unicv_final.png" alt="Logo Uni-CV">
-        </div>
-        <div>UniCV Future</div>
-      </div>
-
-      <div class="future-title-box">
-        <span class="future-kicker">Portal Académico Inteligente</span>
-        <h1>O futuro da experiência universitária.</h1>
-        <p>
-          Uma plataforma académica moderna para alunos e docentes da Universidade de Cabo Verde,
-          com serviços digitais, jornada personalizada e apoio inteligente.
-        </p>
-      </div>
-
-      <div class="future-stats">
-        <div><strong>2030</strong><span>Visão digital</span></div>
-        <div><strong>AI</strong><span>Suporte académico</span></div>
-        <div><strong>24/7</strong><span>Serviços online</span></div>
-      </div>
-    </div>
-
-    <div class="future-right">
-      <div class="future-card">
-        <img src="logotipo_unicv_final.png" class="future-logo" alt="Logo Uni-CV">
-
-        <h2>Bem-vindo</h2>
-        <p>Escolhe o teu perfil para entrar na plataforma.</p>
-
-        <div class="future-role-grid">
-          <button class="future-role active" id="roleAluno" onclick="selecionarPerfil('aluno')">
-            <span>🎓</span>
-            <strong>Aluno</strong>
-            <small>Student Journey</small>
-          </button>
-
-          <button class="future-role" id="roleDocente" onclick="selecionarPerfil('docente')">
-            <span>👩‍🏫</span>
-            <strong>Docente</strong>
-            <small>Teaching Studio</small>
-          </button>
-        </div>
-
-        <label>Número / E-mail</label>
-        <input id="loginUser" value="158656">
-
-        <label>Palavra-passe</label>
-        <input id="loginPass" type="password" value="1234">
-
-        <div class="future-options">
-          <label>
-            <input type="checkbox" checked>
-            Lembrar-me
-          </label>
-          <a href="#">Esqueceu?</a>
-        </div>
-
-        <button class="future-login-btn" onclick="entrar()">Entrar na plataforma</button>
-        <p class="future-demo">Demo: usa a senha <strong>1234</strong>.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="app" class="app">
-    <div class="topbar">
-      <div class="brand">
-        <div class="brand-logo">
-          <img src="logotipo_unicv_final.png" alt="Logo Uni-CV">
-        </div>
-        <div>UniCV Future</div>
-      </div>
-
-      <div id="nav" class="nav"></div>
-
-      <div class="profile-chip">
-        <div id="avatar" class="avatar">JC</div>
-        <span id="chipNome">Jean Claude</span>
-      </div>
-    </div>
-
-    <section id="home" class="section active">
-      <div class="editorial-hero">
-        <div class="editorial-text">
-          <span class="kicker">UniCV Future 2.0</span>
-          <h1>Educação superior para uma nova geração atlântica.</h1>
-          <p>
-            Uma plataforma universitária integrada, organizada por jornada:
-            curso, serviços académicos, calendário, apoio, carreira e inteligência académica.
-          </p>
-
-          <div class="hero-actions">
-            <button onclick="entrarDireto('aluno')">Explorar Student Journey</button>
-            <button class="light" onclick="entrarDireto('docente')">Entrar no Teaching Studio</button>
-            <button class="dark" onclick="abrirSite()">Site oficial Uni-CV</button>
-          </div>
-        </div>
-
-        <div class="editorial-image"></div>
-      </div>
-
-      <div class="feature-row">
-        <div class="feature">
-          <span class="kicker">Curso</span>
-          <h3>Primeiro o curso, depois as disciplinas.</h3>
-          <p>O estudante entra em Tecnologia e Multimédia e consulta plano curricular, unidades, notas e docentes.</p>
-        </div>
-
-        <div class="feature">
-          <span class="kicker">Serviços</span>
-          <h3>Balcão académico online.</h3>
-          <p>Documentos, propinas, requerimentos, inscrições, bolsa, recibos e suporte técnico num só menu.</p>
-        </div>
-
-        <div class="feature">
-          <span class="kicker">Apoio</span>
-          <h3>Chatbot e suporte técnico.</h3>
-          <p>O aluno pode perguntar como pedir documentos, consultar prazos, abrir tickets e receber orientação.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="studentArea" class="section student-area">
-      <div class="workspace">
-        <aside class="side">
-          <span class="kicker">Student Journey</span>
-          <h2>Jean Claude Duarte Fernandes</h2>
-          <p>Nº 158656 · Tecnologia e Multimédia</p>
-          <div id="studentMenu" class="side-menu"></div>
-        </aside>
-
-        <main class="work-content">
-          <div id="studentDashboard" class="work-section active"></div>
-          <div id="studentCurso" class="work-section"></div>
-          <div id="studentServicos" class="work-section"></div>
-          <div id="studentCalendario" class="work-section"></div>
-          <div id="studentApoio" class="work-section"></div>
-          <div id="studentUniAI" class="work-section"></div>
-          <div id="studentCarreira" class="work-section"></div>
-          <div id="studentVida" class="work-section"></div>
-          <div id="studentPerfil" class="work-section"></div>
-        </main>
-      </div>
-    </section>
-
-    <section id="teacherArea" class="section teacher-area">
-      <div class="workspace">
-        <aside class="side">
-          <span class="kicker" style="color:#ffd5dc">Teaching Studio</span>
-          <h2>Cleonice Moreira</h2>
-          <p>Laboratório de Projeto Multimédia I · Departamento de Tecnologias e Multimédia</p>
-          <div id="teacherMenu" class="side-menu"></div>
-        </aside>
-
-        <main class="work-content">
-          <div id="teacherDashboard" class="work-section active"></div>
-          <div id="teacherDisciplinas" class="work-section"></div>
-          <div id="teacherTurmas" class="work-section"></div>
-          <div id="teacherPresencas" class="work-section"></div>
-          <div id="teacherAvaliacoes" class="work-section"></div>
-          <div id="teacherConteudos" class="work-section"></div>
-          <div id="teacherMensagens" class="work-section"></div>
-          <div id="teacherAgenda" class="work-section"></div>
-          <div id="teacherAnalytics" class="work-section"></div>
-          <div id="teacherPerfil" class="work-section"></div>
-        </main>
-      </div>
-    </section>
-  </section>
-
-  <div id="modalAI" class="modal">
-    <div class="modal-content">
-      <h2>UniAI</h2>
-      <p>Assistente académico experimental.</p>
-      <label>Pergunta</label>
-      <input id="perguntaAI" placeholder="Ex.: Como peço uma declaração de matrícula?">
-      <button onclick="responderAI()">Perguntar</button>
-      <p id="respostaAI"></p>
-      <button class="light" onclick="fecharAI()">Fechar</button>
-    </div>
-  </div>
-
-  <script>
-    let perfilAtual = "aluno";
-    function testarBotao(){
-  alert("O botão está funcionando");
-}
-
-    const studentMenuItems = [
-      ["studentDashboard","Dashboard"],
-      ["studentCurso","O Meu Curso"],
-      ["studentServicos","Serviços Académicos"],
-      ["studentCalendario","Calendário Académico"],
-      ["studentApoio","Centro de Apoio"],
-      ["studentUniAI","UniAI"],
-      ["studentCarreira","Carreira"],
-      ["studentVida","Vida Académica"],
-      ["studentPerfil","Perfil"]
-    ];
-
-    const teacherMenuItems = [
-      ["teacherDashboard","Dashboard"],
-      ["teacherDisciplinas","Minhas Disciplinas"],
-      ["teacherTurmas","Turmas"],
-      ["teacherPresencas","Presenças"],
-      ["teacherAvaliacoes","Avaliações"],
-      ["teacherConteudos","Conteúdos"],
-      ["teacherMensagens","Mensagens"],
-      ["teacherAgenda","Agenda"],
-      ["teacherAnalytics","Analytics"],
-      ["teacherPerfil","Perfil"]
-    ];
-
-    function selecionarPerfil(perfil){
-      perfilAtual = perfil;
-      document.getElementById("roleAluno").classList.toggle("active", perfil === "aluno");
-      document.getElementById("roleDocente").classList.toggle("active", perfil === "docente");
-      document.getElementById("loginUser").value = perfil === "aluno" ? "158656" : "cleonice@unicv.edu.cv";
-    }
-
-  function entrar(){
-  const senha = document.getElementById("loginPass").value;
-
-  if(senha !== "1234"){
-    alert("Senha errada. Usa 1234.");
-    return;
-  }
-
-  const login = document.getElementById("login");
-  const app = document.getElementById("app");
-  const loading = document.getElementById("loadingScreen");
-  const circle = document.getElementById("loadingCircle");
-  const percent = document.getElementById("loadingPercent");
-  const loadingText = document.getElementById("loadingText");
-
-  if(!login || !app || !loading || !circle || !percent || !loadingText){
-    alert("Erro: algum elemento do loading/login não foi encontrado.");
-    return;
-  }
-
-  login.style.display = "none";
-  loading.style.display = "flex";
-
-  let progresso = 0;
-
-  const timer = setInterval(function(){
-    progresso += 2;
-
-    percent.innerText = progresso + "%";
-
-    const graus = progresso * 3.6;
-
-    circle.style.background =
-      "conic-gradient(#ef304b " + graus + "deg, rgba(255,255,255,.12) " + graus + "deg)";
-
-    if(progresso >= 100){
-      clearInterval(timer);
-
-      percent.innerHTML = "✓";
-
-      circle.style.background =
-        "conic-gradient(#00b7ff 360deg, #00b7ff 360deg)";
-
-      circle.style.boxShadow =
-        "0 0 70px rgba(0,183,255,.85)";
-
-      loadingText.innerHTML = "✅ Sistema Inicializado";
-
-      setTimeout(function(){
-        loading.style.display = "none";
-        app.style.display = "block";
-        configurarApp();
-      }, 1200);
-    }
-  }, 30);
-}
-
-    function entrarDireto(perfil){
-      perfilAtual = perfil;
-      document.getElementById("login").style.display = "none";
-      document.getElementById("app").style.display = "block";
-      configurarApp();
-    }
-
-    function configurarApp(){
-      renderMenus();
-      renderStudent();
-      renderTeacher();
-
-      if(perfilAtual === "aluno"){
-        document.getElementById("avatar").innerText = "JC";
-        document.getElementById("chipNome").innerText = "Jean Claude";
-        renderNavAluno();
-        mostrar("studentArea");
-        abrirStudent("studentDashboard");
-      }else{
-        document.getElementById("avatar").innerText = "CM";
-        document.getElementById("chipNome").innerText = "Cleonice";
-        renderNavDocente();
-        mostrar("teacherArea");
-        abrirTeacher("teacherDashboard");
-      }
-    }
-
-    function renderNavAluno(){
-      document.getElementById("nav").innerHTML = `
-        <span onclick="mostrar('home')">Home</span>
-        <span onclick="mostrar('studentArea')">Minha área</span>
-        <span onclick="abrirSite()">Site</span>
-        <span onclick="abrirMoodle()">Moodle</span>
-        <span onclick="sair()">Sair</span>
-      `;
-    }
-
-    function renderNavDocente(){
-      document.getElementById("nav").innerHTML = `
-        <span onclick="mostrar('home')">Home</span>
-        <span onclick="mostrar('teacherArea')">Teaching Studio</span>
-        <span onclick="abrirSite()">Site</span>
-        <span onclick="abrirMoodle()">Moodle</span>
-        <span onclick="sair()">Sair</span>
-      `;
-    }
-
-    function renderMenus(){
-      document.getElementById("studentMenu").innerHTML = studentMenuItems.map((i,idx)=>`
-        <button class="${idx===0?'active':''}" onclick="abrirStudent('${i[0]}', this)">${i[1]}</button>
-      `).join("");
-
-      document.getElementById("teacherMenu").innerHTML = teacherMenuItems.map((i,idx)=>`
-        <button class="${idx===0?'active':''}" onclick="abrirTeacher('${i[0]}', this)">${i[1]}</button>
-      `).join("");
-    }
-
-    function mostrar(id){
-      document.querySelectorAll(".section").forEach(sec=>sec.classList.remove("active"));
-      document.getElementById(id).classList.add("active");
-      window.scrollTo({top:0,behavior:"smooth"});
-    }
-
-    function abrirStudent(id, btn){
-      document.querySelectorAll("#studentArea .work-section").forEach(s=>s.classList.remove("active"));
-      document.getElementById(id).classList.add("active");
-      document.querySelectorAll("#studentMenu button").forEach(b=>b.classList.remove("active"));
-      if(btn) btn.classList.add("active");
-    }
-
-    function abrirTeacher(id, btn){
-      document.querySelectorAll("#teacherArea .work-section").forEach(s=>s.classList.remove("active"));
-      document.getElementById(id).classList.add("active");
-      document.querySelectorAll("#teacherMenu button").forEach(b=>b.classList.remove("active"));
-      if(btn) btn.classList.add("active");
-    }
-
-    function renderStudent(){
-      studentDashboard.innerHTML = `
-        <div class="page-title">
-          <span class="kicker">Dashboard</span>
-          <h1>Bom dia, Jean Claude.</h1>
-        </div>
-
-        <div class="cards">
-          <div class="card stat"><span>Percurso académico</span><strong>78%</strong><small>conclusão estimada</small></div>
-          <div class="card stat"><span>Média atual</span><strong>16</strong><small>valores</small></div>
-          <div class="card stat"><span>Propina</span><strong>OK</strong><small>situação regular</small></div>
-          <div class="card stat"><span>Pedidos</span><strong>2</strong><small>em processamento</small></div>
-        </div>
-
-        <div class="grid-2">
-          <div class="card">
-            <h3>Próxima aula</h3>
-            <div class="step">
-              <div class="step-time">09:00</div>
-              <div><strong>Laboratório de Projeto Multimédia I</strong><br>Lab 2 · Cleonice Moreira</div>
-            </div>
-          </div>
-
-          <div class="card">
-            <h3>Student Journey</h3>
-            <p>Créditos concluídos: 72 ECTS</p>
-            <div class="progress"><span style="width:78%"></span></div>
-            <p>Estimativa de graduação: Julho 2028</p>
-          </div>
-        </div>
-      `;
-
-      studentCurso.innerHTML = `
-        <div class="page-title"><span class="kicker">O Meu Curso</span><h1>Tecnologia e Multimédia</h1></div>
-        <div class="grid-2">
-          <div class="card">
-            <h3>Resumo do curso</h3>
-            <p><strong>Ano:</strong> 2.º Ano</p>
-            <p><strong>Estado:</strong> Matrícula ativa</p>
-            <p><strong>Créditos concluídos:</strong> 72 ECTS</p>
-            <p><strong>Unidades concluídas:</strong> 24 / 30</p>
-          </div>
-          <div class="card">
-            <h3>Docente em destaque</h3>
-            <p><strong>Cleonice Moreira</strong></p>
-            <p>Laboratório de Projeto Multimédia I</p>
-            <p>Atendimento: Quarta-feira, 15:00 - 17:00</p>
-            <button class="gold" onclick="abrirPerfilDocente()">
-  Conhecer a Docente
+    <!-- LOGIN -->
+<main class="login-page">
+    <button type="button" onclick="toggleTema()" class="login-theme-floating">
+    Claro/Escuro
 </button>
-          </div>
-        </div>
-        <br>
-        <table>
-          <tr><th>Ano</th><th>Unidade Curricular</th><th>Docente</th><th>Créditos</th><th>Estado</th><th>Nota</th></tr>
-          <tr><td>2.º</td><td>Introdução a Base de Dados</td><td>Celistino</td><td>6</td><td>Concluída</td><td>15</td></tr>
-          <tr><td>2.º</td><td>Gestão de Projetos Multimédia</td><td>Domingos Andrade</td><td>5</td><td>Concluída</td><td>16</td></tr>
-          <tr><td>2.º</td><td>Tecnologia Web 2</td><td>Elcelina Silva</td><td>6</td><td>Em curso</td><td>17</td></tr>
-          <tr><td>2.º</td><td>Laboratório de Projeto Multimédia I</td><td>Cleonice Moreira</td><td>6</td><td>Em avaliação</td><td>—</td></tr>
-        </table>
-      `;
+    <section class="login-panel">
+        <div class="login-card">
+            <img src="logotipo_unicv_final.png" class="logo" alt="Logotipo UniCV">
 
-      studentServicos.innerHTML = `
-        <div class="page-title"><span class="kicker">Serviços Académicos</span><h1>Balcão Online</h1></div>
-        <div class="grid-3">
-          <div class="card"><h3>Declaração de matrícula</h3><p>Documento para comprovar inscrição ativa.</p><button onclick="alert('Pedido registado.')">Solicitar</button></div>
-          <div class="card"><h3>Certificado de notas</h3><p>Histórico de notas lançadas.</p><button onclick="alert('Pedido registado.')">Solicitar</button></div>
-          <div class="card"><h3>Declaração de frequência</h3><p>Documento para bolsa, estágio ou trabalho.</p><button onclick="alert('Pedido registado.')">Solicitar</button></div>
-          <div class="card">
-  <h3>Financeiro</h3>
-  <p>Propinas, dívidas, recibos e referências de pagamento.</p>
-  <button onclick="abrirFinanceiro()">Pagar propina</button>
+            <form>
+                <input id="studentNumber" type="text" placeholder="Número de estudante">
+                <input id="studentPassword" type="password" placeholder="Palavra-passe">
+
+                <p class="login-feedback" id="loginFeedback"></p>
+
+                <label class="remember">
+                    <input type="checkbox">
+                    <span>Manter sessão</span>
+                </label>
+
+                <button type="button" onclick="entrarPortal()">Entrar</button>
+            </form>
+
+            <a href="#" class="forgot" onclick="simularRecuperacao()">Esqueceu a palavra-passe?</a>
+        </div>
+    </section>
+</main>
+
+    <!-- DASHBOARD -->
+<section class="dashboard">
+
+    <aside class="sidebar">
+
+        <div class="sidebar-brand-minimal">
+            <img src="logotipo_unicv_final.png" alt="UniCV">
+
+            <div>
+                <strong>UniCV Future</strong>
+                <span>Portal do Estudante</span>
+            </div>
+        </div>
+
+        <nav>
+            <a class="active" data-page="inicio">Início</a>
+            <a data-page="perfil">Perfil</a>
+            <a data-page="disciplinas">Disciplinas</a>
+            <a data-page="notas">Notas</a>
+            <a data-page="horario">Horário</a>
+            <a data-page="financeiro">Financeiro</a>
+            <a data-page="moodle">Moodle</a>
+            <a data-page="assistente">Assistente IA</a>
+        </nav>
+
+    </aside>
+
+    <main class="main-content">
+        <header class="top-actions">
+    <button type="button" onclick="voltarPagina()">Voltar</button>
+
+    <div>
+        <button type="button" onclick="toggleTema()">Claro/Escuro</button>
+        <button type="button" onclick="sairPortal()">Sair</button>
+    </div>
+</header>
+
+            <!-- INÍCIO -->
+            <section class="page active" id="inicio">
+                <header class="home-hero">
+                   <div>
+    <span class="hero-label">Área do estudante</span>
+    <h1>Bem-vindo, Jean Claude</h1>
+    <p>Tecnologia e Multimédia - 2º Ano - Ano letivo 2025/2026</p>
+    <small class="hero-note">Hoje tens 2 aulas, 1 avaliação próxima e materiais novos no Moodle.</small>
 </div>
-          <div class="card"><h3>Bolsa de estudos</h3><p>Consultar estado e anexar documentos.</p><button class="light" onclick="abrirBolsa()">
-  Ver estado
 
-</button></div>
-
-          <div class="card"><h3>Inscrições</h3><p>Renovação de matrícula e inscrições em unidades.</p><button class="gold" onclick="abrirInscricoes()">
-  Inscrever em Exame
-</button></div>
-        </div>
-      `;
-
-      studentCalendario.innerHTML = `
-        <div class="page-title"><span class="kicker">Calendário Académico</span><h1>Prazos importantes</h1></div>
-        <div class="timeline">
-          <div class="step"><div class="step-time">JAN</div><div><strong>Inscrição semestral</strong><br>Renovação de matrícula e escolha de unidades curriculares.</div></div>
-          <div class="step"><div class="step-time">MAR</div><div><strong>Primeiras avaliações</strong><br>Testes e trabalhos práticos.</div></div>
-          <div class="step"><div class="step-time">JUN</div><div><strong>Exames</strong><br>Época normal de exames.</div></div>
-          <div class="step"><div class="step-time">JUL</div><div><strong>Época de recurso</strong><br>Revisões e exames de recurso.</div></div>
-        </div>
-      `;
-
-      studentApoio.innerHTML = `
-        <div class="page-title"><span class="kicker">Centro de Apoio</span><h1>Suporte técnico</h1></div>
-        <div class="grid-2">
-          <div class="card">
-            <h3>Abrir ticket</h3>
-            <label>Assunto</label>
-            <input placeholder="Ex.: Problema no Moodle">
-            <label>Descrição</label>
-            <textarea placeholder="Descreve o problema"></textarea>
-            <button onclick="alert('Ticket criado: #UNICV-2045')">Enviar ticket</button>
-          </div>
-          <div class="card">
-            <h3>FAQ rápida</h3>
-            <p><strong>Como pedir documento?</strong><br>Serviços Académicos → Balcão Online → selecionar documento.</p>
-            <p><strong>Como pagar propina?</strong><br>Serviços Académicos → Financeiro → Pagar propina.</p>
-            <p><strong>Problema técnico?</strong><br>Centro de Apoio → Abrir ticket.</p>
-          </div>
-        </div>
-      `;
-
-      studentUniAI.innerHTML = `
-        <div class="page-title"><span class="kicker">UniAI</span><h1>Chatbot académico</h1></div>
-        <div class="grid-2">
-          <div class="card">
-            <h3>Conversa com o UniAI</h3>
-            <input id="perguntaRapida" placeholder="Ex.: Como tiro uma declaração de matrícula?">
-            <button onclick="respostaRapida()">Perguntar</button>
-            <p id="respostaRapidaBox"></p>
-          </div>
-          <div class="card">
-            <h3>Perguntas úteis</h3>
-            <p>Quando é o próximo exame?</p>
-            <p>Quem é a docente da minha disciplina?</p>
-            <p>Como pedir certificado de notas?</p>
-            <p>Qual o estado da minha propina?</p>
-          </div>
-        </div>
-      `;
-
-      studentCarreira.innerHTML = `
-        <div class="page-title"><span class="kicker">Carreira e Empregabilidade</span><h1>Do curso ao mercado</h1></div>
-        <div class="grid-3">
-          <div class="card"><h3>CV Builder</h3><p>Gerar currículo académico com competências do curso.</p><button>Criar CV</button></div>
-          <div class="card"><h3>Estágios</h3><p>Oportunidades em empresas parceiras.</p><button class="gold">Ver vagas</button></div>
-          <div class="card"><h3>Portfólio</h3><p>Projetos, trabalhos e entregas organizadas.</p><button class="light">Abrir portfólio</button></div>
-        </div>
-      `;
-
-      studentVida.innerHTML = `
-        <div class="page-title"><span class="kicker">Vida Académica</span><h1>Campus e comunidade</h1></div>
-        <div class="grid-3">
-          <div class="card"><h3>Eventos</h3><p>Semana da Tecnologia e Multimédia.</p><button>Inscrever</button></div>
-          <div class="card"><h3>Clubes</h3><p>Design, programação, vídeo e fotografia.</p><button class="light">Explorar</button></div>
-          <div class="card"><h3>Mobilidade</h3><p>Intercâmbio, projetos e oportunidades internacionais.</p><button class="gold">Ver oportunidades</button></div>
-        </div>
-      `;
-
-      studentPerfil.innerHTML = `
-        <div class="page-title"><span class="kicker">Perfil</span><h1>Dados pessoais</h1></div>
-        <div class="grid-2">
-          <div class="card">
-            <h3>Jean Claude Duarte Fernandes</h3>
-            <p><strong>Nº:</strong> 158656</p>
-            <p><strong>Curso:</strong> Tecnologia e Multimédia</p>
-            <p><strong>Ano:</strong> 2.º Ano</p>
-            <p><strong>Estado:</strong> Matrícula ativa</p>
-            <button>Editar perfil</button>
-          </div>
-          <div class="card">
-            <h3>Cartão digital</h3>
-            <p>QR académico, validação de estudante e acesso a serviços digitais.</p>
-            <button class="gold">Ver QR ID</button>
-          </div>
-        </div>
-      `;
-    }
-
-    function renderTeacher(){
-      teacherDashboard.innerHTML = `
-        <div class="page-title"><span class="kicker">Dashboard docente</span><h1>Bom dia, Cleonice.</h1></div>
-        <div class="cards">
-          <div class="card stat"><span>Disciplinas</span><strong>1</strong><small>Laboratório de Projeto Multimédia I</small></div>
-          <div class="card stat"><span>Turmas</span><strong>2</strong><small>TM-2 e TM-1</small></div>
-          <div class="card stat"><span>Alunos</span><strong>42</strong><small>inscritos nas turmas</small></div>
-          <div class="card stat"><span>Pendências</span><strong>6</strong><small>tarefas por corrigir</small></div>
-        </div>
-        <div class="grid-2">
-          <div class="card">
-            <h3>Ações rápidas</h3>
-            <button>Publicar material</button>
-            <button class="light">Criar tarefa</button>
-            <button class="gold">Enviar aviso</button>
-          </div>
-          <div class="card">
-            <h3>UniAI pedagógico</h3>
-            <p>A turma TM-2 apresenta bom desempenho geral, mas há alunos com atrasos na entrega do protótipo.</p>
-            <button class="gold">Gerar resumo pedagógico</button>
-          </div>
-        </div>
-      `;
-
-      teacherDisciplinas.innerHTML = `
-        <div class="page-title"><span class="kicker">Minhas Disciplinas</span><h1>Unidades lecionadas</h1></div>
-        <div class="grid-2">
-          <div class="card">
-            <h3>Laboratório de Projeto Multimédia I</h3>
-            <p><strong>Docente:</strong> Cleonice Moreira</p>
-            <p><strong>Turmas:</strong> TM-2 e TM-1</p>
-            <p><strong>Créditos:</strong> 6 ECTS</p>
-            <p><strong>Estado:</strong> Em curso</p>
-            <button class="gold">Abrir disciplina</button>
-          </div>
-          <div class="card">
-            <h3>Plano da disciplina</h3>
-            <p>Objetivos, conteúdos programáticos, critérios de avaliação e materiais.</p>
-            <button class="light">Editar plano</button>
-          </div>
-        </div>
-      `;
-
-      teacherTurmas.innerHTML = `
-        <div class="page-title"><span class="kicker">Turmas</span><h1>TM-2</h1></div>
-        <table>
-          <tr><th>Nº</th><th>Aluno</th><th>Disciplina</th><th>Nota</th><th>Estado</th></tr>
-          <tr><td>158656</td><td>Jean Claude Duarte Fernandes</td><td>Laboratório de Projeto Multimédia I</td><td>18</td><td><span class="badge">Ativo</span></td></tr>
-          <tr><td>158657</td><td>Geovanny Moniz</td><td>Laboratório de Projeto Multimédia I</td><td>9</td><td><span class="badge">Ativo</span></td></tr>
-          <tr><td>158658</td><td>Lina Silva</td><td>Laboratório de Projeto Multimédia I</td><td>15</td><td><span class="badge">Ativo</span></td></tr>
-        </table>
-      `;
-
-      teacherPresencas.innerHTML = `
-        <div class="page-title"><span class="kicker">Presenças</span><h1>Marcar presenças</h1></div>
-        <table>
-          <tr><th>Aluno</th><th>Aula 08</th><th>Estado</th></tr>
-          <tr><td>Jean Claude Duarte Fernandes</td><td>09:00</td><td><select><option>Presente</option><option>Falta</option></select></td></tr>
-          <tr><td>Geovanny Moniz</td><td>09:00</td><td><select><option>Presente</option><option>Falta</option></select></td></tr>
-          <tr><td>Lina Silva</td><td>09:00</td><td><select><option>Presente</option><option>Falta</option></select></td></tr>
-        </table>
-        <br>
-        <button>Guardar presenças</button>
-      `;
-
-      teacherAvaliacoes.innerHTML = `
-        <div class="page-title"><span class="kicker">Avaliações</span><h1>Pautas e notas</h1></div>
-        <table>
-          <tr><th>Aluno</th><th>Trabalho</th><th>Teste</th><th>Nota final</th></tr>
-          <tr><td>Jean Claude Duarte Fernandes</td><td><input value="19"></td><td><input value="19"></td><td>17</td></tr>
-          <tr><td>Geovanny Moniz</td><td><input value="10"></td><td><input value="9"></td><td>9</td></tr>
-          <tr><td>Lina Silva</td><td><input value="15"></td><td><input value="14"></td><td>15</td></tr>
-        </table>
-        <br>
-        <button>Publicar pauta</button>
-      `;
-
-      teacherConteudos.innerHTML = `
-        <div class="page-title"><span class="kicker">Conteúdos</span><h1>Materiais e tarefas</h1></div>
-        <div class="grid-3">
-          <div class="card"><h3>Enviar material</h3><p>PDF, PPT, DOCX, imagens ou links externos.</p><input type="file"><button>Enviar material</button></div>
-          <div class="card"><h3>Criar tarefa</h3><input placeholder="Título da tarefa"><textarea placeholder="Descrição da tarefa"></textarea><button>Criar tarefa</button></div>
-          <div class="card"><h3>Criar aviso</h3><textarea placeholder="Mensagem para a turma"></textarea><button class="gold">Publicar aviso</button></div>
-        </div>
-      `;
-
-      teacherMensagens.innerHTML = `
-        <div class="page-title"><span class="kicker">Mensagens</span><h1>Comunicação</h1></div>
-        <div class="grid-2">
-          <div class="card"><h3>Aviso à turma</h3><textarea placeholder="Mensagem..."></textarea><button>Enviar aviso</button></div>
-          <div class="card"><h3>Mensagens recentes</h3><p>“Relembro entrega do protótipo até sexta-feira.”</p><p>“A próxima aula será dedicada à defesa do conceito.”</p></div>
-        </div>
-      `;
-
-      teacherAgenda.innerHTML = `
-        <div class="page-title"><span class="kicker">Agenda</span><h1>Semana docente</h1></div>
-        <div class="timeline">
-          <div class="step"><div class="step-time">Seg</div><div><strong>Aula TM-2</strong><br>09:00 - 12:00 · Lab 2</div></div>
-          <div class="step"><div class="step-time">Qua</div><div><strong>Atendimento</strong><br>15:00 - 17:00</div></div>
-          <div class="step"><div class="step-time">Sex</div><div><strong>Correção de trabalhos</strong><br>Entrega do protótipo</div></div>
-        </div>
-      `;
-
-      teacherAnalytics.innerHTML = `
-        <div class="page-title"><span class="kicker">Analytics</span><h1>Dados pedagógicos</h1></div>
-        <div class="cards">
-          <div class="card stat"><span>Média da turma</span><strong>16</strong><small>valores</small></div>
-          <div class="card stat"><span>Assiduidade</span><strong>80%</strong><small>última aula</small></div>
-          <div class="card stat"><span>Risco</span><strong>1</strong><small>aluno em atenção</small></div>
-          <div class="card stat"><span>Tarefas</span><strong>3</strong><small>ativas</small></div>
-        </div>
-      `;
-
-      teacherPerfil.innerHTML = `
-        <div class="page-title"><span class="kicker">Perfil docente</span><h1>Cleonice Moreira</h1></div>
-        <div class="grid-2">
-          <div class="card">
-            <h3>Dados profissionais</h3>
-            <p><strong>Departamento:</strong> Tecnologias e Multimédia</p>
-            <p><strong>Disciplina:</strong> Laboratório de Projeto Multimédia I</p>
-            <p><strong>Atendimento:</strong> Quarta-feira, 15:00 - 17:00</p>
-            <p><strong>Gabinete:</strong> Bloco B · Sala 12</p>
-          </div>
-          <div class="card">
-            <h3>Ferramentas docentes</h3>
-            <p>Pautas, presenças, conteúdos, comunicação, atendimento e analytics pedagógico.</p>
-            <button class="gold">Editar perfil</button>
-          </div>
-        </div>
-      `;
-    }
-
-    function respostaRapida(){
-      document.getElementById("respostaRapidaBox").innerText =
-        "Para pedir uma declaração: Serviços Académicos → Balcão Online → escolher o documento → Solicitar.";
-    }
-
-    function abrirSite(){
-      window.open("https://www.unicv.edu.cv", "_blank");
-    }
-
-    function abrirMoodle(){
-      window.open("https://moodle2.unicv.cv/", "_blank");
-    }
-
-    function abrirAI(){
-      document.getElementById("modalAI").style.display = "flex";
-    }
-
-    function fecharAI(){
-      document.getElementById("modalAI").style.display = "none";
-    }
-
-    function responderAI(){
-      document.getElementById("respostaAI").innerText =
-        "Sugestão UniAI: organiza a apresentação mostrando a lógica: primeiro o curso, depois unidades curriculares, notas e docentes; os documentos e propinas ficam nos Serviços Académicos.";
-    }
-    function abrirPerfilDocente(){
-  document.getElementById("modalDocente").style.display = "flex";
-}
-
-function fecharPerfilDocente(){
-  document.getElementById("modalDocente").style.display = "none";
-}
-
-function abrirFinanceiro(){
-  document.getElementById("modalFinanceiro").style.display = "flex";
-}
-
-function fecharFinanceiro(){
-  document.getElementById("modalFinanceiro").style.display = "none";
-}
-
-function gerarReferenciaPagamento(){
-  const valor = document.getElementById("valorPagamento").value;
-  const metodo = document.getElementById("metodoPagamento").value;
-
-  const referencia = "UCV-" + Math.floor(100000 + Math.random() * 900000);
-  const entidade = "20888";
-
-  document.getElementById("referenciaPagamento").classList.remove("hidden");
-
-  document.getElementById("referenciaPagamento").innerHTML = `
-    <h3>Referência gerada com sucesso</h3>
-
-    <p><strong>Entidade:</strong> ${entidade}</p>
-    <p><strong>Referência:</strong> ${referencia}</p>
-    <p><strong>Valor:</strong> ${Number(valor).toLocaleString("pt-PT")}$00</p>
-    <p><strong>Método:</strong> ${metodo}</p>
-    <p><strong>Estado:</strong> A aguardar pagamento</p>
-
-    <button onclick="confirmarPagamentoSimulado()">
-      Confirmar pagamento simulado
-    </button>
-  `;
-}
-
-function confirmarPagamentoSimulado(){
-
-  const recibo = "REC-UNICV-" + Math.floor(1000 + Math.random() * 9000);
-
-  document.getElementById("referenciaPagamento").innerHTML = `
-    <h3>✅ Pagamento processado com sucesso</h3>
-
-    <p>O pagamento foi registado no sistema académico.</p>
-
-    <p><strong>Recibo:</strong> ${recibo}</p>
-
-    <p>
-      📧 Comprovativo enviado para:
-      <strong>duartejean852@gmail.com</strong>
-    </p>
-
-    <p>
-      📅 Data:
-      <strong>${new Date().toLocaleString("pt-PT")}</strong>
-    </p>
-
-    <p><strong>Estado:</strong> Email entregue</p>
-
-    <button class="gold" onclick="verEmailRecibo('${recibo}')">
-      Ver Email
-    </button>
-
-    <button onclick="alert('Recibo descarregado em modo simulação.')">
-      Baixar recibo
-    </button>
-  `;
-}
-
-function verEmailRecibo(recibo){
-  alert(
-    "EMAIL ENVIADO\n\n" +
-    "Para: duartejean852@gmail.com\n" +
-    "Assunto: Comprovativo de Pagamento\n\n" +
-    "O seu pagamento foi confirmado com sucesso.\n" +
-    "Recibo: " + recibo + "\n\n" +
-    "Universidade de Cabo Verde"
-  );
-}
-  function abrirInscricoes(){
-  document.getElementById("modalInscricoes").style.display = "flex";
-}
-
-
-function fecharInscricoes(){
-  document.getElementById("modalInscricoes").style.display = "none";
-}
-
-function confirmarExameBD(){
-
-  document
-    .getElementById("resultadoInscricao")
-    .classList.remove("hidden");
-
-  document
-    .getElementById("resultadoInscricao")
-    .innerHTML = `
-
-      <h3>
-        ✅ Inscrição efetuada
-      </h3>
-
-      <p>
-        Disciplina:
-        <strong>Base de Dados</strong>
-      </p>
-
-      <p>
-        Época:
-        <strong>Normal</strong>
-      </p>
-
-      <p>
-        Data prevista:
-        <strong>15 Julho 2026</strong>
-      </p>
-
-      <p>
-        Sala:
-        <strong>Laboratório 3</strong>
-      </p>
-
-      <p>
-        Código:
-        <strong>
-          EX-${Math.floor(10000 + Math.random()*90000)}
-        </strong>
-      </p>
-
-      <button class="gold"
-        onclick="baixarComprovativoExame()">
-
-        Baixar comprovativo
-
-      </button>
-  `;
-}
-function baixarComprovativoExame(){
-
-  alert(
-    "Comprovativo de inscrição no exame gerado com sucesso."
-  );
- 
-}
-
-    function sair(){
-      document.getElementById("app").style.display = "none";
-      document.getElementById("login").style.display = "grid";
-      document.getElementById("login").classList.remove("login-exit");
-
-    }
-  </script>
-    <div id="loadingScreen" style="
-    position:fixed;
-    inset:0;
-    display:none;
-    align-items:center;
-    justify-content:center;
-    z-index:99999;
-    background:
-      linear-gradient(rgba(0,0,0,.82), rgba(0,0,0,.92)),
-      url('matricula_unicv-2.jpeg');
-    background-size:cover;
-    background-position:center;
-    color:white;
-    font-family:Arial,sans-serif;
-  ">
-
-    <div style="
-      text-align:center;
-      width:460px;
-      padding:40px;
-    ">
-
-      <img src="logotipo_unicv_final.png" alt="Logo UniCV" style="
-        width:150px;
-        margin-bottom:22px;
-        filter:drop-shadow(0 0 25px rgba(171,22,42,.8));
-      ">
-
-      <h1 style="
-        font-size:28px;
-        letter-spacing:.35em;
-        margin:0;
-        color:white;
-      ">
-        UNICV <span style="color:#d6a84f;">FUTURE</span>
-      </h1>
-
-      <p style="color:rgba(255,255,255,.75); margin:18px 0 28px;">
-        Inicializando experiência académica...
-      </p>
-
-      <div id="loadingCircle" style="
-        width:150px;
-        height:150px;
-        margin:0 auto 26px;
-        border-radius:50%;
-        display:grid;
-        place-items:center;
-        background:conic-gradient(#ef304b 0deg, rgba(255,255,255,.12) 0deg);
-        box-shadow:0 0 45px rgba(239,48,75,.55);
-      ">
-        <div style="
-          width:118px;
-          height:118px;
-          border-radius:50%;
-          background:#090909;
-          display:grid;
-          place-items:center;
-          border:1px solid rgba(255,255,255,.18);
-        ">
-          <span id="loadingPercent" style="
-            font-size:34px;
-            font-weight:900;
-            color:white;
-          ">0%</span>
-        </div>
-      </div>
-
-      <p id="loadingText" style="color:rgba(255,255,255,.75);">
-        A carregar módulos...
-      </p>
-
-      <div style="
-        display:flex;
-        justify-content:center;
-        gap:26px;
-        flex-wrap:wrap;
-        margin-top:26px;
-        font-size:14px;
-        color:rgba(255,255,255,.85);
-      ">
-        <span>🎓 Portal Académico</span>
-        <span>📊 Student Journey</span>
-        <span>✨ UniAI</span>
-        <span>📄 Serviços Online</span>
-      </div>
-
-    </div>
-  </div> -------------------
-
-<div id="modalDocente" class="modal-docente">
-
-  <div class="modal-docente-card">
-
-    <button class="modal-close"
-      onclick="fecharPerfilDocente()">×</button>
-
-    <div class="docente-header">
-
-      <div class="docente-avatar">
-        CM
-      </div>
-
-      <div>
-        <span class="docente-kicker">
-          Perfil Académico
-        </span>
-
-        <h2>Cleonice Moreira</h2>
-
-        <p>
-          Docente da Universidade de Cabo Verde
-        </p>
-      </div>
-
+                    <div class="hero-tags">
+                        <span class="tag-success">Ativo</span>
+                        <span>Manhã</span>
+                    </div>
+
+                    <div class="hero-average">
+                        <small>Média</small>
+                        <strong id="mediaValor" class="hidden-media">••••</strong>
+                        <span id="mediaTexto">Oculta</span>
+                        <button class="media-toggle" type="button" onclick="toggleMedia()">Mostrar</button>
+                    </div>
+                </header>
+
+                <section class="summary-cards">
+                    <div class="summary-card">
+                        <h3>6</h3>
+                        <p>Disciplinas</p>
+                    </div>
+
+                    <div class="summary-card">
+                        <h3>7:30</h3>
+                        <p>Próxima aula</p>
+                    </div>
+
+                    <div class="summary-card">
+                        <h3>3</h3>
+                        <p>Avisos</p>
+                    </div>
+
+                    <div class="summary-card">
+                        <h3>IA</h3>
+                        <p>Assistente</p>
+                    </div>
+                </section>
+
+                <section class="quick-access">
+                    <div class="section-title">
+                        <h2>Acesso rápido</h2>
+                        <p>Principais serviços académicos</p>
+                    </div>
+
+                    <div class="quick-grid">
+    <div class="quick-card" onclick="mostrarPagina('disciplinas')">
+        <strong>Disciplinas</strong>
+        <span>Plano de estudo e atividades</span>
     </div>
 
-    <div class="docente-grid">
-
-      <div>
-        <strong>Departamento</strong>
-        <span>Tecnologias e Multimédia</span>
-      </div>
-
-      <div>
-        <strong>Atendimento</strong>
-        <span>Quarta-feira · 15h às 17h</span>
-      </div>
-
-      <div>
-        <strong>Gabinete</strong>
-        <span>Bloco B · Sala 12</span>
-      </div>
-
-      <div>
-        <strong>Email</strong>
-        <span>cleonice@unicv.edu.cv</span>
-      </div>
-
+    <div class="quick-card" onclick="mostrarPagina('notas')">
+        <strong>Notas</strong>
+        <span>Boletim e percurso académico</span>
     </div>
 
-    <div class="docente-actions">
-
-      <button onclick="solicitarAtendimento()">
-        Solicitar Atendimento
-      </button>
-
-      <button class="gold"
-        onclick="enviarMensagemDocente()">
-        Enviar Mensagem
-      </button>
-
+    <div class="quick-card" onclick="mostrarPagina('horario')">
+        <strong>Horário</strong>
+        <span>Agenda semanal e próxima aula</span>
     </div>
-
-  </div>
-
 </div>
-<div id="modalFinanceiro" class="modal-financeiro">
-  <div class="financeiro-card">
-    <button class="modal-close" onclick="fecharFinanceiro()">×</button>
 
-    <span class="financeiro-kicker">Serviços Académicos</span>
-    <h2>Área Financeira</h2>
-    <p>Consulta de propinas, dívidas e simulação de pagamento.</p>
+                    <button class="ai-floating" onclick="mostrarPagina('assistente')">IA</button>
+                </section>
 
-    <div class="financeiro-resumo">
-      <div>
-        <strong>2</strong>
-        <span>Mensalidades pendentes</span>
-      </div>
-      <div>
-        <strong>10.000$00</strong>
-        <span>Total em dívida</span>
-      </div>
-      <div>
-        <strong>REGULARIZÁVEL</strong>
-        <span>Estado financeiro</span>
-      </div>
+                <section class="home-grid">
+                    <div class="info-box">
+                        <h2>Próximas aulas</h2>
+
+                        <div class="class-item">
+                            <div>
+                                <strong>Tecnologia Web II</strong>
+                                <p>Sala B12 - 7:30</p>
+                            </div>
+                            <span>Hoje</span>
+                        </div>
+
+                        <div class="class-item">
+                            <div>
+                                <strong>Introdução à Base de Dados</strong>
+                                <p>Laboratório 2 - 9:30</p>
+                            </div>
+                            <span>Hoje</span>
+                        </div>
+
+                        <div class="class-item">
+                            <div>
+                                <strong>Gestão de Projetos Multimédia</strong>
+                                <p>Sala A04 - 11:30</p>
+                            </div>
+                            <span>Amanhã</span>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <h2>Avisos académicos</h2>
+
+                        <div class="notice">
+                            <strong>Entrega do projeto final</strong>
+                            <p>Laboratório de Projeto Multimédia I</p>
+                        </div>
+
+                        <div class="notice">
+                            <strong>Teste de Base de Dados</strong>
+                            <p>Marcado para dia 20 de junho</p>
+                        </div>
+
+                        <div class="notice">
+                            <strong>Financeiro</strong>
+                            <p>Propinas regularizadas</p>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- PERFIL -->
+            <section class="page" id="perfil">
+                <div class="profile-page-layout">
+                    <div class="profile-title">
+                        <h1>Meu Perfil</h1>
+                        <p>Dados pessoais e académicos do estudante</p>
+                    </div>
+
+                    <div class="profile-main-card">
+                        <div class="profile-photo-area">
+                            <img src="perfil.jpg" class="profile-photo-img" alt="Fotografia do estudante">
+                            <span class="photo-label">Fotografia validada</span>
+                        </div>
+
+                        <div class="profile-info-area">
+                            <h2>Jean Claude Duarte Fernandes</h2>
+                            <p>Tecnologia e Multimédia - 2º Ano</p>
+
+                            <div class="profile-info-tags">
+                                <span>Nº 158656</span>
+                                <span class="active-status">ATIVO</span>
+                                <span>Manhã</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-section">
+                        <h3>Privacidade</h3>
+
+                        <label class="privacy-option">
+                            <input type="checkbox">
+                            Quero receber notificações académicas por email
+                        </label>
+
+                        <label class="privacy-option">
+                            <input type="checkbox">
+                            Quero receber notificações por telemóvel
+                        </label>
+
+                        <label class="privacy-option">
+                            <input type="checkbox">
+                            Aceito participar em pesquisas sobre a experiência no portal
+                        </label>
+                    </div>
+
+                    <div class="profile-section">
+                        <h3>Dados pessoais</h3>
+
+                        <div class="personal-grid">
+                            <div>
+                                <label>Nome completo</label>
+                                <p class="fixed-data">Jean Claude Duarte Fernandes</p>
+                            </div>
+
+                            <div>
+                                <label>Data de nascimento</label>
+                                <p class="fixed-data">16-06-2004</p>
+                            </div>
+
+                            <div>
+                                <label>NIF</label>
+                                <p class="fixed-data">1516*****</p>
+                            </div>
+
+                            <div>
+                                <label>Curso</label>
+                                <p class="fixed-data">Tecnologia e Multimédia</p>
+                            </div>
+
+                            <div>
+                                <label>Ano</label>
+                                <p class="fixed-data">2º Ano</p>
+                            </div>
+
+                            <div>
+                                <label>Email institucional</label>
+                                <p class="fixed-data">158656@unicv.cv</p>
+                            </div>
+
+                            <div>
+                                <label>Telefone</label>
+                                <input type="text" value="+238 588****">
+                            </div>
+
+                            <div>
+                                <label>Morada</label>
+                                <input type="text" value="Praia, Cabo Verde">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+          <!-- DISCIPLINAS -->
+<section class="page" id="disciplinas">
+    <div class="page-header">
+        <h1>Disciplinas</h1>
+        <p>Painel de acompanhamento das unidades curriculares do semestre</p>
     </div>
 
-    <h3>Dívidas Pendentes</h3>
+    <section class="discipline-command">
+        <div class="command-card">
+            <span>Disciplinas ativas</span>
+            <strong>6</strong>
+            <p>semestre atual</p>
+        </div>
 
-    <table>
-      <tr>
-        <th>Descrição</th>
-        <th>Vencimento</th>
-        <th>Valor</th>
-        <th>Estado</th>
-      </tr>
-      <tr>
-        <td>Propina Maio 2026</td>
-        <td>10/05/2026</td>
-        <td>5.000$00</td>
-        <td><span class="badge">Pendente</span></td>
-      </tr>
-      <tr>
-        <td>Propina Junho 2026</td>
-        <td>10/06/2026</td>
-        <td>5.000$00</td>
-        <td><span class="badge">Pendente</span></td>
-      </tr>
-    </table>
+        <div class="command-card">
+            <span>Próximos prazos</span>
+            <strong>3</strong>
+            <p>esta semana</p>
+        </div>
 
-    <div class="pagamento-box">
-      <h3>Simular pagamento</h3>
+        <div class="command-card">
+            <span>Materiais novos</span>
+            <strong>8</strong>
+            <p>no Moodle</p>
+        </div>
 
-      <label>Selecionar valor</label>
-      <select id="valorPagamento">
-        <option value="5000">Pagar Maio - 5.000$00</option>
-        <option value="10000">Pagar Maio + Junho - 10.000$00</option>
-      </select>
+        <div class="command-card command-focus">
+            <span>Prioridade</span>
+            <strong>Web II</strong>
+            <p>mini-projeto pendente</p>
+        </div>
+    </section>
 
-      <label>Método de pagamento</label>
-      <select id="metodoPagamento">
-        <option>Referência bancária</option>
-        <option>Cartão Vinti4</option>
-        <option>Transferência bancária</option>
-        <option>Pagamento presencial</option>
-      </select>
+    <section class="discipline-workspace">
+        <div class="discipline-list-panel">
+            <div class="panel-heading">
+                <h2>Plano do semestre</h2>
+                <p>Seleciona uma disciplina para acompanhar o estado.</p>
+            </div>
 
-      <button class="gold" onclick="gerarReferenciaPagamento()">Gerar referência</button>
+            <div class="discipline-search-line">
+                <input type="text" placeholder="Pesquisar disciplina...">
+            </div>
 
-      <div id="referenciaPagamento" class="referencia-box hidden"></div>
+            <div class="discipline-list">
+                <button class="discipline-row active" type="button" onclick="simularDisciplina('Tecnologia Web II')">
+                    <div>
+                        <span>WEB II</span>
+                        <strong>Tecnologia Web II</strong>
+                        <p>Entrega do mini-projeto - 21 Jun</p>
+                    </div>
+                    <small>72%</small>
+                </button>
+
+                <button class="discipline-row warning" type="button" onclick="simularDisciplina('Introdução à Base de Dados')">
+                    <div>
+                        <span>BD</span>
+                        <strong>Introdução à Base de Dados</strong>
+                        <p>Teste prático - 20 Jun</p>
+                    </div>
+                    <small>64%</small>
+                </button>
+
+                <button class="discipline-row" type="button" onclick="simularDisciplina('Gestão de Projetos Multimédia')">
+                    <div>
+                        <span>GPM</span>
+                        <strong>Gestão de Projetos Multimédia</strong>
+                        <p>Apresentação de grupo - 24 Jun</p>
+                    </div>
+                    <small>58%</small>
+                </button>
+
+                <button class="discipline-row" type="button" onclick="simularDisciplina('Laboratório Projeto Multimédia I')">
+                    <div>
+                        <span>LPM I</span>
+                        <strong>Laboratório Projeto Multimédia I</strong>
+                        <p>Validação do protótipo - 26 Jun</p>
+                    </div>
+                    <small>69%</small>
+                </button>
+
+                <button class="discipline-row" type="button" onclick="simularDisciplina('Sistema de Compressão Multimédia')">
+                    <div>
+                        <span>SCM</span>
+                        <strong>Sistema de Compressão Multimédia</strong>
+                        <p>Ficha de exercícios - 28 Jun</p>
+                    </div>
+                    <small>61%</small>
+                </button>
+            </div>
+        </div>
+
+        <div class="discipline-detail-panel">
+            <div class="detail-header">
+                <div>
+                    <span class="detail-code">WEB II</span>
+                    <h2>Tecnologia Web II</h2>
+                    <p>Docente: Elcelina Silva • Laboratório • 4h/semana</p>
+                </div>
+
+                <span class="detail-status">Em curso</span>
+            </div>
+
+            <div class="next-step-box">
+                <span>O que fazer agora</span>
+                <strong>Finalizar o mini-projeto e submeter no Moodle até 21 de junho.</strong>
+            </div>
+
+            <div class="detail-grid">
+                <div class="detail-card">
+                    <span>Progresso do programa</span>
+                    <strong>72%</strong>
+                    <div class="mini-progress">
+                        <span style="width:72%"></span>
+                    </div>
+                </div>
+
+                <div class="detail-card">
+                    <span>Última presença</span>
+                    <strong>Presente</strong>
+                    <p>Aula prática de layout responsivo</p>
+                </div>
+
+                <div class="detail-card">
+                    <span>Estado académico</span>
+                    <strong>Regular</strong>
+                    <p>sem pendências graves</p>
+                </div>
+            </div>
+
+            <div class="discipline-lower-grid">
+                <div class="timeline-box">
+                    <h3>Próximas atividades</h3>
+
+                    <div class="timeline-item important">
+                        <span>20 Jun</span>
+                        <div>
+                            <strong>Revisão em aula</strong>
+                            <p>Preparação final do mini-projeto</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <span>21 Jun</span>
+                        <div>
+                            <strong>Entrega do mini-projeto</strong>
+                            <p>Submissão no Moodle</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <span>27 Jun</span>
+                        <div>
+                            <strong>Feedback individual</strong>
+                            <p>Correções e melhorias</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="resources-box">
+                    <h3>Materiais recentes</h3>
+
+                    <div class="resource-item">
+                        <div>
+                            <strong>Slides - Flexbox e Grid</strong>
+                            <p>PDF • publicado ontem</p>
+                        </div>
+                        <button type="button" onclick="simularAcao('Material aberto em modo de simulação.')">Ver</button>
+                    </div>
+
+                    <div class="resource-item">
+                        <div>
+                            <strong>Guia do mini-projeto</strong>
+                            <p>Documento • atualizado</p>
+                        </div>
+                        <button type="button" onclick="simularAcao('Material aberto em modo de simulação.')">Ver</button>
+                    </div>
+
+                    <div class="resource-item">
+                        <div>
+                            <strong>Exemplo de dashboard</strong>
+                            <p>ZIP • material de apoio</p>
+                        </div>
+                        <button type="button" onclick="simularAcao('Material aberto em modo de simulação.')"    >Ver</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="assistant-hint">
+                <strong>Sugestão do Assistente IA</strong>
+                <p>Prioriza a entrega de Web II hoje. Depois revê Base de Dados, porque o teste prático está próximo.</p>
+            </div>
+        </div>
+    </section>
+</section>
+
+<!-- NOTAS -->
+<section class="page" id="notas">
+    <div class="page-header">
+        <h1>Notas</h1>
+        <p>Resumo académico, avaliações e progresso no curso</p>
     </div>
-  </div>
+
+    <section class="grade-brief">
+        <div>
+            <span>Média atual</span>
+            <strong>16.3</strong>
+        </div>
+
+        <div>
+            <span>Créditos concluídos</span>
+            <strong>120/180</strong>
+        </div>
+
+        <div>
+            <span>Situação</span>
+            <strong class="brief-good">Regular</strong>
+        </div>
+
+        <div>
+            <span>Pendências</span>
+            <strong class="brief-alert">2</strong>
+        </div>
+    </section>
+
+    <section class="grades-minimal-layout">
+        <div class="semester-panel">
+            <div class="minimal-title">
+                <h2>Percurso</h2>
+                <p>Histórico por ano letivo</p>
+            </div>
+
+            <div class="semester-timeline">
+                <div class="semester-step done">
+                    <span>1º Ano</span>
+                    <div>
+                        <strong>Concluído</strong>
+                        <p>Média 14.1 • 60 créditos</p>
+                    </div>
+                </div>
+
+                <div class="semester-step current">
+                    <span>2º Ano</span>
+                    <div>
+                        <strong>Em curso</strong>
+                        <p>Média 16.3 • 60 créditos</p>
+                    </div>
+                </div>
+
+                <div class="semester-step">
+                    <span>3º Ano</span>
+                    <div>
+                        <strong>Por iniciar</strong>
+                        <p>60 créditos restantes</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="focus-note">
+                <span>Foco recomendado</span>
+                <p>Concluir as avaliações pendentes antes de abrir novas solicitações académicas.</p>
+            </div>
+        </div>
+
+        <div class="gradebook-panel">
+            <div class="gradebook-header">
+                <div>
+                    <h2>Boletim do semestre</h2>
+                    <p>2º semestre • 2025/2026</p>
+                </div>
+
+                <select>
+                    <option>2º Semestre</option>
+                    <option>1º Semestre</option>
+                </select>
+            </div>
+
+            <div class="gradebook-list">
+                <div class="gradebook-row approved">
+                    <div>
+                        <span>WEB II</span>
+                        <strong>Tecnologia Web II</strong>
+                        <p>Projeto + avaliação contínua</p>
+                    </div>
+                    <strong class="grade-number">17</strong>
+                    <em>Aprovado</em>
+                </div>
+
+                <div class="gradebook-row approved">
+                    <div>
+                        <span>BD</span>
+                        <strong>Introdução à Base de Dados</strong>
+                        <p>Teste prático realizado</p>
+                    </div>
+                    <strong class="grade-number">16</strong>
+                    <em>Aprovado</em>
+                </div>
+
+                <div class="gradebook-row waiting">
+                    <div>
+                        <span>GPM</span>
+                        <strong>Gestão de Projetos Multimédia</strong>
+                        <p>Apresentação final por avaliar</p>
+                    </div>
+                    <strong class="grade-number muted">--</strong>
+                    <em>Pendente</em>
+                </div>
+
+                <div class="gradebook-row approved">
+                    <div>
+                        <span>LPM I</span>
+                        <strong>Laboratório Projeto Multimédia I</strong>
+                        <p>Protótipo entregue</p>
+                    </div>
+                    <strong class="grade-number">18</strong>
+                    <em>Aprovado</em>
+                </div>
+
+                <div class="gradebook-row progress">
+                    <div>
+                        <span>SCM</span>
+                        <strong>Sistema de Compressão Multimédia</strong>
+                        <p>Ficha de exercícios em curso</p>
+                    </div>
+                    <strong class="grade-number muted">--</strong>
+                    <em>Em curso</em>
+                </div>
+            </div>
+
+            <div class="gradebook-summary">
+                <span>5 disciplinas</span>
+                <span>3 aprovadas</span>
+                <span>2 por concluir</span>
+            </div>
+        </div>
+    </section>
+    <section class="exam-panel">
+    <div class="exam-header">
+        <div>
+            <h2>Inscrição em exames</h2>
+            <p>Solicita inscrição em exame, recurso ou melhoria de nota.</p>
+        </div>
+
+        <span>Época 2025/2026</span>
+    </div>
+
+    <div class="exam-list">
+        <div class="exam-row">
+            <div>
+                <span>WEB II</span>
+                <strong>Tecnologia Web II</strong>
+                <p>Exame normal • 28/06/2026 • Sala B12</p>
+            </div>
+            <em>Disponível</em>
+            <button type="button" onclick="abrirInscricaoExame('Tecnologia Web II', 'Exame normal', '28/06/2026')">Inscrever</button>
+        </div>
+
+        <div class="exam-row">
+            <div>
+                <span>BD</span>
+                <strong>Introdução à Base de Dados</strong>
+                <p>Recurso • 30/06/2026 • Laboratório 2</p>
+            </div>
+            <em>Disponível</em>
+            <button type="button" onclick="abrirInscricaoExame('Introdução à Base de Dados', 'Recurso', '30/06/2026')">Inscrever</button>
+        </div>
+
+        <div class="exam-row locked">
+            <div>
+                <span>LPM I</span>
+                <strong>Laboratório Projeto Multimédia I</strong>
+                <p>Melhoria • disponível após lançamento da nota final</p>
+            </div>
+            <em>Indisponível</em>
+            <button type="button" disabled>Bloqueado</button>
+        </div>
+    </div>
+</section>
+</section>
+
+            <!-- HORÁRIO -->
+<section class="page" id="horario">
+    <div class="page-header">
+        <h1>Horário</h1>
+        <p>Agenda semanal e próximas aulas do estudante</p>
+    </div>
+
+    <section class="schedule-brief">
+        <div>
+            <span>Próxima aula</span>
+            <strong>Tecnologia Web II</strong>
+            <p>Hoje • 07:30 • Sala B12</p>
+        </div>
+
+        <div>
+            <span>Aulas hoje</span>
+            <strong>2</strong>
+            <p>manhã livre após 11:30</p>
+        </div>
+
+        <div>
+            <span>Carga semanal</span>
+            <strong>13h</strong>
+            <p>5 disciplinas ativas</p>
+        </div>
+
+        <div>
+            <span>Formato</span>
+            <strong>Presencial</strong>
+            <p>com apoio online</p>
+        </div>
+    </section>
+
+    <section class="schedule-layout">
+        <div class="today-panel">
+            <div class="schedule-title">
+                <h2>Hoje</h2>
+                <p>Segunda-feira, 19 de junho</p>
+            </div>
+
+            <div class="now-card">
+                <span>Agora</span>
+                <strong>Preparação para aula</strong>
+                <p>Revê os ficheiros de Flexbox e Grid antes da aula de Tecnologia Web II.</p>
+            </div>
+
+            <div class="today-list">
+                <div class="today-class active">
+                    <time>07:30</time>
+                    <div>
+                        <strong>Tecnologia Web II</strong>
+                        <p>Sala B12 • Elcelina Silva</p>
+                    </div>
+                    <span>Próxima</span>
+                </div>
+
+                <div class="today-class">
+                    <time>09:30</time>
+                    <div>
+                        <strong>Introdução à Base de Dados</strong>
+                        <p>Laboratório 2 • Celistino</p>
+                    </div>
+                    <span>Prática</span>
+                </div>
+
+                <div class="today-class muted">
+                    <time>11:30</time>
+                    <div>
+                        <strong>Intervalo académico</strong>
+                        <p>Sem aulas marcadas</p>
+                    </div>
+                    <span>Livre</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="week-panel">
+            <div class="schedule-title">
+                <h2>Semana</h2>
+                <p>Visão compacta das aulas</p>
+            </div>
+
+            <div class="week-list">
+                <div class="week-day selected">
+                    <div>
+                        <strong>Seg</strong>
+                        <span>Hoje</span>
+                    </div>
+                    <p>Web II • Base de Dados</p>
+                </div>
+
+                <div class="week-day">
+                    <div>
+                        <strong>Ter</strong>
+                        <span>2 aulas</span>
+                    </div>
+                    <p>Compressão • Laboratório Projeto</p>
+                </div>
+
+                <div class="week-day">
+                    <div>
+                        <strong>Qua</strong>
+                        <span>2 aulas</span>
+                    </div>
+                    <p>Gestão de Projetos • Web II</p>
+                </div>
+
+                <div class="week-day light">
+                    <div>
+                        <strong>Qui</strong>
+                        <span>Sem aula</span>
+                    </div>
+                    <p>Dia reservado para estudo e projeto</p>
+                </div>
+
+                <div class="week-day">
+                    <div>
+                        <strong>Sex</strong>
+                        <span>Apoio</span>
+                    </div>
+                    <p>Sessão online de apoio ao projeto</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="schedule-focus">
+        <div>
+            <strong>Prioridade da semana</strong>
+            <p>Organiza o tempo para terminar o mini-projeto de Web II e rever Base de Dados antes do teste prático.</p>
+        </div>
+
+        <button type="button" onclick="mostrarPagina('disciplinas')">Ver plano de estudo</button>
+    </section>
+</section>
+
+
+           <!-- FINANCEIRO -->
+<section class="page" id="financeiro">
+    <div class="page-header">
+        <h1>Financeiro</h1>
+        <p>Situação financeira, propinas e documentos académicos</p>
+    </div>
+
+    <section class="finance-brief">
+        <div>
+            <span>Situação atual</span>
+            <strong class="finance-ok">Regular</strong>
+            <p>sem bloqueios académicos</p>
+        </div>
+
+        <div>
+            <span>Próxima propina</span>
+            <strong>9.000 CVE</strong>
+            <p>vence em 30 de junho</p>
+        </div>
+
+        <div>
+            <span>Último pagamento</span>
+            <strong>01/06/2026</strong>
+            <p>recibo disponível</p>
+        </div>
+
+        <div>
+            <span>Documentos</span>
+            <strong>4</strong>
+            <p>disponíveis para consulta</p>
+        </div>
+    </section>
+
+    <section class="finance-layout">
+        <div class="payment-panel">
+            <div class="finance-title">
+                <h2>Propinas</h2>
+                <p>Resumo do ano letivo 2025/2026</p>
+            </div>
+
+            <div class="payment-timeline">
+                <div class="payment-month paid">
+                    <span>Jan</span>
+                    <strong>Pago</strong>
+                </div>
+
+                <div class="payment-month paid">
+                    <span>Fev</span>
+                    <strong>Pago</strong>
+                </div>
+
+                <div class="payment-month paid">
+                    <span>Mar</span>
+                    <strong>Pago</strong>
+                </div>
+
+                <div class="payment-month paid">
+                    <span>Abr</span>
+                    <strong>Pago</strong>
+                </div>
+
+                <div class="payment-month paid">
+                    <span>Mai</span>
+                    <strong>Pago</strong>
+                </div>
+
+                <div class="payment-month current">
+                    <span>Jun</span>
+                    <strong>Aberto</strong>
+                </div>
+            </div>
+
+            <div class="payment-reference">
+                <div>
+                    <span>Referência ativa</span>
+                    <strong>584175277</strong>
+                </div>
+
+                <div>
+                    <span>Entidade</span>
+                    <strong>92613</strong>
+                </div>
+
+                <div>
+                    <span>Montante</span>
+                    <strong>9.000 CVE</strong>
+                </div>
+            </div>
+
+            <button class="finance-primary-btn" type="button" onclick="abrirPagamento()">
+    Pagar propina
+</button>
+        </div>
+
+        <div class="docs-panel">
+            <div class="finance-title">
+                <h2>Documentos</h2>
+                <p>Certidões, declarações e recibos</p>
+            </div>
+
+            <div class="document-list">
+                <div class="document-row">
+                    <div>
+                        <strong>Declaração de matrícula</strong>
+                        <p>PDF • atualizado em 15/06/2026</p>
+                    </div>
+                    <span>Disponível</span>
+                    <button type="button">Transferir</button>
+                </div>
+
+                <div class="document-row">
+                    <div>
+                        <strong>Recibo de pagamento</strong>
+                        <p>PDF • junho 2026</p>
+                    </div>
+                    <span>Disponível</span>
+                    <button type="button">Transferir</button>
+                </div>
+
+                <div class="document-row">
+                    <div>
+                        <strong>Histórico académico</strong>
+                        <p>PDF • emissão simples</p>
+                    </div>
+                    <span>Pronto</span>
+                    <button type="button">Ver</button>
+                </div>
+
+                <div class="document-row locked">
+                    <div>
+                        <strong>Certificado de conclusão</strong>
+                        <p>Disponível após conclusão do curso</p>
+                    </div>
+                    <span>Bloqueado</span>
+                    <button type="button">Indisponível</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="request-document-panel">
+        <div>
+            <strong>Pedido rápido de documento</strong>
+            <p>Solicita declarações académicas diretamente pelo portal. O estado do pedido aparece nesta área.</p>
+        </div>
+
+        <div class="request-actions">
+            <select>
+                <option>Declaração de matrícula</option>
+                <option>Histórico académico</option>
+                <option>Declaração de frequência</option>
+                <option>Recibo de pagamento</option>
+            </select>
+
+            <button type="button">Solicitar</button>
+        </div>
+    </section>
+</section>
+
+
+           <!-- MOODLE -->
+<section class="page" id="moodle">
+    <div class="page-header">
+        <h1>Moodle</h1>
+        <p>Central de materiais, tarefas e atividades online</p>
+    </div>
+
+    <section class="moodle-brief">
+        <div>
+            <span>Materiais novos</span>
+            <strong>8</strong>
+            <p>desde a última visita</p>
+        </div>
+
+        <div>
+            <span>Tarefas abertas</span>
+            <strong>3</strong>
+            <p>com prazo ativo</p>
+        </div>
+
+        <div>
+            <span>Fóruns</span>
+            <strong>2</strong>
+            <p>com novas mensagens</p>
+        </div>
+
+        <div>
+            <span>Último acesso</span>
+            <strong>Hoje</strong>
+            <p>07:12</p>
+        </div>
+    </section>
+
+    <section class="moodle-layout">
+        <div class="moodle-main-panel">
+            <div class="moodle-title">
+                <h2>Atividades recentes</h2>
+                <p>Atualizações organizadas por disciplina</p>
+            </div>
+
+            <div class="moodle-feed">
+                <div class="moodle-feed-item important">
+                    <span>WEB II</span>
+                    <div>
+                        <strong>Mini-projeto disponível para submissão</strong>
+                        <p>Prazo: 21 de junho • Tecnologia Web II</p>
+                    </div>
+                    <button type="button">Abrir</button>
+                </div>
+
+                <div class="moodle-feed-item">
+                    <span>BD</span>
+                    <div>
+                        <strong>Ficha prática publicada</strong>
+                        <p>Laboratório 2 • Introdução à Base de Dados</p>
+                    </div>
+                    <button type="button">Ver</button>
+                </div>
+
+                <div class="moodle-feed-item">
+                    <span>LPM I</span>
+                    <div>
+                        <strong>Guia de validação do protótipo</strong>
+                        <p>Documento PDF • Laboratório Projeto Multimédia I</p>
+                    </div>
+                    <button type="button">Ver</button>
+                </div>
+
+                <div class="moodle-feed-item">
+                    <span>SCM</span>
+                    <div>
+                        <strong>Exercícios de compressão de imagem</strong>
+                        <p>Material complementar • Sistema de Compressão Multimédia</p>
+                    </div>
+                    <button type="button">Ver</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="moodle-side-panel">
+            <div class="moodle-title">
+                <h2>Acesso rápido</h2>
+                <p>Principais áreas do Moodle</p>
+            </div>
+
+            <div class="moodle-shortcuts">
+                <button type="button" onclick="window.open('https://moodle2.unicv.cv/', '_blank')">
+                    Abrir Moodle
+                </button>
+
+                <button type="button">
+                    Tarefas pendentes
+                </button>
+
+                <button type="button">
+                    Materiais recentes
+                </button>
+
+                <button type="button">
+                    Fóruns das disciplinas
+                </button>
+            </div>
+
+            <div class="moodle-note">
+                <strong>Prioridade</strong>
+                <p>Submete o mini-projeto de Web II antes de consultar novos materiais.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="moodle-courses">
+        <div class="moodle-title">
+            <h2>Disciplinas no Moodle</h2>
+            <p>Estado de atividade por unidade curricular</p>
+        </div>
+
+        <div class="moodle-course-grid">
+            <div class="moodle-course">
+                <span>WEB II</span>
+                <strong>Tecnologia Web II</strong>
+                <p>2 tarefas • 4 materiais novos</p>
+            </div>
+
+            <div class="moodle-course">
+                <span>BD</span>
+                <strong>Introdução à Base de Dados</strong>
+                <p>1 tarefa • 1 ficha prática</p>
+            </div>
+
+            <div class="moodle-course">
+                <span>GPM</span>
+                <strong>Gestão de Projetos Multimédia</strong>
+                <p>1 fórum • apresentação pendente</p>
+            </div>
+
+            <div class="moodle-course">
+                <span>LPM I</span>
+                <strong>Laboratório Projeto Multimédia I</strong>
+                <p>2 documentos • validação próxima</p>
+            </div>
+        </div>
+    </section>
+</section>
+
+          <!-- ASSISTENTE IA -->
+<section class="page" id="assistente">
+    <div class="page-header">
+        <h1>Assistente IA</h1>
+        <p>Apoio académico personalizado para o estudante</p>
+    </div>
+
+    <section class="assistant-layout">
+        <div class="assistant-panel">
+            <div class="assistant-header">
+                <div>
+                    <span>UniCV Future IA</span>
+                    <h2>Como posso ajudar hoje?</h2>
+                    <p>O assistente usa o teu contexto académico para orientar estudos, prazos e serviços.</p>
+                </div>
+
+                <strong>Online</strong>
+            </div>
+
+            <div class="assistant-suggestions">
+                <button type="button">Organizar a semana</button>
+                <button type="button">Ver prioridades</button>
+                <button type="button">Explicar como pedir documento</button>
+                <button type="button">Preparar plano de estudo</button>
+            </div>
+
+            <div class="smart-chat">
+                <div class="chat-message ai">
+                    <strong>Assistente IA</strong>
+                    <p>Olá, Jean Claude. Tens 3 tarefas importantes esta semana: mini-projeto de Web II, teste prático de Base de Dados e validação do protótipo.</p>
+                </div>
+
+                <div class="chat-message user">
+                    <strong>Tu</strong>
+                    <p>O que devo fazer primeiro?</p>
+                </div>
+
+                <div class="chat-message ai">
+                    <strong>Assistente IA</strong>
+                    <p>Começa pelo mini-projeto de Web II, porque o prazo é mais próximo. Depois reserva uma sessão curta para rever consultas SQL.</p>
+                </div>
+
+                <div class="chat-message ai compact">
+                    <strong>Plano sugerido</strong>
+                    <p>Hoje: Web II • Amanhã: Base de Dados • Sexta: revisão do protótipo.</p>
+                </div>
+            </div>
+
+            <div class="assistant-input-area">
+                <input type="text" placeholder="Escreve uma pergunta académica...">
+                <button type="button">Enviar</button>
+            </div>
+        </div>
+
+        <aside class="assistant-context">
+            <div class="context-card">
+                <span>Prioridade atual</span>
+                <strong>Mini-projeto Web II</strong>
+                <p>Entrega até 21 de junho</p>
+            </div>
+
+            <div class="context-card">
+                <span>Estado académico</span>
+                <strong>Regular</strong>
+                <p>sem bloqueios financeiros</p>
+            </div>
+
+            <div class="context-card">
+                <span>Próxima aula</span>
+                <strong>Base de Dados</strong>
+                <p>Hoje • 09:30 • Laboratório 2</p>
+            </div>
+
+            <div class="context-card soft">
+                <span>Sugestão rápida</span>
+                <p>Antes de pedir documentos, confirma se a situação financeira está regularizada.</p>
+            </div>
+        </aside>
+    </section>
+</section>
+
+    </main>
+</section>
+
+<button class="scroll-top-btn" type="button" onclick="subirAoTopo()">Topo</button>
+
+    <div class="app-toast" id="appToast"></div>
+
+<div class="modal-backdrop" id="appModal" onclick="fecharModal(event)">
+    <div class="app-modal">
+        <span id="modalTipo">Material</span>
+        <h2 id="modalTitulo">Título</h2>
+        <p id="modalDescricao">Descrição</p>
+        <div class="modal-actions">
+            <button type="button" onclick="fecharModal()">Fechar</button>
+            <button type="button" onclick="confirmarTransferencia()">Transferir simulado</button>
+        </div>
+    </div>
 </div>
+
+<div class="modal-backdrop" id="paymentModal" onclick="fecharPagamento(event)">
+    <div class="app-modal payment-modal">
+        <span>Pagamento de propina</span>
+        <h2>Escolher método</h2>
+
+        <div class="payment-methods">
+            <button class="payment-method active" type="button" onclick="selecionarMetodoPagamento(this, 'vinti4')">Vinti4 / Referência</button>
+            <button class="payment-method" type="button" onclick="selecionarMetodoPagamento(this, 'cartao')">Cartão</button>
+            <button class="payment-method" type="button" onclick="selecionarMetodoPagamento(this, 'transferencia')">Transferência</button>
+            <button class="payment-method" type="button" onclick="selecionarMetodoPagamento(this, 'balcao')">Balcão UniCV</button>
+        </div>
+
+        <div class="payment-confirm-box" id="paymentDetails">
+            <div><span>Entidade</span><strong>92613</strong></div>
+            <div><span>Referência</span><strong>584175277</strong></div>
+            <div><span>Montante</span><strong>9.000 CVE</strong></div>
+            <div><span>Validade</span><strong>30/06/2026</strong></div>
+        </div>
+
+        <p id="paymentInfo">Use a entidade e referência numa caixa Vinti4, app bancária ou ATM.</p>
+
+        <div class="modal-actions">
+            <button type="button" onclick="fecharPagamento()">Cancelar</button>
+            <button type="button" onclick="confirmarPagamento()">Confirmar pagamento</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-backdrop" id="receiptModal" onclick="fecharRecibo(event)">
+    <div class="app-modal receipt-modal">
+        <span>Recibo académico</span>
+        <h2>Pagamento confirmado</h2>
+
+        <div class="receipt-box">
+            <div class="receipt-head">
+                <strong>UniCV Future</strong>
+                <span>Recibo Nº RF-2026-0619-158656</span>
+            </div>
+
+            <div class="receipt-line">
+                <span>Estudante</span>
+                <strong>Jean Claude Duarte Fernandes</strong>
+            </div>
+
+            <div class="receipt-line">
+                <span>Nº estudante</span>
+                <strong>158656</strong>
+            </div>
+
+            <div class="receipt-line">
+                <span>Descrição</span>
+                <strong>Propina - Junho 2026</strong>
+            </div>
+
+            <div class="receipt-line">
+                <span>Método</span>
+                <strong id="receiptMethod">Vinti4 / Referência</strong>
+            </div>
+
+            <div class="receipt-line">
+                <span>Data</span>
+                <strong>19/06/2026</strong>
+            </div>
+
+            <div class="receipt-total">
+                <span>Total pago</span>
+                <strong>9.000 CVE</strong>
+            </div>
+            <div class="receipt-line">
+    <span>Detalhe</span>
+    <strong id="receiptDetail">Entidade 92613 • Referência 584175277</strong>
+        </div>
+
+        <div class="modal-actions">
+            <button type="button" onclick="fecharRecibo()">Fechar</button>
+            <button type="button" onclick="mostrarToast('Recibo transferido em modo de simulação.')">Transferir recibo</button>
+        </div>
+    </div>
+</div>
+<div class="modal-backdrop" id="examModal" onclick="fecharInscricaoExame(event)">
+    <div class="app-modal exam-modal">
+        <span>Inscrição em exame</span>
+        <h2>Confirmar inscrição</h2>
+
+        <div class="exam-form-grid">
+            <label>
+                <span>Nome do estudante</span>
+                <input id="examStudentName" type="text" value="Jean Claude Duarte Fernandes">
+            </label>
+
+            <label>
+                <span>Nº estudante</span>
+                <input id="examStudentNumber" type="text" value="158656">
+            </label>
+
+            <label>
+                <span>Disciplina</span>
+                <input id="examSubject" type="text" readonly>
+            </label>
+
+            <label>
+                <span>Tipo de exame</span>
+                <input id="examType" type="text" readonly>
+            </label>
+
+            <label>
+                <span>Data</span>
+                <input id="examDate" type="text" readonly>
+            </label>
+
+            <label>
+                <span>Taxa</span>
+                <input id="examFee" type="text" value="1.500 CVE" readonly>
+            </label>
+
+            <label class="exam-full">
+                <span>Método de pagamento</span>
+                <select id="examPaymentMethod">
+                    <option>Vinti4 / Referência</option>
+                    <option>Cartão</option>
+                    <option>Transferência bancária</option>
+                    <option>Balcão UniCV</option>
+                </select>
+            </label>
+        </div>
+
+        <p>Ao confirmar, a inscrição e o pagamento da taxa serão registados em modo de simulação.</p>
+
+        <div class="modal-actions">
+            <button type="button" onclick="fecharInscricaoExame()">Cancelar</button>
+            <button type="button" onclick="confirmarInscricaoExame()">Confirmar e pagar</button>
+        </div>
+    </div>
+<script>
+    var historicoPaginas = ["inicio"];
+    var toastTimer;
+    var metodoPagamentoSelecionado = "vinti4";
+    var exameSelecionado = null;
+
+    const dadosDisciplinas = {
+        "Tecnologia Web II": { codigo:"WEB II", titulo:"Tecnologia Web II", meta:"Docente: Elcelina Silva • Laboratório • 4h/semana", estado:"Em curso", fazer:"Finalizar o mini-projeto e submeter no Moodle até 21 de junho.", progresso:"72%", progressoNumero:72, presenca:"Presente", presencaTexto:"Aula prática de layout responsivo", estadoAcademico:"Regular", estadoTexto:"sem pendências graves", atividades:[["20 Jun","Revisão em aula","Preparação final do mini-projeto"],["21 Jun","Entrega do mini-projeto","Submissão no Moodle"],["27 Jun","Feedback individual","Correções e melhorias"]], materiais:[["Slides - Flexbox e Grid","PDF • publicado ontem"],["Guia do mini-projeto","Documento • atualizado"],["Exemplo de dashboard","ZIP • material de apoio"]], sugestao:"Prioriza a entrega de Web II hoje. Depois revê Base de Dados, porque o teste prático está próximo." },
+        "Introdução à Base de Dados": { codigo:"BD", titulo:"Introdução à Base de Dados", meta:"Docente: Celistino • Laboratório 2 • 2h/semana", estado:"Avaliação próxima", fazer:"Rever consultas SQL e preparar o teste prático marcado para 20 de junho.", progresso:"64%", progressoNumero:64, presenca:"Presente", presencaTexto:"Exercícios de normalização e relações", estadoAcademico:"Atenção", estadoTexto:"teste prático próximo", atividades:[["19 Jun","Revisão de SQL","SELECT, JOIN e GROUP BY"],["20 Jun","Teste prático","Avaliação em laboratório"],["24 Jun","Correção orientada","Discussão dos erros comuns"]], materiais:[["Ficha prática SQL","PDF • nova"],["Modelo entidade-relação","Imagem • apoio"],["Base de dados exemplo","SQL • descarregável"]], sugestao:"Reserva 40 minutos hoje para SQL. É a disciplina com maior urgência depois de Web II." },
+        "Gestão de Projetos Multimédia": { codigo:"GPM", titulo:"Gestão de Projetos Multimédia", meta:"Docente: Domingos Andrade • Sala A04 • 2h/semana", estado:"Estável", fazer:"Preparar a apresentação de grupo e rever o cronograma do projeto.", progresso:"58%", progressoNumero:58, presenca:"Presente", presencaTexto:"Planeamento e divisão de tarefas", estadoAcademico:"Regular", estadoTexto:"trabalho de grupo em andamento", atividades:[["22 Jun","Reunião de grupo","Organização da apresentação"],["24 Jun","Apresentação","Defesa do planeamento multimédia"],["28 Jun","Entrega final","Relatório do projeto"]], materiais:[["Template de cronograma","XLSX • apoio"],["Rubrica de avaliação","PDF • importante"],["Exemplo de relatório","Documento • referência"]], sugestao:"Confirma se todos os elementos do grupo já têm tarefas atribuídas antes da apresentação." },
+        "Laboratório Projeto Multimédia I": { codigo:"LPM I", titulo:"Laboratório Projeto Multimédia I", meta:"Docente: Cleonice Moreira • Laboratório 1 • 3h/semana", estado:"Prática", fazer:"Validar o protótipo e registar as melhorias antes da próxima sessão.", progresso:"69%", progressoNumero:69, presenca:"Presente", presencaTexto:"Teste de navegação do protótipo", estadoAcademico:"Regular", estadoTexto:"protótipo em evolução", atividades:[["21 Jun","Teste de interface","Recolha de feedback"],["26 Jun","Validação do protótipo","Demonstração em laboratório"],["30 Jun","Iteração final","Correções visuais"]], materiais:[["Checklist de validação","PDF • obrigatório"],["Guia de prototipagem","Documento • apoio"],["Modelo de relatório","DOCX • editável"]], sugestao:"Faz uma validação curta com outro colega antes da sessão oficial." },
+        "Sistema de Compressão Multimédia": { codigo:"SCM", titulo:"Sistema de Compressão Multimédia", meta:"Docente: Aristides Lopes Silva • Sala C03 • 2h/semana", estado:"Estável", fazer:"Resolver a ficha de exercícios sobre compressão de imagem.", progresso:"61%", progressoNumero:61, presenca:"Presente", presencaTexto:"Codificação e formatos multimédia", estadoAcademico:"Regular", estadoTexto:"sem atrasos registados", atividades:[["23 Jun","Ficha de exercícios","Compressão sem perdas"],["28 Jun","Entrega da ficha","Submissão no Moodle"],["01 Jul","Discussão prática","Comparação de formatos"]], materiais:[["Ficha de compressão","PDF • publicada"],["Dataset de imagens","ZIP • apoio"],["Resumo de formatos","PDF • leitura"]], sugestao:"Começa pelos exercícios de comparação entre PNG e JPEG. São os mais diretos." }
+    };
+
+    function entrarPortal(){
+        const numero = document.getElementById("studentNumber");
+        const senha = document.getElementById("studentPassword");
+        const feedback = document.getElementById("loginFeedback");
+        if(numero.value.trim() === "" || senha.value.trim() === ""){
+            feedback.textContent = "Preencha o número de estudante e a palavra-passe.";
+            return;
+        }
+        feedback.textContent = "";
+        document.querySelector(".login-page").style.display = "none";
+        document.querySelector(".dashboard").style.display = "flex";
+        mostrarPagina("inicio", false);
+        mostrarToast("Sessão iniciada em modo de simulação.");
+    }
+
+    function simularRecuperacao(){
+        document.getElementById("loginFeedback").textContent = "Foi enviada uma simulação de recuperação para o email institucional.";
+    }
+
+    function sairPortal(){
+        document.querySelector(".dashboard").style.display = "none";
+        document.querySelector(".login-page").style.display = "flex";
+        historicoPaginas = ["inicio"];
+        mostrarPagina("inicio", false);
+        mostrarToast("Sessão terminada.");
+    }
+
+    function mostrarPagina(pagina, guardarHistorico = true){
+        const paginaAtual = document.querySelector(".page.active");
+        if(guardarHistorico && paginaAtual && paginaAtual.id !== pagina){
+            historicoPaginas.push(paginaAtual.id);
+        }
+        document.querySelectorAll(".page").forEach(secao => secao.classList.remove("active"));
+        const paginaSelecionada = document.getElementById(pagina);
+        if(paginaSelecionada){ paginaSelecionada.classList.add("active"); }
+        document.querySelectorAll(".sidebar nav a").forEach(link => {
+            link.classList.remove("active");
+            if(link.dataset.page === pagina){ link.classList.add("active"); }
+        });
+        subirAoTopo();
+    }
+
+    function voltarPagina(){
+        if(historicoPaginas.length > 1){
+            historicoPaginas.pop();
+            mostrarPagina(historicoPaginas[historicoPaginas.length - 1], false);
+        }else{
+            mostrarPagina("inicio", false);
+        }
+    }
+
+    document.querySelectorAll(".sidebar nav a").forEach(link => {
+        link.addEventListener("click", function(){ mostrarPagina(this.dataset.page); });
+    });
+
+    function toggleMedia(){
+        const valor = document.getElementById("mediaValor");
+        const texto = document.getElementById("mediaTexto");
+        const botao = document.querySelector(".media-toggle");
+        if(valor.textContent === "••••"){
+            valor.textContent = "16";
+            texto.textContent = "/ 20";
+            botao.textContent = "Ocultar";
+        }else{
+            valor.textContent = "••••";
+            texto.textContent = "Oculta";
+            botao.textContent = "Mostrar";
+        }
+    }
+
+    function toggleTema(){
+        document.body.classList.toggle("dark-mode");
+        mostrarToast(document.body.classList.contains("dark-mode") ? "Modo escuro ativado." : "Modo claro ativado.");
+    }
+
+    function subirAoTopo(){
+        const conteudo = document.querySelector(".main-content");
+        if(conteudo){ conteudo.scrollTo({ top:0, behavior:"smooth" }); }
+    }
+
+    const mainContent = document.querySelector(".main-content");
+    if(mainContent){
+        mainContent.addEventListener("scroll", function(){
+            const botaoTopo = document.querySelector(".scroll-top-btn");
+            if(botaoTopo){ botaoTopo.classList.toggle("show", this.scrollTop > 300); }
+        });
+    }
+
+    function simularDisciplina(nome){ selecionarDisciplina(nome); }
+
+    function selecionarDisciplina(nome){
+        const dados = dadosDisciplinas[nome];
+        if(!dados) return;
+        document.querySelectorAll(".discipline-row").forEach(row => {
+            const titulo = row.querySelector("strong")?.textContent.trim();
+            row.classList.toggle("active", titulo === nome);
+        });
+        const painel = document.querySelector(".discipline-detail-panel");
+        painel.querySelector(".detail-code").textContent = dados.codigo;
+        painel.querySelector(".detail-header h2").textContent = dados.titulo;
+        painel.querySelector(".detail-header p").textContent = dados.meta;
+        painel.querySelector(".detail-status").textContent = dados.estado;
+        painel.querySelector(".next-step-box strong").textContent = dados.fazer;
+        const cards = painel.querySelectorAll(".detail-card");
+        cards[0].querySelector("strong").textContent = dados.progresso;
+        cards[0].querySelector(".mini-progress span").style.width = dados.progressoNumero + "%";
+        cards[1].querySelector("strong").textContent = dados.presenca;
+        cards[1].querySelector("p").textContent = dados.presencaTexto;
+        cards[2].querySelector("strong").textContent = dados.estadoAcademico;
+        cards[2].querySelector("p").textContent = dados.estadoTexto;
+        painel.querySelector(".timeline-box").innerHTML = `<h3>Próximas atividades</h3>${dados.atividades.map((item, index) => `<div class="timeline-item ${index === 0 ? "important" : ""}"><span>${item[0]}</span><div><strong>${item[1]}</strong><p>${item[2]}</p></div></div>`).join("")}`;
+        painel.querySelector(".resources-box").innerHTML = `<h3>Materiais recentes</h3>${dados.materiais.map(item => `<div class="resource-item"><div><strong>${item[0]}</strong><p>${item[1]}</p></div><button type="button" onclick="abrirMaterial('${item[0]}', '${item[1]}', '${dados.titulo}')">Ver</button></div>`).join("")}`;
+        painel.querySelector(".assistant-hint p").textContent = dados.sugestao;
+        mostrarToast("Painel atualizado: " + dados.titulo);
+    }
+
+    function abrirMaterial(titulo, tipo, disciplina){
+        document.getElementById("modalTipo").textContent = tipo;
+        document.getElementById("modalTitulo").textContent = titulo;
+        document.getElementById("modalDescricao").textContent = "Material de " + disciplina + " aberto em modo de simulação. Nesta versão, a transferência é representativa.";
+        document.getElementById("appModal").classList.add("show");
+    }
+
+    function fecharModal(event){
+        if(event && event.target.id !== "appModal") return;
+        document.getElementById("appModal").classList.remove("show");
+    }
+
+    function confirmarTransferencia(){
+        document.getElementById("appModal").classList.remove("show");
+        mostrarToast("Transferência simulada com sucesso.");
+    }
+
+    function abrirPagamento(){
+        const ativo = document.querySelector(".payment-method.active") || document.querySelector(".payment-method");
+        selecionarMetodoPagamento(ativo, "vinti4");
+        document.getElementById("paymentModal").classList.add("show");
+    }
+
+    function fecharPagamento(event){
+        if(event && event.target.id !== "paymentModal") return;
+        document.getElementById("paymentModal").classList.remove("show");
+    }
+
+    function selecionarMetodoPagamento(botao, metodo){
+        metodoPagamentoSelecionado = metodo;
+        document.querySelectorAll(".payment-method").forEach(item => item.classList.remove("active"));
+        if(botao){ botao.classList.add("active"); }
+        const detalhes = document.getElementById("paymentDetails");
+        const info = document.getElementById("paymentInfo");
+
+        if(metodo === "vinti4"){
+            detalhes.innerHTML = `<div><span>Entidade</span><strong>92613</strong></div><div><span>Referência</span><strong>584175277</strong></div><div><span>Montante</span><strong>9.000 CVE</strong></div><div><span>Validade</span><strong>30/06/2026</strong></div>`;
+            info.textContent = "Use a entidade e referência numa caixa Vinti4, app bancária ou ATM.";
+        }
+        if(metodo === "cartao"){
+            detalhes.innerHTML = `<label><span>Número do cartão</span><input id="cardNumber" type="text" placeholder="0000 0000 0000 0000" maxlength="19" oninput="formatarCartao(this)"></label><label><span>Titular</span><input id="cardName" type="text" placeholder="Nome no cartão"></label><label><span>Validade</span><input id="cardDate" type="text" placeholder="MM/AA" maxlength="5" oninput="formatarValidade(this)"></label><label><span>CVV</span><input id="cardCvv" type="password" placeholder="123" maxlength="3" oninput="apenasNumeros(this)"></label>`;
+            info.textContent = "Preenche os dados do cartão. Nenhum dado real será processado.";
+        }
+        if(metodo === "transferencia"){
+            detalhes.innerHTML = `<div><span>Banco</span><strong>Banco parceiro</strong></div><div><span>IBAN</span><strong>CV64 0000 0000 0000 9277</strong></div><label><span>Nº de operação</span><input id="transferCode" type="text" placeholder="Ex: TRF-2026-001"></label><label><span>Comprovativo</span><input id="transferFile" type="text" placeholder="comprovativo.pdf"></label>`;
+            info.textContent = "Preenche o número da operação e o nome do comprovativo para simular a validação.";
+        }
+        if(metodo === "balcao"){
+            detalhes.innerHTML = `<label><span>Campus</span><select id="deskCampus"><option>Campus Palmarejo</option><option>Campus Praia</option><option>Campus Mindelo</option></select></label><label><span>Serviço</span><select id="deskService"><option>Serviços Académicos</option><option>Tesouraria</option></select></label><div><span>Senha gerada</span><strong>F-024</strong></div><div><span>Horário</span><strong>08:30 - 15:00</strong></div>`;
+            info.textContent = "Escolhe o campus e o serviço para simular o pagamento presencial.";
+        }
+    }
+
+    function formatarCartao(input){
+        let valor = input.value.replace(/\D/g, "").substring(0, 16);
+        input.value = valor.replace(/(\d{4})(?=\d)/g, "$1 ");
+    }
+
+    function formatarValidade(input){
+        let valor = input.value.replace(/\D/g, "").substring(0, 4);
+        if(valor.length >= 3){ valor = valor.substring(0, 2) + "/" + valor.substring(2); }
+        input.value = valor;
+    }
+
+    function apenasNumeros(input){ input.value = input.value.replace(/\D/g, ""); }
+
+    function confirmarPagamento(){
+        let detalheRecibo = "";
+        if(metodoPagamentoSelecionado === "cartao"){
+            const numero = document.getElementById("cardNumber").value.trim();
+            const nome = document.getElementById("cardName").value.trim();
+            const validade = document.getElementById("cardDate").value.trim();
+            const cvv = document.getElementById("cardCvv").value.trim();
+            if(numero === "" || nome === "" || validade === "" || cvv === ""){
+                mostrarToast("Preencha todos os dados do cartão.");
+                return;
+            }
+            detalheRecibo = "Cartão de " + nome + " terminado em " + numero.slice(-4);
+        }
+        if(metodoPagamentoSelecionado === "transferencia"){
+            const codigo = document.getElementById("transferCode").value.trim();
+            const ficheiro = document.getElementById("transferFile").value.trim();
+            if(codigo === "" || ficheiro === ""){
+                mostrarToast("Preencha o número da operação e o comprovativo.");
+                return;
+            }
+            detalheRecibo = "Operação " + codigo + " • Comprovativo " + ficheiro;
+        }
+        if(metodoPagamentoSelecionado === "balcao"){
+            detalheRecibo = document.getElementById("deskCampus").value + " • " + document.getElementById("deskService").value + " • Senha F-024";
+        }
+        if(metodoPagamentoSelecionado === "vinti4"){
+            detalheRecibo = "Entidade 92613 • Referência 584175277";
+        }
+        document.getElementById("paymentModal").classList.remove("show");
+        const mesAtual = document.querySelector(".payment-month.current");
+        if(mesAtual){
+            mesAtual.classList.remove("current");
+            mesAtual.classList.add("paid");
+            mesAtual.querySelector("strong").textContent = "Pago";
+        }
+        const ultimoPagamento = document.querySelectorAll(".finance-brief div")[2];
+        if(ultimoPagamento){
+            ultimoPagamento.querySelector("strong").textContent = "19/06/2026";
+            ultimoPagamento.querySelector("p").textContent = "recibo gerado agora";
+        }
+        document.getElementById("receiptMethod").textContent = nomeMetodoPagamento();
+        const reciboDetalhe = document.getElementById("receiptDetail");
+        if(reciboDetalhe){ reciboDetalhe.textContent = detalheRecibo; }
+        document.getElementById("receiptModal").classList.add("show");
+        mostrarToast("Pagamento confirmado. Recibo gerado.");
+    }
+
+    function fecharRecibo(event){
+        if(event && event.target.id !== "receiptModal") return;
+        document.getElementById("receiptModal").classList.remove("show");
+    }
+
+    function nomeMetodoPagamento(){
+        if(metodoPagamentoSelecionado === "vinti4") return "Vinti4 / Referência";
+        if(metodoPagamentoSelecionado === "cartao") return "Cartão";
+        if(metodoPagamentoSelecionado === "transferencia") return "Transferência bancária";
+        if(metodoPagamentoSelecionado === "balcao") return "Balcão UniCV";
+        return "Método selecionado";
+    }
+
+    function abrirInscricaoExame(disciplina, tipo, data){
+        exameSelecionado = disciplina;
+        document.getElementById("examSubject").value = disciplina;
+        document.getElementById("examType").value = tipo;
+        document.getElementById("examDate").value = data;
+        document.getElementById("examModal").classList.add("show");
+    }
+
+    function fecharInscricaoExame(event){
+        if(event && event.target.id !== "examModal") return;
+        document.getElementById("examModal").classList.remove("show");
+    }
+
+    function confirmarInscricaoExame(){
+        const nome = document.getElementById("examStudentName").value.trim();
+        const numero = document.getElementById("examStudentNumber").value.trim();
+        const metodo = document.getElementById("examPaymentMethod").value;
+        if(nome === "" || numero === ""){
+            mostrarToast("Preencha o nome e o número do estudante.");
+            return;
+        }
+        document.getElementById("examModal").classList.remove("show");
+        document.querySelectorAll(".exam-row").forEach(row => {
+            const nomeDisciplina = row.querySelector("strong").textContent.trim();
+            if(nomeDisciplina === exameSelecionado){
+                row.classList.add("registered");
+                row.querySelector("em").textContent = "Inscrito";
+                row.querySelector("button").textContent = "Inscrito";
+                row.querySelector("button").disabled = true;
+            }
+        });
+        document.getElementById("modalTipo").textContent = "Recibo de exame";
+        document.getElementById("modalTitulo").textContent = "Inscrição confirmada";
+        document.getElementById("modalDescricao").innerHTML = "Estudante: " + nome + "<br>Nº estudante: " + numero + "<br>Disciplina: " + exameSelecionado + "<br>Taxa: 1.500 CVE<br>Método: " + metodo + "<br>Estado: inscrição registada";
+        document.getElementById("appModal").classList.add("show");
+        mostrarToast("Inscrição confirmada e taxa paga por " + metodo + ".");
+    }
+
+    function mostrarToast(mensagem){
+        const toast = document.getElementById("appToast");
+        if(!toast) return;
+        clearTimeout(toastTimer);
+        toast.textContent = mensagem;
+        toast.classList.add("show");
+        toastTimer = setTimeout(() => toast.classList.remove("show"), 2800);
+    }
+
+    function simularAcao(mensagem){ mostrarToast(mensagem); }
+
+    const pesquisaDisciplina = document.querySelector(".discipline-search-line input");
+    if(pesquisaDisciplina){
+        pesquisaDisciplina.addEventListener("input", function(){
+            const termo = this.value.trim().toLowerCase();
+            document.querySelectorAll(".discipline-row").forEach(row => {
+                row.style.display = row.textContent.toLowerCase().includes(termo) ? "flex" : "none";
+            });
+        });
+    }
+
+    document.querySelectorAll("button").forEach(botao => {
+        if(botao.dataset.autoBound === "true" || botao.getAttribute("onclick")) return;
+        botao.dataset.autoBound = "true";
+        botao.addEventListener("click", function(){
+            const texto = this.textContent.trim();
+            if(texto === "Solicitar"){ mostrarToast("Pedido de documento registado em modo de simulação."); return; }
+            if(texto === "Enviar"){
+                const input = document.querySelector(".assistant-input-area input");
+                const pergunta = input.value.trim() || "Preciso de orientação académica.";
+                const chat = document.querySelector(".smart-chat");
+                chat.insertAdjacentHTML("beforeend", `<div class="chat-message user"><strong>Tu</strong><p>${pergunta}</p></div>`);
+                chat.insertAdjacentHTML("beforeend", `<div class="chat-message ai"><strong>Assistente IA</strong><p>Com base no teu contexto, recomendo veres primeiro Disciplinas e Horário para organizar as próximas tarefas.</p></div>`);
+                input.value = "";
+                chat.scrollTop = chat.scrollHeight;
+                return;
+            }
+            if(this.closest(".assistant-suggestions")){
+                const input = document.querySelector(".assistant-input-area input");
+                input.value = texto;
+                mostrarToast("Sugestão aplicada ao campo do assistente.");
+                return;
+            }
+            if(this.closest(".moodle-shortcuts") || this.closest(".moodle-feed-item")){
+                mostrarToast("Área do Moodle aberta em modo de simulação.");
+                return;
+            }
+            if(this.closest(".document-row")){
+                abrirMaterial(texto, "Documento académico", "Financeiro & Docs");
+                return;
+            }
+            mostrarToast("Ação simulada: " + texto);
+        });
+    });
+</script>
 </body>
 </html>
+
+
+
 
